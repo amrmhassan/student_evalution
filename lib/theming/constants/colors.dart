@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
   //? material colors
-  static const Color kBackgroundColor = Color(0xffffffff);
-  static const Color kCardBackgroundColor = Color(0xffF5F7F9);
+  static const Color kBackgroundColor = Color(0xffF7FBFE);
+  static const Color kCardBackgroundColor = Color(0xffFFFFFF);
   static const Color kCardBackgroundColorDark = Color(0xff878F7B);
   static const Color kLightCardBackgroundColor = Color(0xff474B63);
   static const Color kInactiveColor = Color(0xff9A9CA3);
-  static const Color kBlueColor = Color(0xff157AFE);
+  static const Color kBlueColor = Color(0xff1B62EE);
   static const Color textFieldBackgroundColor = Color(0xffF5F7F9);
   //? icons colors
 

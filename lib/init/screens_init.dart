@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
+import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
@@ -13,6 +14,7 @@ class ScreensInit {
     HomeScreen.routeName: (context) => HomeScreen(),
     LoginScreen.routeName: (context) => LoginScreen(),
     IntroScreen.routeName: (context) => IntroScreen(),
+    TestScreen.routeName: (context) => TestScreen(),
   };
 
   static Widget? home = StreamBuilder(

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
+import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
 import 'core/hive/hive_initiator.dart';
 import 'init/firebase_init.dart';
@@ -12,6 +14,7 @@ import 'init/theme_init.dart';
 import 'init/user_initiators.dart';
 
 // flutter packages pub run build_runner build --delete-conflicting-outputs
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,8 +35,9 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         theme: ThemeInit.theme,
         debugShowCheckedModeBanner: false,
-        title: 'Firebase Chat',
-        home: ScreensInit.home,
+        title: 'Students Evaluation',
+        // home: testing ? TestScreen() : ScreensInit.home,
+        home: testing ? TestScreen() : IntroScreen(),
         routes: ScreensInit.routes,
       ),
     );

@@ -13,6 +13,9 @@ enum AuthType {
 }
 
 class UserProvider extends ChangeNotifier {
+  //# inputs
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
   bool loggingIn = false;
   UserModel? userModel;
 
@@ -54,4 +57,8 @@ class UserProvider extends ChangeNotifier {
       logger.e(e);
     }
   }
+
+  //# validation
+  String? emailError;
+  String? passError;
 }

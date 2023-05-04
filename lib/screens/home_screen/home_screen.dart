@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/widgets.dart';
 import 'package:student_evaluation/fast_tools/widgets/screen_wrapper.dart';
@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenWrapper(
         body: Column(
-      children: [],
+      children: [Text('Home Screen')],
     ));
   }
 }
