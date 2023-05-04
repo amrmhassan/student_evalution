@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1020409288678",
+    "project_id": "inidian-ta",
+    "storage_bucket": "inidian-ta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020409288678:android:681c653df37b085d7ae827",
+        "android_client_info": {
+          "package_name": "com.example.student_evaluation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020409288678-8llmvckvvbfcbksr30vi3pefjafssimn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzx9laYBMtimFcvpPw1jXgtnId8dBNT3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020409288678-8llmvckvvbfcbksr30vi3pefjafssimn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1020409288678-h98qdsqqtf9sqtgq5pfkfsuobgmanjb8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dashboardTask"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
