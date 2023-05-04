@@ -36,7 +36,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   //# saved user info related methods
-  Future<void> _saveCurrentUserInfo(UserModel userModel) async {
+  Future<void> saveCurrentUserInfo(UserModel userModel) async {
     var box = await HiveBox.currentUser;
     await box.put(userModel.uid, userModel);
   }

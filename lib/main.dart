@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
-import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
 import 'core/hive/hive_initiator.dart';

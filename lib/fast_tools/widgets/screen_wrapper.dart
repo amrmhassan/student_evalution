@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_evaluation/core/navigation.dart';
-import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
 class ScreenWrapper extends StatelessWidget {
   final Widget body;

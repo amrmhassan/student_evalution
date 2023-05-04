@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../theming/constants/colors.dart';
 import '../../theming/constants/sizes.dart';
 import '../../theming/constants/styles.dart';
-import 'h_space.dart';
 import 'padding_wrapper.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -28,6 +27,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String? v)? validator;
   final bool enabled;
   final TextStyle? textStyle;
+  final TextStyle? hintStyle;
   final bool? requiredField;
   final BorderRadius? borderRadius;
   final int? maxLines;
@@ -66,6 +66,7 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.enabled = true,
     this.textStyle,
+    this.hintStyle,
     this.requiredField,
     this.borderRadius,
     this.maxLines,
@@ -87,6 +88,7 @@ class CustomTextField extends StatelessWidget {
       padding: padding ?? EdgeInsets.symmetric(horizontal: kHPad),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,7 +133,7 @@ class CustomTextField extends StatelessWidget {
                         )
                       else if (leadingIcon != null)
                         leadingIcon!,
-                      HSpace(factor: .5),
+                      // HSpace(factor: .5),
                       Expanded(
                         child: TextFormField(
                           onFieldSubmitted: onSubmitted,
@@ -154,7 +156,7 @@ class CustomTextField extends StatelessWidget {
                             border: InputBorder.none,
                             hintText: title,
                             hintStyle: errorText == null
-                                ? h3LiteTextStyle
+                                ? (hintStyle ?? h3LiteTextStyle)
                                 : h3LiteTextStyle.copyWith(
                                     color: CustomColors.kDangerColor,
                                   ),
