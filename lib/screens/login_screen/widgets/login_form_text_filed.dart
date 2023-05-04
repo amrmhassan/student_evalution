@@ -68,7 +68,7 @@ class _LoginFormTextFieldState extends State<LoginFormTextField> {
           borderRadius: BorderRadius.circular(mediumBorderRadius),
           leadingIcon: child,
           trailingIcon: passwordEye(),
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
         );
       },
       child: Container(

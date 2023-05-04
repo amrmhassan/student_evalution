@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
+import 'package:student_evaluation/screens/login_screen/login_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
 import 'core/hive/hive_initiator.dart';
@@ -36,8 +37,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeInit.theme,
         debugShowCheckedModeBanner: false,
         title: 'Students Evaluation',
-        // home: testing ? TestScreen() : ScreensInit.home,
-        home: testing ? TestScreen() : HomeScreen(),
+        home: testing ? TestScreen() : ScreensInit.home,
+        // home: testing ? TestScreen() : LoginScreen(),
         routes: ScreensInit.routes,
       ),
     );

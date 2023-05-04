@@ -25,7 +25,7 @@ class ScreensInit {
       } else if (snapshot.data != null) {
         return HomeScreen();
       } else {
-        return LoginScreen();
+        return IntroScreen();
       }
     },
   );

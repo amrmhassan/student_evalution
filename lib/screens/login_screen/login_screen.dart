@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -99,6 +101,10 @@ class LoginScreen extends StatelessWidget {
                     VSpace(),
                     PaddingWrapper(
                       child: ButtonWrapper(
+                        onTap: () {
+                          CNav.pushReplacementNamed(
+                              context, HomeScreen.routeName);
+                        },
                         padding: EdgeInsets.symmetric(
                           horizontal: kHPad,
                           vertical: kVPad / 2,
