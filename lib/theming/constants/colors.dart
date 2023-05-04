@@ -21,5 +21,5 @@ class CustomColors {
 class TextColors {
   //? text colors
   static const Color kActiveTextColor = Color.fromARGB(255, 29, 40, 95);
-  static const Color kInActiveTextColor = Color.fromARGB(255, 120, 123, 138);
+  static const Color kInActiveTextColor = Color.fromARGB(255, 226, 230, 252);
 }

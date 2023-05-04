@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';

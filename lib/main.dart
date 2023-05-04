@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Students Evaluation',
         // home: testing ? TestScreen() : ScreensInit.home,
-        home: testing ? TestScreen() : IntroScreen(),
+        home: testing ? TestScreen() : HomeScreen(),
         routes: ScreensInit.routes,
       ),
     );

@@ -16,16 +16,16 @@ class ScreenWrapper extends StatelessWidget {
       body: Stack(
         children: [
           body,
-          GestureDetector(
-            onTap: () {
-              CNav.pushNamed(context, TestScreen.routeName);
-            },
-            child: Container(
-              width: 50,
-              height: 100,
-              color: Colors.red,
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     CNav.pushNamed(context, TestScreen.routeName);
+          //   },
+          //   child: Container(
+          //     width: 50,
+          //     height: 100,
+          //     color: Colors.red,
+          //   ),
+          // ),
         ],
       ),
       appBar: appBar,

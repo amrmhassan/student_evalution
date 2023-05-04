@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/theming/constants/sizes.dart';
 
 class VSpace extends StatelessWidget {
   final double factor;
@@ -6,6 +7,6 @@ class VSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: 20 * factor);
+    return SizedBox(height: kVPad * factor);
   }
 }
