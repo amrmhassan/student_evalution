@@ -10,13 +10,12 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
+import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
-import '../../../theming/constants/sizes.dart';
-
-class IndividualChatCard extends StatelessWidget {
-  const IndividualChatCard({
+class GroupChatCard extends StatelessWidget {
+  const GroupChatCard({
     super.key,
   });
 
@@ -39,13 +38,13 @@ class IndividualChatCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Enema',
+                      'K1, Math',
                       style: h2TextStyle,
                     ),
-                    Text(
-                      'F: Jane Cooper | 6th 8',
-                      style: h4TextStyleInactive,
-                    ),
+                    // Text(
+                    //   'F: Jane Cooper | 6th 8',
+                    //   style: h4TextStyleInactive,
+                    // ),
                   ],
                 ),
                 Spacer(),
@@ -53,7 +52,7 @@ class IndividualChatCard extends StatelessWidget {
                 IconButton(
                   onPressed: () {},
                   icon: Image.asset(
-                    'assets/icons/phone.png',
+                    'assets/icons/message2.png',
                     color: colorTheme.kBlueColor,
                     width: mediumIconSize,
                   ),

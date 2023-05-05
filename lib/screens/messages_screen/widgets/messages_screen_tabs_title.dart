@@ -9,14 +9,20 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_tab_item.dart';
+import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class MessagesTabsTitle extends StatelessWidget {
+  final MessageScreenContent content;
+  final Function(MessageScreenContent content) setContent;
+
   const MessagesTabsTitle({
     super.key,
+    required this.content,
+    required this.setContent,
   });
 
   @override
@@ -27,15 +33,19 @@ class MessagesTabsTitle extends StatelessWidget {
           Row(
             children: [
               HomeScreenTabItem(
-                active: true,
+                active: content == MessageScreenContent.individual,
                 title: 'Individual',
-                onTap: () {},
+                onTap: () {
+                  setContent(MessageScreenContent.individual);
+                },
               ),
               Spacer(),
               HomeScreenTabItem(
-                active: false,
+                active: content == MessageScreenContent.groups,
                 title: 'Groups',
-                onTap: () {},
+                onTap: () {
+                  setContent(MessageScreenContent.groups);
+                },
               ),
             ],
           ),

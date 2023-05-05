@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import, dead_code
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
@@ -18,6 +18,7 @@ import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.d
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_line.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/group_chat_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/message_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/messages_screen_tabs_title.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
@@ -27,9 +28,23 @@ import 'package:intl/intl.dart' as intl;
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 
-class MessagesScreen extends StatelessWidget {
+enum MessageScreenContent { individual, groups }
+
+class MessagesScreen extends StatefulWidget {
   static const String routeName = '/MessagesScreen';
   const MessagesScreen({super.key});
+
+  @override
+  State<MessagesScreen> createState() => _MessagesScreenState();
+}
+
+class _MessagesScreenState extends State<MessagesScreen> {
+  MessageScreenContent activeContent = MessageScreenContent.individual;
+  void setActiveContent(MessageScreenContent content) {
+    setState(() {
+      activeContent = content;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +106,21 @@ class MessagesScreen extends StatelessWidget {
                                     children: [
                                       VSpace(factor: 1.5),
                                       VSpace(),
-                                      MessagesTabsTitle(),
-                                      ...List.generate(
-                                        10,
-                                        (index) => IndividualChatCard(),
+                                      MessagesTabsTitle(
+                                        content: activeContent,
+                                        setContent: setActiveContent,
                                       ),
+                                      if (activeContent ==
+                                          MessageScreenContent.individual)
+                                        ...List.generate(
+                                          10,
+                                          (index) => IndividualChatCard(),
+                                        )
+                                      else
+                                        ...List.generate(
+                                          3,
+                                          (index) => GroupChatCard(),
+                                        ),
                                     ],
                                   ),
                                 ),
