@@ -14,8 +14,12 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class HomeScreenSearchBox extends StatelessWidget {
+  final String hint;
+  final Function(String value) onSearch;
   const HomeScreenSearchBox({
     super.key,
+    required this.hint,
+    required this.onSearch,
   });
 
   @override
@@ -47,7 +51,7 @@ class HomeScreenSearchBox extends StatelessWidget {
           Expanded(
             child: CustomTextField(
               padding: EdgeInsets.zero,
-              title: 'Search | Example: Attendance',
+              title: hint,
               hintStyle: h3InactiveTextStyle.copyWith(
                   color: colorTheme.activeText.withOpacity(.3)),
               borderColor: Colors.transparent,

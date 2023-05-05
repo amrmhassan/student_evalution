@@ -44,6 +44,7 @@ class CustomTextField extends StatelessWidget {
   final Color? backgroundColor;
   final Widget? leadingIcon;
   final bool? obscureText;
+  final FocusNode? focusNode;
 
   const CustomTextField({
     Key? key,
@@ -80,6 +81,7 @@ class CustomTextField extends StatelessWidget {
     this.backgroundColor,
     this.leadingIcon,
     this.obscureText,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -136,6 +138,7 @@ class CustomTextField extends StatelessWidget {
                       // HSpace(factor: .5),
                       Expanded(
                         child: TextFormField(
+                          focusNode: focusNode,
                           onFieldSubmitted: onSubmitted,
                           maxLength: maxLength,
                           maxLines: maxLines ?? 1,

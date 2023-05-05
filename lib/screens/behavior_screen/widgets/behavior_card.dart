@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/round_checkbox.dart';
-import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
+
+import '../../messages_screen/widgets/user_avatar.dart';
 
 enum BehaviorState {
   active,

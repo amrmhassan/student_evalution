@@ -17,18 +17,20 @@ class NavBarItem extends StatelessWidget {
   final String title;
   final bool active;
   final String iconName;
+  final VoidCallback onTap;
 
   const NavBarItem({
     super.key,
     required this.title,
     required this.active,
     required this.iconName,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       child: active
           ? Container(
               padding: EdgeInsets.symmetric(

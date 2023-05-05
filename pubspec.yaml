@@ -51,6 +51,7 @@ dependencies:
   firebase_auth: ^4.4.2
   font_awesome_flutter: ^10.4.0
   intl: ^0.17.0
+  flutter_lorem: ^2.0.0
 
 
 dev_dependencies:

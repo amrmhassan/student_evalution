@@ -132,7 +132,10 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            HomeScreenSearchBox(),
+                            HomeScreenSearchBox(
+                              hint: 'Search | Example: Attendance',
+                              onSearch: (value) {},
+                            ),
                           ],
                         ),
                       ],
