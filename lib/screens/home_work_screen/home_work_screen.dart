@@ -10,8 +10,6 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
-import 'package:student_evaluation/screens/behavior_screen/widgets/behavior_card.dart';
-import 'package:student_evaluation/screens/behavior_screen/widgets/behavior_table_title.dart';
 import 'package:student_evaluation/screens/home_work_screen/widgets/home_work_card.dart';
 import 'package:student_evaluation/screens/home_work_screen/widgets/home_work_table_title.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
@@ -105,10 +103,8 @@ class HomeWorkScreen extends StatelessWidget {
                               10,
                               (index) => HomeWorkCard(
                                 checked: true,
-                                onTap: () {
-                                  print('present');
-                                },
-                                name: 'Nesma',
+                                onTap: () {},
+                                name: 'Enema',
                               ),
                             ),
                             VSpace(),

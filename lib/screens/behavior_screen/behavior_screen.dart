@@ -95,10 +95,8 @@ class BehaviorScreen extends StatelessWidget {
                               10,
                               (index) => BehaviorCard(
                                 behaviorState: BehaviorState.active,
-                                onChange: (present) {
-                                  print('present $present');
-                                },
-                                name: 'Nesma',
+                                onChange: (present) {},
+                                name: 'Enema',
                               ),
                             ),
                             VSpace(),

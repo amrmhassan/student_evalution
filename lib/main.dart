@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 

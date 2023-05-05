@@ -95,10 +95,8 @@ class AttendanceScreen extends StatelessWidget {
                               10,
                               (index) => AttendanceCard(
                                 present: false,
-                                onChange: (present) {
-                                  print('present $present');
-                                },
-                                name: 'Nesma',
+                                onChange: (present) {},
+                                name: 'Enema',
                               ),
                             ),
                             VSpace(),
