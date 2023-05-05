@@ -15,7 +15,7 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class TimeTableCard extends StatelessWidget {
-  // final VoidCallback onTap;
+  final VoidCallback onTap;
   final String title;
   // final String desc;
   // final String imageURL;
@@ -23,7 +23,7 @@ class TimeTableCard extends StatelessWidget {
   const TimeTableCard({
     super.key,
     required this.title,
-    // required this.onTap,
+    required this.onTap,
     // required this.desc,
     // required this.imageURL,
   });
@@ -31,7 +31,7 @@ class TimeTableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       padding: EdgeInsets.all(largePadding),
       margin: EdgeInsets.only(bottom: kVPad / 2),
       width: double.infinity,

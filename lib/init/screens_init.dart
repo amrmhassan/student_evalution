@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
+import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
@@ -25,6 +26,7 @@ class ScreensInit {
     HomeWorkScreen.routeName: (context) => HomeWorkScreen(),
     MessagesScreen.routeName: (context) => MessagesScreen(),
     ChatScreen.routeName: (context) => ChatScreen(),
+    EventScreen.routeName: (context) => EventScreen(),
   };
 
   static Widget? home = StreamBuilder(

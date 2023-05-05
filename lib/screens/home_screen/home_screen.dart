@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_dashboard.dart';
@@ -163,12 +165,21 @@ class HomeScreenEvents extends StatelessWidget {
           // VSpace(factor: .4),
           TimeTableCard(
             title: 'Personal Trainings',
+            onTap: () {
+              CNav.pushNamed(context, EventScreen.routeName);
+            },
           ),
           TimeTableCard(
             title: 'Yoga',
+            onTap: () {
+              CNav.pushNamed(context, EventScreen.routeName);
+            },
           ),
           TimeTableCard(
             title: 'Stretch',
+            onTap: () {
+              CNav.pushNamed(context, EventScreen.routeName);
+            },
           ),
         ],
       ),
@@ -218,12 +229,15 @@ class HomeScreenUpdates extends StatelessWidget {
             children: [
               TimeTableCard(
                 title: 'Science Class',
+                onTap: () {},
               ),
               TimeTableCard(
                 title: 'Biology Class',
+                onTap: () {},
               ),
               TimeTableCard(
                 title: 'Maths Class',
+                onTap: () {},
               ),
             ],
           ),
