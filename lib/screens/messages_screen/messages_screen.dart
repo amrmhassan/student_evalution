@@ -93,7 +93,7 @@ class MessagesScreen extends StatelessWidget {
                                       VSpace(),
                                       MessagesTabsTitle(),
                                       ...List.generate(
-                                        100,
+                                        10,
                                         (index) => IndividualChatCard(),
                                       ),
                                     ],

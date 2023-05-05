@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_evaluation/providers/app_state_provider.dart';
 
 import '../providers/user_provider.dart';
 
@@ -10,5 +11,13 @@ class Providers {
 
   static UserProvider userP(BuildContext context) {
     return Provider.of<UserProvider>(context);
+  }
+
+  static AppStateProvider appSPf(BuildContext context) {
+    return Provider.of<AppStateProvider>(context, listen: false);
+  }
+
+  static AppStateProvider appSP(BuildContext context) {
+    return Provider.of<AppStateProvider>(context);
   }
 }

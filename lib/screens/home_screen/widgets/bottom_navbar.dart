@@ -16,6 +16,7 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
@@ -24,6 +25,7 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appStateProvider = Providers.appSP(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
       height: 80,
@@ -41,30 +43,37 @@ class BottomNavBar extends StatelessWidget {
           NavBarItem(
             title: 'Home',
             iconName: 'home',
-            active: true,
+            active: appStateProvider.activeNavBarIndex == 0,
             onTap: () {
-              CNav.pushNamed(context, HomeScreen.routeName);
+              Providers.appSPf(context).setActiveNavBar(0);
+              CNav.pushReplacementNamed(context, HomeScreen.routeName);
             },
           ),
           NavBarItem(
             title: 'Message',
             iconName: 'message',
-            active: false,
+            active: appStateProvider.activeNavBarIndex == 1,
             onTap: () {
-              CNav.pushNamed(context, MessagesScreen.routeName);
+              Providers.appSPf(context).setActiveNavBar(1);
+
+              CNav.pushReplacementNamed(context, MessagesScreen.routeName);
             },
           ),
           NavBarItem(
             title: 'Notification',
             iconName: 'Notification',
-            active: false,
-            onTap: () {},
+            active: appStateProvider.activeNavBarIndex == 2,
+            onTap: () {
+              Providers.appSPf(context).setActiveNavBar(2);
+            },
           ),
           NavBarItem(
             title: 'Settings',
             iconName: 'setting',
-            active: false,
-            onTap: () {},
+            active: appStateProvider.activeNavBarIndex == 3,
+            onTap: () {
+              Providers.appSPf(context).setActiveNavBar(3);
+            },
           ),
         ],
       ),
