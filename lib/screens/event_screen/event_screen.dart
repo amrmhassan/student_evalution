@@ -3,14 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:intl/intl.dart';
-import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/absent_table_title.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/attendance_card.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -92,7 +86,7 @@ class EventScreen extends StatelessWidget {
                             VSpace(),
                             EventInfoItem(
                               title: 'Place',
-                              value: 'Yoga section in Maadi club',
+                              value: 'Yoga section in Madag club',
                             ),
                             VSpace(),
                             Text(
