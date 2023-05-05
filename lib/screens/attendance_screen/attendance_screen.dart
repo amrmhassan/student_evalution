@@ -110,8 +110,14 @@ class AttendanceScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ResetAttendanceButton(),
-                                  ApplyAttendanceButton(),
+                                  ResetAttendanceButton(
+                                    title: 'Reset',
+                                    onTap: () {},
+                                  ),
+                                  ApplyAttendanceButton(
+                                    title: 'Apply',
+                                    onTap: () {},
+                                  ),
                                 ],
                               ),
                             ),

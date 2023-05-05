@@ -7,14 +7,18 @@ import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
 class ResetAttendanceButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
   const ResetAttendanceButton({
     super.key,
+    required this.title,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(
@@ -30,7 +34,7 @@ class ResetAttendanceButton extends StatelessWidget {
         vertical: kVPad / 3,
       ),
       child: Text(
-        'Reset',
+        title,
         style: h3LightTextStyle.copyWith(
           color: colorTheme.kBlueColor,
         ),

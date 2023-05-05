@@ -5,9 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/absent_table_title.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/attendance_card.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
 import 'package:student_evaluation/screens/behavior_screen/widgets/behavior_card.dart';
@@ -65,7 +63,7 @@ class BehaviorScreen extends StatelessWidget {
                           children: [
                             VSpace(),
                             Text(
-                              'Attendance',
+                              'Behaviour',
                               style: h1TextStyle.copyWith(
                                 color: colorTheme.kBlueColor,
                               ),
@@ -112,8 +110,14 @@ class BehaviorScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ResetAttendanceButton(),
-                                  ApplyAttendanceButton(),
+                                  ResetAttendanceButton(
+                                    title: 'Reset',
+                                    onTap: () {},
+                                  ),
+                                  ApplyAttendanceButton(
+                                    title: 'Apply',
+                                    onTap: () {},
+                                  ),
                                 ],
                               ),
                             ),

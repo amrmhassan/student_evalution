@@ -7,14 +7,18 @@ import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
 class ApplyAttendanceButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
   const ApplyAttendanceButton({
     super.key,
+    required this.title,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       decoration: BoxDecoration(
         color: colorTheme.kBlueColor,
         borderRadius: BorderRadius.circular(
@@ -39,7 +43,7 @@ class ApplyAttendanceButton extends StatelessWidget {
         vertical: kVPad / 3,
       ),
       child: Text(
-        'Apply',
+        title,
         style: h3LightTextStyle.copyWith(
           color: Colors.white,
         ),

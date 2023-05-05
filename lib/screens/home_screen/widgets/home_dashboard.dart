@@ -12,6 +12,7 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
+import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -40,7 +41,9 @@ class HomeDashboard extends StatelessWidget {
               DashboardItem(
                 title: 'Home Works',
                 iconName: 'home_work',
-                onTap: () {},
+                onTap: () {
+                  CNav.pushNamed(context, HomeWorkScreen.routeName);
+                },
               ),
               DashboardItem(
                 title: 'Behavior',
