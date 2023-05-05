@@ -16,17 +16,19 @@ import 'package:intl/intl.dart' as intl;
 class DashboardItem extends StatelessWidget {
   final String title;
   final String iconName;
+  final VoidCallback? onTap;
 
   const DashboardItem({
     super.key,
     required this.iconName,
     required this.title,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       child: Column(
         children: [
           Image.asset(

@@ -6,6 +6,7 @@ import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
+import '../screens/attendance_screen/attendance_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
 
@@ -15,6 +16,7 @@ class ScreensInit {
     LoginScreen.routeName: (context) => LoginScreen(),
     IntroScreen.routeName: (context) => IntroScreen(),
     TestScreen.routeName: (context) => TestScreen(),
+    AttendanceScreen.routeName: (context) => AttendanceScreen(),
   };
 
   static Widget? home = StreamBuilder(
