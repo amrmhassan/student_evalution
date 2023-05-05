@@ -11,6 +11,7 @@ import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 import '../screens/attendance_screen/attendance_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
+import '../screens/messages_screen/messages_screen.dart';
 
 class ScreensInit {
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -21,6 +22,7 @@ class ScreensInit {
     AttendanceScreen.routeName: (context) => AttendanceScreen(),
     BehaviorScreen.routeName: (context) => BehaviorScreen(),
     HomeWorkScreen.routeName: (context) => HomeWorkScreen(),
+    MessagesScreen.routeName: (context) => MessagesScreen(),
   };
 
   static Widget? home = StreamBuilder(

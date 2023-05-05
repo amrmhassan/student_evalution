@@ -13,6 +13,7 @@ import 'package:student_evaluation/screens/attendance_screen/attendance_screen.d
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
+import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -66,7 +67,9 @@ class HomeDashboard extends StatelessWidget {
               DashboardItem(
                 title: 'Messages',
                 iconName: 'messages',
-                onTap: () {},
+                onTap: () {
+                  CNav.pushReplacementNamed(context, MessagesScreen.routeName);
+                },
               ),
               Opacity(
                 opacity: 0,
