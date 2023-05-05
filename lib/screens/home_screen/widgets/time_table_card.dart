@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
@@ -14,8 +15,17 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class TimeTableCard extends StatelessWidget {
+  // final VoidCallback onTap;
+  final String title;
+  // final String desc;
+  // final String imageURL;
+
   const TimeTableCard({
     super.key,
+    required this.title,
+    // required this.onTap,
+    // required this.desc,
+    // required this.imageURL,
   });
 
   @override
@@ -59,7 +69,7 @@ class TimeTableCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Science Class',
+                title,
                 style: h3TextStyle,
               ),
               VSpace(factor: .4),
@@ -71,7 +81,8 @@ class TimeTableCard extends StatelessWidget {
           ),
           Spacer(),
           Icon(
-            Icons.arrow_right,
+            FontAwesomeIcons.chevronRight,
+            size: smallIconSize,
             color: colorTheme.inActiveText,
           )
         ],

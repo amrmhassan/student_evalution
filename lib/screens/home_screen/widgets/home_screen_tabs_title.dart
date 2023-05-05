@@ -8,6 +8,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_tab_item.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
@@ -15,8 +16,12 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class HomeScreenTabsTitle extends StatelessWidget {
+  final HomeScreenContent content;
+  final Function(HomeScreenContent content) setContent;
   const HomeScreenTabsTitle({
     super.key,
+    required this.content,
+    required this.setContent,
   });
 
   @override
@@ -27,15 +32,19 @@ class HomeScreenTabsTitle extends StatelessWidget {
           Row(
             children: [
               HomeScreenTabItem(
-                active: true,
+                active: content == HomeScreenContent.updates,
                 title: 'Updates',
-                onTap: () {},
+                onTap: () {
+                  setContent(HomeScreenContent.updates);
+                },
               ),
               Spacer(),
               HomeScreenTabItem(
-                active: false,
+                active: content == HomeScreenContent.events,
                 title: 'Events',
-                onTap: () {},
+                onTap: () {
+                  setContent(HomeScreenContent.events);
+                },
               ),
             ],
           ),

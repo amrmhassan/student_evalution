@@ -19,6 +19,8 @@ import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../../../utils/providers_calls.dart';
+
 class HomeDashboard extends StatelessWidget {
   const HomeDashboard({
     super.key,
@@ -69,6 +71,7 @@ class HomeDashboard extends StatelessWidget {
                 iconName: 'messages',
                 onTap: () {
                   CNav.pushReplacementNamed(context, MessagesScreen.routeName);
+                  Providers.appSPf(context).setActiveNavBar(1);
                 },
               ),
               Opacity(

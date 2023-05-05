@@ -11,6 +11,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/screens/chat_screen/widgets/message_card.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_dashboard.dart';
@@ -125,37 +126,34 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                       children: [
                         SizedBox(width: double.infinity),
                         VSpace(factor: 5),
-                        Stack(
-                          alignment: Alignment.topCenter,
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                VSpace(factor: 1.5),
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft:
-                                          Radius.circular(largeBorderRadius),
-                                      topRight:
-                                          Radius.circular(largeBorderRadius),
-                                    ),
+                            VSpace(factor: 1.5),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                    largeBorderRadius,
                                   ),
-                                  child: Column(
-                                    children: [
-                                      VSpace(factor: 1.5),
-                                      VSpace(),
-                                      ...List.generate(
-                                        100,
-                                        (index) => MessageCard(
-                                          mine: Random().nextBool(),
-                                        ),
-                                      ),
-                                    ],
+                                  topRight: Radius.circular(
+                                    largeBorderRadius,
                                   ),
                                 ),
-                              ],
+                              ),
+                              child: Column(
+                                children: [
+                                  VSpace(factor: 1.5),
+                                  VSpace(),
+                                  ...List.generate(
+                                    100,
+                                    (index) => MessageCard(
+                                      mine: Random().nextBool(),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -165,38 +163,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              color: colorTheme.backGround,
-              padding: EdgeInsets.symmetric(
-                horizontal: kHPad,
-                vertical: kVPad / 2,
-              ),
-              child: CustomTextField(
-                focusNode: focusNode,
-                borderRadius: BorderRadius.circular(1000),
-                backgroundColor: colorTheme.kBlueColor,
-                hintStyle: h4LightTextStyle.copyWith(
-                  color: Colors.white.withOpacity(
-                    .7,
-                  ),
-                ),
-                textStyle: h4LightTextStyle,
-                padding: EdgeInsets.zero,
-                title: 'Type Something...',
-                color: colorTheme.kBlueColor,
-                trailingIcon: ButtonWrapper(
-                  padding: EdgeInsets.all(largePadding),
-                  borderRadius: 1000,
-                  onTap: () {},
-                  backgroundColor: colorTheme.kBlueColor,
-                  child: Icon(
-                    Icons.send,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+            SendMessageBox(focusNode: focusNode),
           ],
         ),
       ),
@@ -204,71 +171,47 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   }
 }
 
-class MessageCard extends StatelessWidget {
-  final bool mine;
-
-  const MessageCard({
+class SendMessageBox extends StatelessWidget {
+  const SendMessageBox({
     super.key,
-    required this.mine,
+    required this.focusNode,
   });
+
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      textDirection: mine ? TextDirection.rtl : null,
-      children: [
-        HSpace(),
-        Container(
-          margin: EdgeInsets.only(
-            bottom: largePadding,
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: kHPad,
-            vertical: kVPad / 2,
-          ),
-          decoration: BoxDecoration(
-            color: mine
-                ? colorTheme.kBlueColor
-                : colorTheme.kInactiveColor.withOpacity(
-                    .2,
-                  ),
-            borderRadius: BorderRadius.only(
-              topRight: mine
-                  ? Radius.zero
-                  : Radius.circular(
-                      largeBorderRadius,
-                    ),
-              topLeft: Radius.circular(
-                largeBorderRadius,
-              ),
-              bottomLeft: mine
-                  ? Radius.circular(
-                      largeBorderRadius,
-                    )
-                  : Radius.zero,
-              bottomRight: Radius.circular(
-                largeBorderRadius,
-              ),
-            ),
-          ),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: Responsive.getWidth(context) / 1.6,
-            ),
-            child: Text(
-              lorem(
-                paragraphs: Random().nextInt(5) + 1,
-                words: Random().nextInt(20) + 1,
-              ),
-              style: h4TextStyleInactive.copyWith(
-                color: mine ? Colors.white : colorTheme.kBlueColor,
-              ),
-              overflow: TextOverflow.visible,
-              softWrap: true,
-            ),
+    return Container(
+      width: double.infinity,
+      color: colorTheme.backGround,
+      padding: EdgeInsets.symmetric(
+        horizontal: kHPad,
+        vertical: kVPad / 2,
+      ),
+      child: CustomTextField(
+        focusNode: focusNode,
+        borderRadius: BorderRadius.circular(1000),
+        backgroundColor: colorTheme.kBlueColor,
+        hintStyle: h4LightTextStyle.copyWith(
+          color: Colors.white.withOpacity(
+            .7,
           ),
         ),
-      ],
+        textStyle: h4LightTextStyle,
+        padding: EdgeInsets.zero,
+        title: 'Type Something...',
+        color: colorTheme.kBlueColor,
+        trailingIcon: ButtonWrapper(
+          padding: EdgeInsets.all(largePadding),
+          borderRadius: 1000,
+          onTap: () {},
+          backgroundColor: colorTheme.kBlueColor,
+          child: Icon(
+            Icons.send,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

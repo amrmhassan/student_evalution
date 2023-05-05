@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
@@ -19,9 +21,23 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 
 import 'widgets/home_screen_appbar.dart';
 
-class HomeScreen extends StatelessWidget {
+enum HomeScreenContent { updates, events }
+
+class HomeScreen extends StatefulWidget {
   static const String routeName = '/HomeScreen';
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  HomeScreenContent activeContent = HomeScreenContent.updates;
+  void setActiveContent(HomeScreenContent content) {
+    setState(() {
+      activeContent = content;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,49 +100,14 @@ class HomeScreen extends StatelessWidget {
                                     children: [
                                       VSpace(factor: 1.5),
                                       VSpace(),
-                                      HomeScreenTabsTitle(),
-                                      VSpace(),
-                                      HomeDashboard(),
-                                      VSpace(),
-                                      PaddingWrapper(
-                                        child: HLine(
-                                          color: colorTheme.inActiveText,
-                                          thickness: .8,
-                                        ),
+                                      HomeScreenTabsTitle(
+                                        content: activeContent,
+                                        setContent: setActiveContent,
                                       ),
                                       VSpace(),
-                                      PaddingWrapper(
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Time Table',
-                                              style: h2TextStyle,
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              'View All',
-                                              style:
-                                                  h4TextStyleInactive.copyWith(
-                                                decoration:
-                                                    TextDecoration.underline,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      VSpace(),
-                                      // here is the time table items
-                                      PaddingWrapper(
-                                        child: Column(
-                                          children: [
-                                            TimeTableCard(),
-                                            TimeTableCard(),
-                                            TimeTableCard(),
-                                          ],
-                                        ),
-                                      ),
-
-                                      VSpace(),
+                                      activeContent == HomeScreenContent.updates
+                                          ? HomeScreenUpdates()
+                                          : HomeScreenEvents(),
                                     ],
                                   ),
                                 ),
@@ -148,6 +129,108 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HomeScreenEvents extends StatelessWidget {
+  const HomeScreenEvents({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PaddingWrapper(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Events on June 14, 2022',
+                style: h2TextStyle,
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: Image.asset(
+                  'assets/icons/add.png',
+                  width: largeIconSize,
+                  color: colorTheme.inActiveText,
+                ),
+              ),
+            ],
+          ),
+          // VSpace(factor: .4),
+          TimeTableCard(
+            title: 'Personal Trainings',
+          ),
+          TimeTableCard(
+            title: 'Yoga',
+          ),
+          TimeTableCard(
+            title: 'Stretch',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HomeScreenUpdates extends StatelessWidget {
+  const HomeScreenUpdates({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        HomeDashboard(),
+        VSpace(),
+        PaddingWrapper(
+          child: HLine(
+            color: colorTheme.inActiveText,
+            thickness: .8,
+          ),
+        ),
+        VSpace(),
+        PaddingWrapper(
+          child: Row(
+            children: [
+              Text(
+                'Time Table',
+                style: h2TextStyle,
+              ),
+              Spacer(),
+              Text(
+                'View All',
+                style: h4TextStyleInactive.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
+              )
+            ],
+          ),
+        ),
+        VSpace(),
+        // here is the time table items
+        PaddingWrapper(
+          child: Column(
+            children: [
+              TimeTableCard(
+                title: 'Science Class',
+              ),
+              TimeTableCard(
+                title: 'Biology Class',
+              ),
+              TimeTableCard(
+                title: 'Maths Class',
+              ),
+            ],
+          ),
+        ),
+
+        VSpace(),
+      ],
     );
   }
 }
