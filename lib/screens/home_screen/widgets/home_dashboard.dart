@@ -10,6 +10,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
+import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
@@ -44,7 +45,9 @@ class HomeDashboard extends StatelessWidget {
               DashboardItem(
                 title: 'Behavior',
                 iconName: 'behaviour',
-                onTap: () {},
+                onTap: () {
+                  CNav.pushNamed(context, BehaviorScreen.routeName);
+                },
               ),
             ],
           ),
