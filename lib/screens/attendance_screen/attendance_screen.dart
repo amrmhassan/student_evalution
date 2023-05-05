@@ -6,8 +6,10 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/absent_table_title.dart';
+import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/attendance_card.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
+import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -90,14 +92,30 @@ class AttendanceScreen extends StatelessWidget {
                             AbsentTableTitle(),
                             VSpace(factor: .3),
                             ...List.generate(
-                                10,
-                                (index) => AttendanceCard(
-                                      present: false,
-                                      onChange: (present) {
-                                        print('present $present');
-                                      },
-                                      name: 'Nesma',
-                                    ))
+                              10,
+                              (index) => AttendanceCard(
+                                present: false,
+                                onChange: (present) {
+                                  print('present $present');
+                                },
+                                name: 'Nesma',
+                              ),
+                            ),
+                            VSpace(),
+                            PaddingWrapper(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: kHPad * 2,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ResetAttendanceButton(),
+                                  ApplyAttendanceButton(),
+                                ],
+                              ),
+                            ),
+                            VSpace(),
                           ],
                         ),
                       ),
