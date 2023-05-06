@@ -9,6 +9,8 @@ class ModelsFields {
   static const String providerId = 'providerId';
   static const String userImage = 'userImage';
   static const String userType = 'userType';
+  static const String studentGrade = 'studentGrade';
+  static const String teacherClass = 'teacherClass';
 
   // temp mail model
   static const String autocorrect = 'autocorrect';

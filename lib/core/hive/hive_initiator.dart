@@ -9,7 +9,12 @@ class HiveInitiator {
   }
 
   Future<void> _registerAdapters() async {
-    Hive.registerAdapter(UserModelAdapter()); //=>0
+    // Hive.registerAdapter(UserModelAdapter()); //=>0
     Hive.registerAdapter(UserTypeAdapter()); //=>1
+    Hive.registerAdapter(StudentGradeAdapter()); //=>2
+    Hive.registerAdapter(TeacherClassAdapter()); //=>3
+    Hive.registerAdapter(StudentModelAdapter()); //=>4
+    Hive.registerAdapter(TeacherModelAdapter()); //=>5
+    Hive.registerAdapter(AdminModelAdapter()); //=>6
   }
 }

@@ -109,29 +109,29 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> signUp({
-    required String email,
-    required String password,
-    required String name,
-    required String imageLink,
-  }) async {
-    var cred = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
-    if (cred.user == null) {
-      throw Exception('User not created');
-    }
-    UserModel userModel = UserModel(
-      email: email,
-      name: name,
-      uid: cred.user!.uid,
-      userImage: imageLink,
-      userType: UserType.teacher,
-    );
-    await FirebaseFirestore.instance
-        .collection(DBCollections.users)
-        .doc(userModel.uid)
-        .set(userModel.toJSON());
-  }
+  // Future<void> signUp({
+  //   required String email,
+  //   required String password,
+  //   required String name,
+  //   required String imageLink,
+  // }) async {
+  //   var cred = await FirebaseAuth.instance
+  //       .createUserWithEmailAndPassword(email: email, password: password);
+  //   if (cred.user == null) {
+  //     throw Exception('User not created');
+  //   }
+  //   UserModel userModel = UserModel(
+  //     email: email,
+  //     name: name,
+  //     uid: cred.user!.uid,
+  //     userImage: imageLink,
+  //     userType: UserType.teacher,
+  //   );
+  //   await FirebaseFirestore.instance
+  //       .collection(DBCollections.users)
+  //       .doc(userModel.uid)
+  //       .set(userModel.toJSON());
+  // }
 
   //# validation
   String? emailError;
