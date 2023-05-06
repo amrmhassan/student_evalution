@@ -83,7 +83,9 @@ class HomeWorkScreen extends StatelessWidget {
                               borderRadius: 1000,
                             ),
                             VSpace(),
-                            ChooseGradeSection(),
+                            ChooseGradeSection(
+                              afterChange: (grade) {},
+                            ),
                             VSpace(factor: .5),
                             UploadDocumentCard(),
                             VSpace(factor: .5),

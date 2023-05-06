@@ -28,7 +28,6 @@ class AttendanceProvider extends ChangeNotifier {
     gradeUsers.clear();
     loadingAttendance = true;
     notifyListeners();
-    await Future.delayed(Duration(seconds: 6));
 
     await _loadUserGrades();
     var docs = (await FirebaseFirestore.instance

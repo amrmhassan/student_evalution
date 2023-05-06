@@ -81,7 +81,9 @@ class BehaviorScreen extends StatelessWidget {
                               borderRadius: 1000,
                             ),
                             VSpace(),
-                            ChooseGradeSection(),
+                            ChooseGradeSection(
+                              afterChange: (grade) {},
+                            ),
                             VSpace(),
                             HLine(
                               thickness: .4,

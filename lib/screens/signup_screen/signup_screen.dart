@@ -15,6 +15,7 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/transformers/collections.dart';
+import 'package:student_evaluation/transformers/enums_transformers.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
 
@@ -154,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               key: Key(e.name),
                               value: e,
                               child: Text(
-                                e.name,
+                                gradeTransformer(e),
                                 style: h3InactiveTextStyle,
                               ),
                             ),

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
@@ -32,6 +33,12 @@ class AttendanceScreen extends StatefulWidget {
 class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   void initState() {
+    loadData();
+
+    super.initState();
+  }
+
+  void loadData() async {
     Future.delayed(Duration.zero).then((value) {
       TeacherClass currentTeacherClass =
           (Providers.userPf(context).userModel as TeacherModel).teacherClass;
@@ -41,7 +48,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         activeDate,
       );
     });
-    super.initState();
   }
 
   @override
@@ -119,7 +125,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   )
                                 : Column(
                                     children: [
-                                      ChooseGradeSection(),
+                                      ChooseGradeSection(
+                                        afterChange: (grade) {
+                                          loadData();
+                                        },
+                                      ),
                                       VSpace(),
                                       HLine(
                                         thickness: .4,
@@ -165,15 +175,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             ResetAttendanceButton(
                                               title: 'Reset',
                                               onTap: () {
-                                                Providers.attendPf(context)
-                                                    .loadAttendanceData(
-                                                  (Providers.userPf(context)
-                                                              .userModel
-                                                          as TeacherModel)
-                                                      .teacherClass,
-                                                  Providers.timeLPf(context)
-                                                      .currentDay,
-                                                );
+                                                loadData();
                                               },
                                             ),
                                             ApplyAttendanceButton(
