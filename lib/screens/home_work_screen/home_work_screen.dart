@@ -17,14 +17,33 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
+import '../../utils/providers_calls.dart';
 import '../home_screen/widgets/home_screen_appbar.dart';
 
-class HomeWorkScreen extends StatelessWidget {
+class HomeWorkScreen extends StatefulWidget {
   static const String routeName = '/HomeWorkScreen';
   const HomeWorkScreen({super.key});
 
   @override
+  State<HomeWorkScreen> createState() => _HomeWorkScreenState();
+}
+
+class _HomeWorkScreenState extends State<HomeWorkScreen> {
+  @override
+  void initState() {
+    loadData();
+    super.initState();
+  }
+
+  void loadData() async {
+    Future.delayed(Duration.zero).then((value) {
+      Providers.homeWPf(context).loadUserGrades();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var homeWProvider = Providers.homeWP(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -78,55 +97,64 @@ class HomeWorkScreen extends StatelessWidget {
                               borderRadius: 1000,
                             ),
                             VSpace(),
-                            ChooseGradeSection(
-                              afterChange: (grade) {},
-                              activeStudentGrade: StudentGrade.k1SectionA,
-                              onChangeGrade: (grade) {},
-                            ),
-                            VSpace(factor: .5),
-                            UploadDocumentCard(),
-                            VSpace(factor: .5),
-                            HomeDescCard(),
-                            VSpace(factor: .5),
-                            HomeWorkDeadlineRow(),
-                            VSpace(),
-                            HLine(
-                              thickness: .4,
-                              color: colorTheme.inActiveText,
-                              borderRadius: 1000,
-                            ),
-                            VSpace(),
-                            HomeWorkTableTitle(),
-                            VSpace(factor: .3),
-                            ...List.generate(
-                              10,
-                              (index) => HomeWorkCard(
-                                checked: true,
-                                onTap: () {},
-                                name: 'Enema',
-                              ),
-                            ),
-                            VSpace(),
-                            PaddingWrapper(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: kHPad * 2,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ResetAttendanceButton(
-                                    title: 'Reset',
-                                    onTap: () {},
+                            homeWProvider.loadingUsers
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                      color: colorTheme.kBlueColor,
+                                    ),
+                                  )
+                                : Column(
+                                    children: [
+                                      ChooseGradeSection(
+                                        afterChange: (grade) {},
+                                        activeStudentGrade:
+                                            StudentGrade.k1SectionA,
+                                        onChangeGrade: (grade) {},
+                                      ),
+                                      VSpace(factor: .5),
+                                      UploadDocumentCard(),
+                                      VSpace(factor: .5),
+                                      HomeDescCard(),
+                                      VSpace(factor: .5),
+                                      HomeWorkDeadlineRow(),
+                                      VSpace(),
+                                      HLine(
+                                        thickness: .4,
+                                        color: colorTheme.inActiveText,
+                                        borderRadius: 1000,
+                                      ),
+                                      VSpace(),
+                                      HomeWorkTableTitle(),
+                                      VSpace(factor: .3),
+                                      ...homeWProvider.gradeUsers.map((e) {
+                                        return HomeWorkCard(
+                                          userModel: e,
+                                        );
+                                      }),
+                                      VSpace(),
+                                      PaddingWrapper(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: kHPad * 2,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ResetAttendanceButton(
+                                              title: 'Reset',
+                                              onTap: () {},
+                                            ),
+                                            ApplyAttendanceButton(
+                                              title: 'Send',
+                                              onTap: () {},
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      VSpace(),
+                                    ],
                                   ),
-                                  ApplyAttendanceButton(
-                                    title: 'Send',
-                                    onTap: () {},
-                                  ),
-                                ],
-                              ),
-                            ),
-                            VSpace(),
                           ],
                         ),
                       ),

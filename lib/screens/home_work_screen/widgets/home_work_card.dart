@@ -2,26 +2,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/round_checkbox.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../messages_screen/widgets/user_avatar.dart';
 
 class HomeWorkCard extends StatelessWidget {
-  final String name;
-  final bool checked;
-  final VoidCallback onTap;
+  final UserModel userModel;
 
   const HomeWorkCard({
     super.key,
-    required this.name,
-    required this.checked,
-    required this.onTap,
+    required this.userModel,
   });
+
+  void toggleAssigned(BuildContext context) {
+    Providers.homeWPf(context).toggleAssign(userModel.uid);
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool checked = Providers.homeWP(context).homeWorkAssigned(userModel.uid);
     return Container(
       margin: EdgeInsets.only(
         bottom: kVPad / 2,
@@ -29,11 +32,11 @@ class HomeWorkCard extends StatelessWidget {
       child: Row(
         children: [
           UserAvatar(
-            userImage: null,
+            userImage: userModel.userImage,
           ),
           HSpace(factor: .5),
           Text(
-            name,
+            userModel.name,
             style: h3InactiveTextStyle.copyWith(
               decoration: TextDecoration.underline,
             ),
@@ -42,7 +45,9 @@ class HomeWorkCard extends StatelessWidget {
           // this is present box
           RoundCheckBox(
             checked: checked,
-            onChange: onTap,
+            onChange: () {
+              toggleAssigned(context);
+            },
           ),
         ],
       ),
