@@ -7,19 +7,22 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/transformers/enums_transformers.dart';
-import 'package:student_evaluation/utils/providers_calls.dart';
 
 class ChooseGradeSection extends StatelessWidget {
   final Function(StudentGrade grade) afterChange;
+  final StudentGrade activeStudentGrade;
+  final Function(StudentGrade grade) onChangeGrade;
+
   const ChooseGradeSection({
     super.key,
     required this.afterChange,
+    required this.activeStudentGrade,
+    required this.onChangeGrade,
   });
 
   @override
   Widget build(BuildContext context) {
     // var timeLineProvider = Providers.timeLP(context);
-    var attendProvider = Providers.attendP(context);
 
     return Column(
       children: [
@@ -91,7 +94,7 @@ class ChooseGradeSection extends StatelessWidget {
                     color: colorTheme.kBlueColor,
                   ),
                   icon: SizedBox(),
-                  value: attendProvider.activeGrade,
+                  value: activeStudentGrade,
                   items: StudentGrade.values
                       .map(
                         (e) => DropdownMenuItem(
@@ -104,7 +107,7 @@ class ChooseGradeSection extends StatelessWidget {
                       )
                       .toList(),
                   onChanged: (value) {
-                    Providers.attendPf(context).setActiveGrade(value!);
+                    onChangeGrade(value!);
                     afterChange(value);
                   },
                 ),

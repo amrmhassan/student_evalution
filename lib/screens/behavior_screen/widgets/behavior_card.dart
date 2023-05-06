@@ -2,44 +2,42 @@
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/round_checkbox.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 
+import '../../../models/behavior_model.dart';
+import '../../../utils/providers_calls.dart';
 import '../../messages_screen/widgets/user_avatar.dart';
 
-enum BehaviorState {
-  active,
-  normal,
-  worry,
-}
-
 class BehaviorCard extends StatelessWidget {
-  final String name;
-  final BehaviorState behaviorState;
+  final UserModel userModel;
   final Function(BehaviorState state) onChange;
 
   const BehaviorCard({
     super.key,
-    required this.name,
-    required this.behaviorState,
+    required this.userModel,
     required this.onChange,
   });
 
   @override
   Widget build(BuildContext context) {
+    var behaveProvider = Providers.behaveP(context);
+    var attendModel =
+        behaveProvider.getBehaviourModelByUserId(userId: userModel.uid);
+    BehaviorState state = attendModel?.state ?? BehaviorState.active;
+
     return Container(
       margin: EdgeInsets.only(
         bottom: kVPad / 2,
       ),
       child: Row(
         children: [
-          UserAvatar(
-            userImage: null,
-          ),
+          UserAvatar(userImage: userModel.userImage),
           HSpace(factor: .5),
           Text(
-            name,
+            userModel.name,
             style: h3InactiveTextStyle.copyWith(
               decoration: TextDecoration.underline,
             ),
@@ -47,7 +45,7 @@ class BehaviorCard extends StatelessWidget {
           Spacer(),
           // this is present box
           RoundCheckBox(
-            checked: behaviorState == BehaviorState.active,
+            checked: state == BehaviorState.active,
             onChange: () {
               onChange(BehaviorState.active);
             },
@@ -55,7 +53,7 @@ class BehaviorCard extends StatelessWidget {
           HSpace(factor: 2),
           // this is absent box
           RoundCheckBox(
-            checked: behaviorState == BehaviorState.normal,
+            checked: state == BehaviorState.normal,
             onChange: () {
               onChange(BehaviorState.normal);
             },
@@ -63,7 +61,7 @@ class BehaviorCard extends StatelessWidget {
           HSpace(factor: 2),
           // this is absent box
           RoundCheckBox(
-            checked: behaviorState == BehaviorState.worry,
+            checked: state == BehaviorState.worry,
             onChange: () {
               onChange(BehaviorState.worry);
             },

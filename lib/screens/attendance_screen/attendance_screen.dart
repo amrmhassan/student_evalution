@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
@@ -129,6 +128,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         afterChange: (grade) {
                                           loadData();
                                         },
+                                        activeStudentGrade:
+                                            attendanceProvider.activeGrade,
+                                        onChangeGrade:
+                                            Providers.attendPf(context)
+                                                .setActiveGrade,
                                       ),
                                       VSpace(),
                                       HLine(
@@ -143,7 +147,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         StudentModel studentModel =
                                             e as StudentModel;
                                         return AttendanceCard(
-                                          present: false,
                                           onChange: (present) {
                                             Providers.attendPf(context)
                                                 .changeAttendanceState(

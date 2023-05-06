@@ -14,7 +14,7 @@ import 'init/user_initiators.dart';
 
 //! fix the time line to view the week from the start
 //! and prevent selection for coming days
-// flutter packages pub run build_runner build --delete-conflicting-outputs
+// flutter packages pub run build_runner build --delete-conflicting-outputs 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

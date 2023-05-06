@@ -13,13 +13,11 @@ import '../../messages_screen/widgets/user_avatar.dart';
 
 class AttendanceCard extends StatelessWidget {
   final UserModel userModel;
-  final bool present;
   final Function(bool present) onChange;
 
   const AttendanceCard({
     super.key,
     required this.userModel,
-    required this.present,
     required this.onChange,
   });
 

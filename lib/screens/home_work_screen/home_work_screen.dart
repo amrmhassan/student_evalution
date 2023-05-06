@@ -7,6 +7,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
@@ -85,6 +86,8 @@ class HomeWorkScreen extends StatelessWidget {
                             VSpace(),
                             ChooseGradeSection(
                               afterChange: (grade) {},
+                              activeStudentGrade: StudentGrade.k1SectionA,
+                              onChangeGrade: (grade) {},
                             ),
                             VSpace(factor: .5),
                             UploadDocumentCard(),
