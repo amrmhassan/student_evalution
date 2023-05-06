@@ -202,12 +202,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return;
       }
 
-      UserModel userModel = UserModel(
+      UserModel userModel = AdminModel(
         email: email,
         name: name,
         uid: cred.user!.uid,
         userImage: imageLink,
-        userType: userType,
       );
       await FirebaseFirestore.instance
           .collection(DBCollections.users)
