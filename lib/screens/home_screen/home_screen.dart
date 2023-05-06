@@ -1,24 +1,17 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:student_evaluation/core/navigation.dart';
-import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
-import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/home_dashboard.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_events.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_search_box.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_tabs_title.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_updates.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_line.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
-import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
@@ -53,7 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
     var userProvider = Providers.userP(context);
     if (userProvider.userModel == null) {
       return Scaffold(
-        body: SizedBox(),
+        body: Center(
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+          ),
+        ),
       );
     }
     return Scaffold(

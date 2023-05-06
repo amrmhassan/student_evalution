@@ -2,10 +2,13 @@
 
 import 'dart:ui';
 
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../fast_tools/widgets/h_space.dart';
@@ -58,17 +61,29 @@ class HAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Providers.userP(context);
+    var userModel = userProvider.userModel as UserModel;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Moaz Ashraf',
+          userModel.name,
           style: h1LightTextStyle,
         ),
-        Text(
-          'ID: 11026 | Teacher',
-          style:
-              h4TextStyleInactive.copyWith(color: Colors.white.withOpacity(.8)),
+        GestureDetector(
+          onTap: () {
+            GlobalUtils.copyToClipboard(
+              context: context,
+              data: userModel.uid,
+              snackContent: 'User id copied',
+            );
+          },
+          child: Text(
+            'ID: ${userModel.uid.substring(0, 5)}... | ${userModel.userType.name.capitalize}',
+            style: h4TextStyleInactive.copyWith(
+              color: Colors.white.withOpacity(.8),
+            ),
+          ),
         ),
       ],
     );

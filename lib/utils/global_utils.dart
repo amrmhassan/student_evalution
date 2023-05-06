@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../core/types.dart';
 import '../init/runtime_variables.dart';
@@ -103,5 +104,14 @@ class GlobalUtils {
         return name;
       }
     }
+  }
+
+  static void copyToClipboard(
+      {required BuildContext context,
+      required String data,
+      bool showSnack = true,
+      String snackContent = 'Copied To Clipboard'}) {
+    Clipboard.setData(ClipboardData(text: data));
+    if (showSnack) fastSnackBar(msg: snackContent);
   }
 }
