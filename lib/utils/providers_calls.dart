@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:student_evaluation/providers/app_state_provider.dart';
 import 'package:student_evaluation/providers/attendance_provider.dart';
 import 'package:student_evaluation/providers/home_work_provider.dart';
+import 'package:student_evaluation/providers/message_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
 
 import '../providers/behavior_provider.dart';
@@ -55,5 +56,13 @@ class Providers {
 
   static HomeWorkProvider homeWP(BuildContext context) {
     return Provider.of<HomeWorkProvider>(context);
+  }
+
+  static MessageProvider msgPf(BuildContext context) {
+    return Provider.of<MessageProvider>(context, listen: false);
+  }
+
+  static MessageProvider msgP(BuildContext context) {
+    return Provider.of<MessageProvider>(context);
   }
 }

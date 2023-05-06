@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import, dead_code
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
@@ -21,6 +22,7 @@ import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_lin
 import 'package:student_evaluation/screens/messages_screen/widgets/group_chat_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/message_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/messages_screen_tabs_title.dart';
+import 'package:student_evaluation/screens/search_screen/search_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -126,9 +128,18 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                 ),
                               ],
                             ),
-                            HomeScreenSearchBox(
-                              hint: 'Search | Example: Pavithran',
-                              onSearch: (value) {},
+                            GestureDetector(
+                              onTap: () {
+                                CNav.pushNamed(context, SearchScreen.routeName);
+                              },
+                              child: Hero(
+                                tag: 'search',
+                                child: HomeScreenSearchBox(
+                                  hint: 'Search | Example: Pavithran',
+                                  enabled: false,
+                                  onSearch: (value) {},
+                                ),
+                              ),
                             ),
                           ],
                         ),

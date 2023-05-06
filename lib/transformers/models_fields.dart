@@ -26,10 +26,14 @@ class ModelsFields {
   static const String startDate = 'startDate';
   static const String usersIds = 'usersIds';
 
-  // temp mail model
-  static const String autocorrect = 'autocorrect';
-  static const String qualityScore = 'quality_score';
-  static const String disposalInfo = 'is_disposable_email';
-  static const String value = 'value';
-  static const String deliverable = 'deliverability';
+  // room model
+  static const String ownerUser = 'ownerUser';
+  static const String consumerUser = 'consumerUser';
+
+  // message model
+  static const String createdAt = 'createdAt';
+  static const String senderID = 'senderID';
+  static const String receiverId = 'receiverId';
+  static const String content = 'content';
+  static const String messageType = 'messageType';
 }

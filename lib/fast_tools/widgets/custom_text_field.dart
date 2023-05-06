@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
+import 'package:student_evaluation/theming/theme_calls.dart';
 
 import '../../theming/constants/colors.dart';
 import '../../theming/constants/sizes.dart';
@@ -138,32 +139,35 @@ class CustomTextField extends StatelessWidget {
                         leadingIcon!,
                       HSpace(factor: .5),
                       Expanded(
-                        child: TextFormField(
-                          focusNode: focusNode,
-                          onFieldSubmitted: onSubmitted,
-                          maxLength: maxLength,
-                          maxLines: maxLines ?? 1,
-                          buildCounter: buildCounter,
-                          minLines: minLines ?? 1,
-                          enabled: enabled,
-                          validator: validator,
-                          textInputAction:
-                              textInputAction ?? TextInputAction.next,
-                          obscureText: obscureText ?? false,
-                          autocorrect: !password,
-                          controller: controller,
-                          onChanged: onChange,
-                          autofocus: autoFocus,
-                          keyboardType: textInputType,
-                          style: textStyle ?? h3LiteTextStyle,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: title,
-                            hintStyle: errorText == null
-                                ? (hintStyle ?? h3LiteTextStyle)
-                                : h3LiteTextStyle.copyWith(
-                                    color: CustomColors.kDangerColor,
-                                  ),
+                        child: Material(
+                          color: colorTheme.backGround,
+                          child: TextFormField(
+                            focusNode: focusNode,
+                            onFieldSubmitted: onSubmitted,
+                            maxLength: maxLength,
+                            maxLines: maxLines ?? 1,
+                            buildCounter: buildCounter,
+                            minLines: minLines ?? 1,
+                            enabled: enabled,
+                            validator: validator,
+                            textInputAction:
+                                textInputAction ?? TextInputAction.next,
+                            obscureText: obscureText ?? false,
+                            autocorrect: !password,
+                            controller: controller,
+                            onChanged: onChange,
+                            autofocus: autoFocus,
+                            keyboardType: textInputType,
+                            style: textStyle ?? h3LiteTextStyle,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: title,
+                              hintStyle: errorText == null
+                                  ? (hintStyle ?? h3LiteTextStyle)
+                                  : h3LiteTextStyle.copyWith(
+                                      color: CustomColors.kDangerColor,
+                                    ),
+                            ),
                           ),
                         ),
                       ),

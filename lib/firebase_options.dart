@@ -51,6 +51,7 @@ class DefaultFirebaseOptions {
     authDomain: 'inidian-ta.firebaseapp.com',
     storageBucket: 'inidian-ta.appspot.com',
     measurementId: 'G-E1692LBMYR',
+    //databaseURL: 'inidian-ta-default-rtdb.europe-west1.firebasedatabase.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -59,6 +60,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1020409288678',
     projectId: 'inidian-ta',
     storageBucket: 'inidian-ta.appspot.com',
+    //databaseURL: 'inidian-ta-default-rtdb.europe-west1.firebasedatabase.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -67,8 +69,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1020409288678',
     projectId: 'inidian-ta',
     storageBucket: 'inidian-ta.appspot.com',
-    iosClientId: '1020409288678-n4v5c8v5fibfqt1r3vull7oh65nt09vu.apps.googleusercontent.com',
+    iosClientId:
+        '1020409288678-n4v5c8v5fibfqt1r3vull7oh65nt09vu.apps.googleusercontent.com',
     iosBundleId: 'com.example.studentEvaluation',
+    //databaseURL: 'inidian-ta-default-rtdb.europe-west1.firebasedatabase.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,7 +81,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1020409288678',
     projectId: 'inidian-ta',
     storageBucket: 'inidian-ta.appspot.com',
-    iosClientId: '1020409288678-n4v5c8v5fibfqt1r3vull7oh65nt09vu.apps.googleusercontent.com',
+    iosClientId:
+        '1020409288678-n4v5c8v5fibfqt1r3vull7oh65nt09vu.apps.googleusercontent.com',
     iosBundleId: 'com.example.studentEvaluation',
+    //databaseURL: 'inidian-ta-default-rtdb.europe-west1.firebasedatabase.app',
   );
 }

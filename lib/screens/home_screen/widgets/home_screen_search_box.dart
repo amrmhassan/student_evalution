@@ -16,10 +16,15 @@ import 'package:intl/intl.dart' as intl;
 class HomeScreenSearchBox extends StatelessWidget {
   final String hint;
   final Function(String value) onSearch;
+  final bool enabled;
+  final bool autoFocus;
+
   const HomeScreenSearchBox({
     super.key,
     required this.hint,
     required this.onSearch,
+    this.enabled = true,
+    this.autoFocus = false,
   });
 
   @override
@@ -50,6 +55,9 @@ class HomeScreenSearchBox extends StatelessWidget {
           // HSpace(factor: .3),
           Expanded(
             child: CustomTextField(
+              onSubmitted: onSearch,
+              enabled: enabled,
+              autoFocus: autoFocus,
               padding: EdgeInsets.zero,
               title: hint,
               hintStyle: h3InactiveTextStyle.copyWith(

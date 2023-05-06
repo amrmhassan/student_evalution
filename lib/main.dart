@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
@@ -18,8 +19,10 @@ import 'init/user_initiators.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await FirebaseInit.init();
+  FirebaseDatabase.instance.databaseURL =
+      ('https://inidian-ta-default-rtdb.europe-west1.firebasedatabase.app');
+
   await UserInit.reloadUser();
   await HiveInitiator().setup();
   runApp(const MyApp());
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Students Evaluation',
         home: testing ? TestScreen() : ScreensInit.home,
-        // home: testing ? TestScreen() : SignUpScreen(),
+        // home: testing ? TestScreen() : SearchScreen(),
         routes: ScreensInit.routes,
       ),
     );
