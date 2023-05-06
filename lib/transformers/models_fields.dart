@@ -19,6 +19,13 @@ class ModelsFields {
   static const String state = 'state';
   static const String userName = 'userName';
 
+// homework model
+  static const String documentLink = 'documentLink';
+  static const String description = 'description';
+  static const String endDate = 'endDate';
+  static const String startDate = 'startDate';
+  static const String usersIds = 'usersIds';
+
   // temp mail model
   static const String autocorrect = 'autocorrect';
   static const String qualityScore = 'quality_score';

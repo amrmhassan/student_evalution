@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/providers/app_state_provider.dart';
 import 'package:student_evaluation/providers/attendance_provider.dart';
+import 'package:student_evaluation/providers/home_work_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
 
 import '../providers/behavior_provider.dart';
@@ -46,5 +47,13 @@ class Providers {
 
   static BehaviorProvider behaveP(BuildContext context) {
     return Provider.of<BehaviorProvider>(context);
+  }
+
+  static HomeWorkProvider homeWPf(BuildContext context) {
+    return Provider.of<HomeWorkProvider>(context, listen: false);
+  }
+
+  static HomeWorkProvider homeWP(BuildContext context) {
+    return Provider.of<HomeWorkProvider>(context);
   }
 }

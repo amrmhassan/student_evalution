@@ -2,9 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
+import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
+import 'package:student_evaluation/fast_tools/widgets/double_modal_button.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
+import 'package:student_evaluation/fast_tools/widgets/modal_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
@@ -16,6 +20,7 @@ import 'package:student_evaluation/screens/home_work_screen/widgets/home_work_ta
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 
@@ -66,16 +71,10 @@ class HomeWorkScreen extends StatelessWidget {
                           children: [
                             VSpace(),
                             Text(
-                              'Home Work',
+                              'New Home Work',
                               style: h1TextStyle.copyWith(
                                 color: colorTheme.kBlueColor,
                               ),
-                            ),
-                            VSpace(factor: .2),
-                            Text(
-                              DateFormat('dd-MM-yyyy | EEEE')
-                                  .format(DateTime.now()),
-                              style: h4TextStyleInactive,
                             ),
                             VSpace(),
                             HLine(
@@ -289,7 +288,15 @@ class HomeDescCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    var homeWProvider = Providers.homeWP(context);
+    return ButtonWrapper(
+      onTap: () {
+        showBottomSheet(
+          backgroundColor: Colors.white,
+          context: context,
+          builder: (context) => AddDescriptionModal(),
+        );
+      },
       padding: EdgeInsets.symmetric(
         horizontal: kHPad / 2,
         vertical: kVPad,
@@ -310,12 +317,72 @@ class HomeDescCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(width: double.infinity),
-          Text(
-            'Enter Description',
-            style: h2TextStyle.copyWith(
-              color: colorTheme.inActiveText.withOpacity(.6),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(
+              homeWProvider.description ?? 'Enter Description',
+              style: homeWProvider.description == null
+                  ? h2TextStyle.copyWith(
+                      color: colorTheme.inActiveText.withOpacity(.6),
+                    )
+                  : h4TextStyleInactive,
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class AddDescriptionModal extends StatefulWidget {
+  const AddDescriptionModal({
+    super.key,
+  });
+
+  @override
+  State<AddDescriptionModal> createState() => _AddDescriptionModalState();
+}
+
+class _AddDescriptionModalState extends State<AddDescriptionModal> {
+  TextEditingController descController = TextEditingController();
+
+  @override
+  void initState() {
+    descController.text = Providers.homeWPf(context).description ?? '';
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DoubleButtonsModal(
+      autoPop: true,
+      okActive: descController.text.isNotEmpty,
+      onOk: () {
+        Providers.homeWPf(context).setDescription(descController.text);
+      },
+      okColor: colorTheme.kBlueColor,
+      okText: 'Save',
+      cancelColor: colorTheme.kDangerColor,
+      title: 'Type Description',
+      extra: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          VSpace(),
+          CustomTextField(
+            onChange: (v) {
+              setState(() {});
+            },
+            controller: descController,
+            title: 'Description',
+            padding: EdgeInsets.zero,
+            borderColor: Colors.transparent,
+            backgroundColor: colorTheme.inActiveText.withOpacity(.1),
+            maxLines: 1,
+            textInputType: TextInputType.multiline,
+            textInputAction: TextInputAction.newline,
+            autoFocus: true,
+          ),
+          VSpace(),
         ],
       ),
     );
