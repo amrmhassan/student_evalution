@@ -20,7 +20,7 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       email: fields[1] as String,
       name: fields[2] as String,
       uid: fields[0] as String,
-      userImage: fields[3] as String,
+      userImage: fields[3] as String?,
       studentGrade: fields[5] as StudentGrade,
     );
   }
@@ -68,7 +68,7 @@ class TeacherModelAdapter extends TypeAdapter<TeacherModel> {
       email: fields[1] as String,
       name: fields[2] as String,
       uid: fields[0] as String,
-      userImage: fields[3] as String,
+      userImage: fields[3] as String?,
       teacherClass: fields[5] as TeacherClass,
     );
   }
@@ -116,7 +116,7 @@ class AdminModelAdapter extends TypeAdapter<AdminModel> {
       email: fields[1] as String,
       name: fields[2] as String,
       uid: fields[0] as String,
-      userImage: fields[3] as String,
+      userImage: fields[3] as String?,
     );
   }
 

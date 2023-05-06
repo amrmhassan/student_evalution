@@ -18,6 +18,8 @@ import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
 
+import '../../data/fake_users.dart';
+
 class SignUpScreen extends StatefulWidget {
   static const String routeName = '/SignUpScreen';
   const SignUpScreen({super.key});
@@ -32,6 +34,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController imageLinkController = TextEditingController();
   UserType userType = UserType.student;
+  StudentGrade studentGrade = StudentGrade.values.first;
+  TeacherClass teacherClass = TeacherClass.values.first;
+
+  void setStudentGrade(StudentGrade? grade) {
+    setState(() {
+      studentGrade = grade!;
+    });
+  }
+
+  void setTeacherClass(TeacherClass? tClass) {
+    setState(() {
+      teacherClass = tClass!;
+    });
+  }
 
   String? emailError;
   String? passwordError;
@@ -42,7 +58,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      // backgroundColor: colorTheme.kBlueColor,
       body: SingleChildScrollView(
         child: PaddingWrapper(
           child: Column(
@@ -123,6 +138,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               VSpace(),
+              if (userType == UserType.student)
+                Row(
+                  children: [
+                    Text(
+                      'Student Grade',
+                      style: h3TextStyle,
+                    ),
+                    Spacer(),
+                    DropdownButton(
+                      value: studentGrade,
+                      items: StudentGrade.values
+                          .map(
+                            (e) => DropdownMenuItem(
+                              key: Key(e.name),
+                              value: e,
+                              child: Text(
+                                e.name,
+                                style: h3InactiveTextStyle,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: setStudentGrade,
+                    ),
+                  ],
+                )
+              else if (userType == UserType.teacher)
+                Row(
+                  children: [
+                    Text(
+                      'Teacher Class',
+                      style: h3TextStyle,
+                    ),
+                    Spacer(),
+                    DropdownButton(
+                      value: teacherClass,
+                      items: TeacherClass.values
+                          .map(
+                            (e) => DropdownMenuItem(
+                              key: Key(e.name),
+                              value: e,
+                              child: Text(
+                                e.name,
+                                style: h3InactiveTextStyle,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: setTeacherClass,
+                    ),
+                  ],
+                ),
+              VSpace(),
               ButtonWrapper(
                 active: !loading,
                 padding: EdgeInsets.symmetric(
@@ -130,17 +198,83 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   vertical: kVPad / 2,
                 ),
                 backgroundColor: colorTheme.kBlueColor,
-                onTap: signUp,
+                onTap: () {
+                  String email = '${emailController.text}@$emailSuffix';
+                  String password = passwordController.text;
+                  String name = nameController.text;
+                  String imageLink = imageLinkController.text;
+                  signUp(
+                    email: email,
+                    password: password,
+                    name: name,
+                    imageLink: imageLink,
+                    uType: userType,
+                    sGrade: studentGrade,
+                    tClass: teacherClass,
+                  );
+                },
                 child: Text(
                   'Sign User',
                   style: h3LightTextStyle,
                 ),
-              )
+              ),
+              VSpace(),
+              ButtonWrapper(
+                active: !loading,
+                padding: EdgeInsets.symmetric(
+                  horizontal: kHPad,
+                  vertical: kVPad / 2,
+                ),
+                backgroundColor: colorTheme.kBlueColor,
+                onTap: signFakeUsers,
+                child: Text(
+                  'Sign Fake Users',
+                  style: h3LightTextStyle,
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void signFakeUsers() async {
+    for (var user in FakeUsers.fakeUsers) {
+      if (user is AdminModel) {
+        await signUp(
+          email: user.email,
+          password: FakeUsers.password,
+          name: user.name,
+          imageLink: user.userImage,
+          uType: user.userType,
+          sGrade: StudentGrade.k1SectionA,
+          tClass: TeacherClass.biology,
+        );
+      } else if (user is TeacherModel) {
+        await signUp(
+          email: user.email,
+          password: FakeUsers.password,
+          name: user.name,
+          imageLink: user.userImage,
+          uType: user.userType,
+          sGrade: StudentGrade.k1SectionA,
+          tClass: user.teacherClass,
+        );
+      } else if (user is StudentModel) {
+        await signUp(
+          email: user.email,
+          password: FakeUsers.password,
+          name: user.name,
+          imageLink: user.userImage,
+          uType: user.userType,
+          sGrade: user.studentGrade,
+          tClass: TeacherClass.biology,
+        );
+      }
+    }
+    GlobalUtils.showSnackBar(
+        context: context, message: 'All Fake Users signed');
   }
 
   void updateUserType(UserType t) {
@@ -164,16 +298,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return emailError == null && passwordError == null && nameError == null;
   }
 
-  Future<void> signUp() async {
+  Future<void> signUp(
+      {required String email,
+      required String password,
+      required String name,
+      required String? imageLink,
+      required UserType uType,
+      required StudentGrade sGrade,
+      required TeacherClass tClass}) async {
     setState(() {
       loading = true;
       clicked = true;
     });
     try {
-      String email = '${emailController.text}@$emailSuffix';
-      String password = passwordController.text;
-      String name = nameController.text;
-      String imageLink = imageLinkController.text;
       bool validResult = _validateInfo(email, password, name);
       if (!validResult) {
         GlobalUtils.showSnackBar(
@@ -202,10 +339,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return;
       }
 
-      UserModel userModel = AdminModel(
+      UserModel userModel = UserModel.fromEntries(
+        uid: cred.user!.uid,
         email: email,
         name: name,
-        uid: cred.user!.uid,
+        userType: uType,
+        teacherClass: tClass,
+        studentGrade: sGrade,
         userImage: imageLink,
       );
       await FirebaseFirestore.instance
@@ -214,7 +354,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .set(userModel.toJSON());
       GlobalUtils.showSnackBar(
         context: context,
-        message: 'User created',
+        message: 'User $name created',
         snackBarType: SnackBarType.success,
       );
     } catch (e) {

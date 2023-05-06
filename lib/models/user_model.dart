@@ -66,11 +66,46 @@ abstract class UserModel {
       UserType.values,
     );
     if (userType == UserType.admin) {
-      return AdminModel.fromJSON(obj);
+      return AdminModel._fromJSON(obj);
     } else if (userType == UserType.teacher) {
-      return TeacherModel.fromJSON(obj);
+      return TeacherModel._fromJSON(obj);
     } else {
-      return StudentModel.fromJSON(obj);
+      return StudentModel._fromJSON(obj);
+    }
+  }
+
+  static UserModel fromEntries({
+    required String uid,
+    required String email,
+    required String name,
+    required UserType userType,
+    required TeacherClass teacherClass,
+    required StudentGrade studentGrade,
+    required String? userImage,
+  }) {
+    if (userType == UserType.admin) {
+      return AdminModel(
+        email: email,
+        name: name,
+        uid: uid,
+        userImage: userImage,
+      );
+    } else if (userType == UserType.teacher) {
+      return TeacherModel(
+        email: email,
+        name: name,
+        uid: uid,
+        userImage: userImage,
+        teacherClass: teacherClass,
+      );
+    } else {
+      return StudentModel(
+        email: email,
+        name: name,
+        uid: uid,
+        userImage: userImage,
+        studentGrade: studentGrade,
+      );
     }
   }
 }
@@ -105,7 +140,7 @@ class StudentModel extends UserModel {
     };
   }
 
-  static StudentModel fromJSON(Map<String, dynamic> obj) {
+  static StudentModel _fromJSON(Map<String, dynamic> obj) {
     return StudentModel(
       email: obj[ModelsFields.email],
       name: obj[ModelsFields.name],
@@ -149,7 +184,7 @@ class TeacherModel extends UserModel {
     };
   }
 
-  static TeacherModel fromJSON(Map<String, dynamic> obj) {
+  static TeacherModel _fromJSON(Map<String, dynamic> obj) {
     return TeacherModel(
       email: obj[ModelsFields.email],
       name: obj[ModelsFields.name],
@@ -189,7 +224,7 @@ class AdminModel extends UserModel {
     };
   }
 
-  static AdminModel fromJSON(Map<String, dynamic> obj) {
+  static AdminModel _fromJSON(Map<String, dynamic> obj) {
     return AdminModel(
       email: obj[ModelsFields.email],
       name: obj[ModelsFields.name],

@@ -10,13 +10,6 @@ import '../init/runtime_variables.dart';
 import '../models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum AuthType {
-  facebook,
-  google,
-  signup,
-  emailLogin,
-}
-
 class UserProvider extends ChangeNotifier {
   //# inputs
   TextEditingController emailController = TextEditingController();
