@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../fast_tools/widgets/h_space.dart';
 import '../../../theming/constants/styles.dart';
@@ -34,7 +35,9 @@ class HAppBarActions extends StatelessWidget {
             ),
             HSpace(factor: .7),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Providers.userPf(context).logout();
+              },
               icon: Image.asset(
                 'assets/icons/icon_other.png',
                 width: mediumIconSize,

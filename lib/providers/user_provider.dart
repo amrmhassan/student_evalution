@@ -1,9 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/transformers/collections.dart';
+import 'package:student_evaluation/transformers/models_fields.dart';
+import 'package:student_evaluation/validation/login_validation.dart';
 
+import '../constants/global_constants.dart';
 import '../core/hive/hive_helper.dart';
 import '../init/runtime_variables.dart';
 import '../models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum AuthType {
   facebook,
@@ -26,6 +31,44 @@ class UserProvider extends ChangeNotifier {
 
   // the repos available now are LoginRepo, SignUpRepo or NormalLoginImpl
 
+  Future<void> auth() async {
+    try {
+      loggingIn = true;
+      notifyListeners();
+      String email = '${emailController.text}@$emailSuffix';
+      String password = passController.text;
+      bool valid = _validateLogin(email: email, password: password);
+      if (!valid) {
+        loggingIn = false;
+        notifyListeners();
+        throw Exception('Please check your inputs');
+      }
+      UserModel remoteUser = await _getUserByEmail(email);
+      userModel = remoteUser;
+      notifyListeners();
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } catch (e) {
+      loggingIn = false;
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<UserModel> _getUserByEmail(String email) async {
+    var res = (await FirebaseFirestore.instance
+            .collection(DBCollections.users)
+            .where(ModelsFields.email, isEqualTo: email)
+            .get())
+        .docs
+        .first
+        .data();
+    UserModel userModel = UserModel.fromJSON(res);
+    return userModel;
+  }
+
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
 
@@ -36,7 +79,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   //# saved user info related methods
-  Future<void> saveCurrentUserInfo(UserModel userModel) async {
+  Future<void> _saveCurrentUserInfo(UserModel userModel) async {
     var box = await HiveBox.currentUser;
     await box.put(userModel.uid, userModel);
   }
@@ -58,7 +101,41 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String name,
+    required String imageLink,
+  }) async {
+    var cred = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+    if (cred.user == null) {
+      throw Exception('User not created');
+    }
+    UserModel userModel = UserModel(
+      email: email,
+      name: name,
+      uid: cred.user!.uid,
+      userImage: imageLink,
+      userType: UserType.teacher,
+    );
+    await FirebaseFirestore.instance
+        .collection(DBCollections.users)
+        .doc(userModel.uid)
+        .set(userModel.toJSON());
+  }
+
   //# validation
   String? emailError;
   String? passError;
+
+  bool _validateLogin({
+    required String email,
+    required String password,
+  }) {
+    emailError = EmailValidation().error(email);
+    passError = PasswordValidation().error(password);
+    notifyListeners();
+    return emailError == null && passError == null;
+  }
 }

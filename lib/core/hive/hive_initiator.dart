@@ -9,6 +9,6 @@ class HiveInitiator {
   }
 
   Future<void> _registerAdapters() async {
-    Hive.registerAdapter(UserModelAdapter()); //=>0
+    // Hive.registerAdapter(UserModelAdapter()); //=>0
   }
 }

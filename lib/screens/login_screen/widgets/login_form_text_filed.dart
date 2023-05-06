@@ -19,6 +19,7 @@ class LoginFormTextField extends StatefulWidget {
   final Function(String value)? onChange;
   final TextEditingController? controller;
   final String? errorText;
+  final Widget? trailingIcon;
 
   const LoginFormTextField({
     super.key,
@@ -30,6 +31,7 @@ class LoginFormTextField extends StatefulWidget {
     this.controller,
     this.autoFocus = false,
     this.errorText,
+    this.trailingIcon,
   });
 
   @override
@@ -64,10 +66,10 @@ class _LoginFormTextFieldState extends State<LoginFormTextField> {
           color: Colors.red,
           backgroundColor: colorTheme.textFieldBackgroundColor,
           borderColor: Colors.transparent,
-          textStyle: h4TextStyleInactive,
+          textStyle: h4LiteTextStyle,
           borderRadius: BorderRadius.circular(mediumBorderRadius),
           leadingIcon: child,
-          trailingIcon: passwordEye(),
+          trailingIcon: widget.trailingIcon ?? passwordEye(),
           padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
         );
       },

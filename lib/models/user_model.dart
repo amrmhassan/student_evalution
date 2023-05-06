@@ -1,31 +1,28 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
 
 import '../transformers/models_fields.dart';
 
-part 'user_model.g.dart';
+// part 'user_model.g.dart';
 
-@HiveType(typeId: 0)
+enum UserType {
+  admin,
+  teacher,
+  student,
+}
+
 class UserModel {
-  @HiveField(0)
   final String uid;
-  @HiveField(1)
   final String email;
-  @HiveField(2)
   final String name;
-  @HiveField(3)
-  final String? accessToken;
-  @HiveField(4)
-  final String provider;
-  @HiveField(5)
-  final String? providerId;
+  final String? userImage;
+  final UserType userType;
 
   const UserModel({
     required this.email,
     required this.name,
     required this.uid,
-    required this.accessToken,
-    required this.provider,
-    required this.providerId,
+    required this.userImage,
+    required this.userType,
   });
 
   static UserModel fromJSON(Map<String, dynamic> obj) {
@@ -33,9 +30,11 @@ class UserModel {
       email: obj[ModelsFields.email],
       name: obj[ModelsFields.name],
       uid: obj[ModelsFields.uid],
-      accessToken: obj[ModelsFields.accessToken],
-      provider: obj[ModelsFields.provider],
-      providerId: obj[ModelsFields.providerId],
+      userImage: obj[ModelsFields.userImage],
+      userType: GlobalUtils.stringToEnum(
+        obj[ModelsFields.userType],
+        UserType.values,
+      ),
     );
   }
 
@@ -44,9 +43,8 @@ class UserModel {
       ModelsFields.email: email,
       ModelsFields.uid: uid,
       ModelsFields.name: name,
-      ModelsFields.accessToken: accessToken,
-      ModelsFields.provider: provider,
-      ModelsFields.providerId: providerId,
+      ModelsFields.userImage: userImage,
+      ModelsFields.userType: userType.name,
     };
   }
 }

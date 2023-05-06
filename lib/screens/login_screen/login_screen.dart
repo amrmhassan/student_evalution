@@ -1,16 +1,21 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_evaluation/constants/global_constants.dart';
 import 'package:student_evaluation/core/navigation.dart';
+import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/providers_calls.dart';
@@ -22,6 +27,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Providers.userP(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: colorTheme.kBlueColor,
@@ -80,9 +86,13 @@ class LoginScreen extends StatelessWidget {
                       builder: (context, value, child) => LoginFormTextField(
                         errorText: value,
                         controller: Providers.userPf(context).emailController,
-                        hint: 'you@example.com',
+                        hint: 'you',
                         iconPath: 'assets/svg/email.svg',
                         inputType: TextInputType.emailAddress,
+                        trailingIcon: Text(
+                          '@$emailSuffix',
+                          style: h4TextStyleInactive,
+                        ),
                       ),
                     ),
                     VSpace(factor: .5),
@@ -101,9 +111,30 @@ class LoginScreen extends StatelessWidget {
                     VSpace(),
                     PaddingWrapper(
                       child: ButtonWrapper(
-                        onTap: () {
-                          CNav.pushReplacementNamed(
-                              context, HomeScreen.routeName);
+                        active: !userProvider.loggingIn,
+                        onTap: () async {
+                          try {
+                            await Providers.userPf(context).auth();
+                            CNav.pushReplacementNamed(
+                              context,
+                              HomeScreen.routeName,
+                            );
+                          } on FirebaseAuthException catch (e) {
+                            GlobalUtils.showSnackBar(
+                              context: context,
+                              message: 'Authentication Error',
+                              snackBarType: SnackBarType.error,
+                            );
+
+                            logger.e(e);
+                          } catch (e) {
+                            GlobalUtils.showSnackBar(
+                              context: context,
+                              message:
+                                  e.toString().replaceAll('Exception: ', ''),
+                              snackBarType: SnackBarType.error,
+                            );
+                          }
                         },
                         padding: EdgeInsets.symmetric(
                           horizontal: kHPad,

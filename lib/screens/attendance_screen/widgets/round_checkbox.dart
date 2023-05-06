@@ -4,33 +4,41 @@ import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
-class RoundCheckBox extends StatelessWidget {
+class RoundCheckBox extends StatefulWidget {
   final bool checked;
   final VoidCallback onChange;
+  final double? radius;
 
   const RoundCheckBox({
     super.key,
     required this.checked,
     required this.onChange,
+    this.radius,
   });
 
   @override
+  State<RoundCheckBox> createState() => _RoundCheckBoxState();
+}
+
+class _RoundCheckBoxState extends State<RoundCheckBox> {
+  @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: onChange,
-      width: mediumIconSize * .8,
-      height: mediumIconSize * .8,
+      onTap: widget.onChange,
+      width: widget.radius ?? mediumIconSize * .8,
+      height: widget.radius ?? mediumIconSize * .8,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
           width: 2,
-          color: checked ? colorTheme.kBlueColor : colorTheme.inActiveText,
+          color:
+              widget.checked ? colorTheme.kBlueColor : colorTheme.inActiveText,
         ),
         borderRadius: BorderRadius.circular(
           1000,
         ),
       ),
-      child: checked
+      child: widget.checked
           ? Icon(
               FontAwesomeIcons.check,
               size: smallIconSize * .8,
