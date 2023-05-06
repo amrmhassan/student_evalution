@@ -7,7 +7,6 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
@@ -64,7 +63,14 @@ class _IndividualChatCardState extends State<IndividualChatCard> {
   Widget build(BuildContext context) {
     return ButtonWrapper(
       onTap: () {
-        CNav.pushNamed(context, ChatScreen.routeName);
+        CNav.pushNamed(
+          context,
+          ChatScreen.routeName,
+          arguments: {
+            'roomId': widget.roomID,
+            'user': userModel,
+          },
+        );
       },
       child: PaddingWrapper(
         child: Column(

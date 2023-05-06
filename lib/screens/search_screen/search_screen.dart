@@ -87,6 +87,7 @@ class SearchScreen extends StatelessWidget {
                                         String myId = Providers.userPf(context)
                                             .userModel!
                                             .uid;
+                                        String roomID =
                                             await Providers.msgPf(context)
                                                 .createRoom(
                                           myId: myId,
@@ -95,6 +96,10 @@ class SearchScreen extends StatelessWidget {
                                         CNav.pushReplacementNamed(
                                           context,
                                           ChatScreen.routeName,
+                                          arguments: {
+                                            'roomId': roomID,
+                                            'user': e,
+                                          },
                                         );
                                       } catch (e) {
                                         GlobalUtils.showSnackBar(

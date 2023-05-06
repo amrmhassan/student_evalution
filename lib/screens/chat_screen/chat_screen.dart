@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import
 
+import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
@@ -11,6 +14,8 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/message_model.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/message_card.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
@@ -28,6 +33,7 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:student_evaluation/transformers/collections.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
@@ -43,20 +49,15 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   ScrollController controller = ScrollController();
   FocusNode focusNode = FocusNode();
-
-  void scrollToEnd() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.animateTo(
-        controller.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.bounceInOut,
-      );
-    });
-  }
+  bool loadingMessages = false;
+  StreamSubscription? messagesListener;
+  List<MessageModel> messages = [];
+  late UserModel otherUser;
 
   @override
   void initState() {
     scrollToEnd();
+    loadMessages();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       focusNode.addListener(() {
         scrollToEnd();
@@ -70,6 +71,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   @override
   void dispose() {
     controller.dispose();
+    messagesListener?.cancel();
     super.dispose();
   }
 
@@ -170,6 +172,76 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         ),
       ),
     );
+  }
+
+  void loadMessages() async {
+    Future.delayed(Duration.zero).then((value) async {
+      var passedData =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      String roomId = passedData['roomId'];
+      setState(() {
+        loadingMessages = true;
+      });
+      setOtherUser();
+      await loadAllMessages(roomId);
+
+      setState(() {
+        loadingMessages = false;
+      });
+
+      runMessagesListener(roomId);
+    });
+  }
+
+  void runMessagesListener(String roomId) {
+    messagesListener = FirebaseDatabase.instance
+        .ref(DBCollections.getRef(
+            [DBCollections.rooms, roomId, DBCollections.messages]))
+        .limitToLast(1)
+        .onValue
+        .listen((msgJson) {
+      var test = (msgJson.snapshot.value as Map<dynamic, dynamic>);
+      Map<String, dynamic> data = {};
+      test.forEach((key, value) {
+        data[key.toString()] = value;
+      });
+      MessageModel model = MessageModel.fromJSON(data);
+      messages.add(model);
+    });
+  }
+
+  Future<void> loadAllMessages(String roomId) async {
+    var data = await FirebaseDatabase.instance
+        .ref(DBCollections.getRef(
+            [DBCollections.rooms, roomId, DBCollections.messages]))
+        .get();
+    for (var msgJson in data.children) {
+      var test = (msgJson.value as Map<dynamic, dynamic>);
+      Map<String, dynamic> data = {};
+      test.forEach((key, value) {
+        data[key.toString()] = value;
+      });
+      MessageModel model = MessageModel.fromJSON(data);
+      messages.add(model);
+    }
+  }
+
+  void scrollToEnd() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.animateTo(
+        controller.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.bounceInOut,
+      );
+    });
+  }
+
+  void setOtherUser() {
+    var data =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    setState(() {
+      otherUser = data['user'];
+    });
   }
 }
 
