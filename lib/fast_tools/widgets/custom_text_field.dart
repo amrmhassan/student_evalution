@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 
 import '../../theming/constants/colors.dart';
 import '../../theming/constants/sizes.dart';
@@ -135,7 +136,7 @@ class CustomTextField extends StatelessWidget {
                         )
                       else if (leadingIcon != null)
                         leadingIcon!,
-                      // HSpace(factor: .5),
+                      HSpace(factor: .5),
                       Expanded(
                         child: TextFormField(
                           focusNode: focusNode,

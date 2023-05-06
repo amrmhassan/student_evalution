@@ -9,8 +9,10 @@ import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_dashboard.dart';
+import 'package:student_evaluation/screens/home_screen/widgets/home_screen_events.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_search_box.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_tabs_title.dart';
+import 'package:student_evaluation/screens/home_screen/widgets/home_screen_updates.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
@@ -18,6 +20,7 @@ import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_lin
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import 'widgets/home_screen_appbar.dart';
 
@@ -40,7 +43,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    _loadCurrentUser();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var userProvider = Providers.userP(context);
+    if (userProvider.userModel == null) {
+      return Scaffold(
+        body: SizedBox(),
+      );
+    }
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -131,118 +146,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
 
-class HomeScreenEvents extends StatelessWidget {
-  const HomeScreenEvents({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return PaddingWrapper(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                'Events on June 14, 2022',
-                style: h2TextStyle,
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: Image.asset(
-                  'assets/icons/add.png',
-                  width: largeIconSize,
-                  color: colorTheme.inActiveText,
-                ),
-              ),
-            ],
-          ),
-          // VSpace(factor: .4),
-          TimeTableCard(
-            title: 'Personal Trainings',
-            onTap: () {
-              CNav.pushNamed(context, EventScreen.routeName);
-            },
-          ),
-          TimeTableCard(
-            title: 'Yoga',
-            onTap: () {
-              CNav.pushNamed(context, EventScreen.routeName);
-            },
-          ),
-          TimeTableCard(
-            title: 'Stretch',
-            onTap: () {
-              CNav.pushNamed(context, EventScreen.routeName);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomeScreenUpdates extends StatelessWidget {
-  const HomeScreenUpdates({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        HomeDashboard(),
-        VSpace(),
-        PaddingWrapper(
-          child: HLine(
-            color: colorTheme.inActiveText,
-            thickness: .8,
-          ),
-        ),
-        VSpace(),
-        PaddingWrapper(
-          child: Row(
-            children: [
-              Text(
-                'Time Table',
-                style: h2TextStyle,
-              ),
-              Spacer(),
-              Text(
-                'View All',
-                style: h4TextStyleInactive.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
-              )
-            ],
-          ),
-        ),
-        VSpace(),
-        // here is the time table items
-        PaddingWrapper(
-          child: Column(
-            children: [
-              TimeTableCard(
-                title: 'Science Class',
-                onTap: () {},
-              ),
-              TimeTableCard(
-                title: 'Biology Class',
-                onTap: () {},
-              ),
-              TimeTableCard(
-                title: 'Maths Class',
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-
-        VSpace(),
-      ],
-    );
+  void _loadCurrentUser() {
+    Future.delayed(Duration.zero).then((value) {
+      var userProvider = Providers.userPf(context);
+      if (userProvider.userModel == null) {
+        userProvider.loadCurrentUserInfo();
+      }
+    });
   }
 }

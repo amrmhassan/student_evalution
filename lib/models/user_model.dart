@@ -1,20 +1,31 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 
 import '../transformers/models_fields.dart';
 
-// part 'user_model.g.dart';
+part 'user_model.g.dart';
 
+@HiveType(typeId: 1)
 enum UserType {
+  @HiveField(0)
   admin,
+  @HiveField(1)
   teacher,
+  @HiveField(2)
   student,
 }
 
+@HiveType(typeId: 0)
 class UserModel {
+  @HiveField(0)
   final String uid;
+  @HiveField(1)
   final String email;
+  @HiveField(2)
   final String name;
+  @HiveField(3)
   final String? userImage;
+  @HiveField(4)
   final UserType userType;
 
   const UserModel({

@@ -43,9 +43,13 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
         throw Exception('Please check your inputs');
       }
-      UserModel remoteUser = await _getUserByEmail(email);
+      UserModel? remoteUser = await _getUserByEmail(email);
+      if (remoteUser == null) {
+        throw Exception('Authentication error');
+      }
       userModel = remoteUser;
       notifyListeners();
+      await _saveCurrentUserInfo(remoteUser);
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -57,16 +61,20 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<UserModel> _getUserByEmail(String email) async {
-    var res = (await FirebaseFirestore.instance
-            .collection(DBCollections.users)
-            .where(ModelsFields.email, isEqualTo: email)
-            .get())
-        .docs
-        .first
-        .data();
-    UserModel userModel = UserModel.fromJSON(res);
-    return userModel;
+  Future<UserModel?> _getUserByEmail(String email) async {
+    try {
+      var res = (await FirebaseFirestore.instance
+              .collection(DBCollections.users)
+              .where(ModelsFields.email, isEqualTo: email)
+              .get())
+          .docs
+          .first
+          .data();
+      UserModel userModel = UserModel.fromJSON(res);
+      return userModel;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> logout() async {
