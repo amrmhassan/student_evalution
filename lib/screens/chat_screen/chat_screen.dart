@@ -99,7 +99,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         actions: [
           Row(
             children: [
-              UserAvatar(),
+              UserAvatar(
+                userImage: null,
+              ),
               HSpace(),
             ],
           ),

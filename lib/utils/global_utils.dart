@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../core/types.dart';
 import '../init/runtime_variables.dart';
@@ -113,5 +114,9 @@ class GlobalUtils {
       String snackContent = 'Copied To Clipboard'}) {
     Clipboard.setData(ClipboardData(text: data));
     if (showSnack) fastSnackBar(msg: snackContent);
+  }
+
+  static String dateToString(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 }

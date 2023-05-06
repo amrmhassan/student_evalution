@@ -12,6 +12,13 @@ class ModelsFields {
   static const String studentGrade = 'studentGrade';
   static const String teacherClass = 'teacherClass';
 
+  // attendance model
+  static const String id = 'id';
+  static const String day = 'day';
+  static const String userId = 'userId';
+  static const String state = 'state';
+  static const String userName = 'userName';
+
   // temp mail model
   static const String autocorrect = 'autocorrect';
   static const String qualityScore = 'quality_score';

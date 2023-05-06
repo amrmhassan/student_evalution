@@ -33,7 +33,9 @@ class IndividualChatCard extends StatelessWidget {
             VSpace(factor: .4),
             Row(
               children: [
-                UserAvatar(),
+                UserAvatar(
+                  userImage: null,
+                ),
                 HSpace(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,7 +28,9 @@ class HomeWorkCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          UserAvatar(),
+          UserAvatar(
+            userImage: null,
+          ),
           HSpace(factor: .5),
           Text(
             name,

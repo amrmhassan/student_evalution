@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/providers/app_state_provider.dart';
+import 'package:student_evaluation/providers/attendance_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
 
 import '../providers/user_provider.dart';
@@ -28,5 +29,13 @@ class Providers {
 
   static TimeLineProvider timeLP(BuildContext context) {
     return Provider.of<TimeLineProvider>(context);
+  }
+
+  static AttendanceProvider attendPf(BuildContext context) {
+    return Provider.of<AttendanceProvider>(context, listen: false);
+  }
+
+  static AttendanceProvider attendP(BuildContext context) {
+    return Provider.of<AttendanceProvider>(context);
   }
 }
