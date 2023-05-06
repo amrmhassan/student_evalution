@@ -7,6 +7,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
@@ -34,9 +35,17 @@ class _IndividualChatCardState extends State<IndividualChatCard> {
 
   void loadUserModel() {
     Future.delayed(Duration.zero).then((value) async {
+      setState(() {
+        loading = true;
+      });
       String myId = Providers.userPf(context).userModel!.uid;
-      UserModel model = await Providers.msgPf(context)
+      UserModel? model = await Providers.msgPf(context)
           .getUserModelFromRoom(myId: myId, roomId: widget.roomID);
+      if (model == null) {
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          loadUserModel();
+        });
+      }
       setState(() {
         userModel = model;
 

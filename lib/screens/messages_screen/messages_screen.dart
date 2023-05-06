@@ -179,13 +179,17 @@ class RoomsStreamBuilder extends StatelessWidget {
               ],
             ),
           )
+          .orderByChild(DBCollections.createdAt)
           .onValue,
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data!.snapshot.children.isNotEmpty) {
           return Column(
             children: snapshot.data!.snapshot.children
+                .toList()
+                .reversed
                 .map(
                   (e) => IndividualChatCard(
+                    key: Key(e.key!),
                     roomID: e.key!,
                   ),
                 )

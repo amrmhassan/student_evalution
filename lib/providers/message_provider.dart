@@ -45,7 +45,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
     notifyListeners();
   }
 
-// returns the created room id (created or existing)
+  // returns the created room id (created or existing)
   Future<String> createRoom({
     required String myId,
     required String consumerId,
@@ -64,6 +64,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
     }
 
     String roomId = Uuid().v4();
+    DateTime creatingTime = DateTime.now();
 
     // adding the room in my path
     await FirebaseDatabase.instance
@@ -73,6 +74,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
           DBCollections.rooms,
         ]))
         .child(roomId)
+        .child(DBCollections.otherUser)
         .set(consumerId);
 
     // adding the room in the other user path
@@ -83,7 +85,28 @@ class MessageProvider extends ChangeNotifier with UserMixin {
           DBCollections.rooms,
         ]))
         .child(roomId)
+        .child(DBCollections.otherUser)
         .set(myId);
+    // creating time for the consumer user
+    await FirebaseDatabase.instance
+        .ref(DBCollections.getRef([
+          DBCollections.users,
+          consumerId,
+          DBCollections.rooms,
+        ]))
+        .child(roomId)
+        .child(DBCollections.createdAt)
+        .set(creatingTime.toIso8601String());
+    // creating time for the creator user
+    await FirebaseDatabase.instance
+        .ref(DBCollections.getRef([
+          DBCollections.users,
+          myId,
+          DBCollections.rooms,
+        ]))
+        .child(roomId)
+        .child(DBCollections.createdAt)
+        .set(creatingTime.toIso8601String());
 
     // add the users ids to the room
     await FirebaseDatabase.instance
@@ -91,6 +114,13 @@ class MessageProvider extends ChangeNotifier with UserMixin {
         .child(roomId)
         .child(DBCollections.users)
         .set([myId, consumerId]);
+
+    // add the creation time to the room
+    await FirebaseDatabase.instance
+        .ref(DBCollections.getRef([DBCollections.rooms]))
+        .child(roomId)
+        .child(DBCollections.createdAt)
+        .set(creatingTime.toIso8601String());
 
     await sendMessage(
       roomId: roomId,
@@ -115,7 +145,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
     return res.key!;
   }
 
-  Future<UserModel> getUserModelFromRoom({
+  Future<UserModel?> getUserModelFromRoom({
     required String myId,
     required String roomId,
   }) async {
@@ -124,6 +154,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
             [DBCollections.rooms, roomId, DBCollections.users]))
         .get();
     var users = res.children.map((e) => e.value).toList();
+    if (users.isEmpty) return null;
     String otherUserId =
         users.where((element) => element != myId).first.toString();
     UserModel userModel = await getUserModelById(otherUserId);
