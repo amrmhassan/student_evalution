@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
+import 'package:student_evaluation/mixins/user_mixins.dart';
 import 'package:student_evaluation/models/message_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/transformers/collections.dart';
@@ -11,7 +12,7 @@ import 'package:uuid/uuid.dart';
 
 import '../constants/global_constants.dart';
 
-class MessageProvider extends ChangeNotifier {
+class MessageProvider extends ChangeNotifier with UserMixin {
   Iterable<UserModel> searchResult = [];
   bool searching = false;
 
@@ -44,6 +45,7 @@ class MessageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+// returns the created room id (created or existing)
   Future<String> createRoom({
     required String myId,
     required String consumerId,
@@ -82,6 +84,14 @@ class MessageProvider extends ChangeNotifier {
         ]))
         .child(roomId)
         .set(myId);
+
+    // add the users ids to the room
+    await FirebaseDatabase.instance
+        .ref(DBCollections.getRef([DBCollections.rooms]))
+        .child(roomId)
+        .child(DBCollections.users)
+        .set([myId, consumerId]);
+
     await sendMessage(
       roomId: roomId,
       messageModel: firstServerMessage,
@@ -103,5 +113,20 @@ class MessageProvider extends ChangeNotifier {
         .push();
     await res.set(messageModel.toJSON());
     return res.key!;
+  }
+
+  Future<UserModel> getUserModelFromRoom({
+    required String myId,
+    required String roomId,
+  }) async {
+    var res = await FirebaseDatabase.instance
+        .ref(DBCollections.getRef(
+            [DBCollections.rooms, roomId, DBCollections.users]))
+        .get();
+    var users = res.children.map((e) => e.value).toList();
+    String otherUserId =
+        users.where((element) => element != myId).first.toString();
+    UserModel userModel = await getUserModelById(otherUserId);
+    return userModel;
   }
 }

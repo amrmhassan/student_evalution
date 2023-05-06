@@ -5,6 +5,9 @@ import '../utils/global_utils.dart';
 
 part 'user_model.g.dart';
 
+//! add address
+//! add phone
+
 @HiveType(typeId: 1)
 enum UserType {
   @HiveField(0)

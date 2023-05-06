@@ -7,18 +7,49 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../theming/constants/sizes.dart';
 
-class IndividualChatCard extends StatelessWidget {
+class IndividualChatCard extends StatefulWidget {
+  final String roomID;
   const IndividualChatCard({
     super.key,
+    required this.roomID,
   });
+
+  @override
+  State<IndividualChatCard> createState() => _IndividualChatCardState();
+}
+
+class _IndividualChatCardState extends State<IndividualChatCard> {
+  bool loading = true;
+  UserModel? userModel;
+
+  void loadUserModel() {
+    Future.delayed(Duration.zero).then((value) async {
+      String myId = Providers.userPf(context).userModel!.uid;
+      UserModel model = await Providers.msgPf(context)
+          .getUserModelFromRoom(myId: myId, roomId: widget.roomID);
+      setState(() {
+        userModel = model;
+
+        loading = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    loadUserModel();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +65,14 @@ class IndividualChatCard extends StatelessWidget {
             Row(
               children: [
                 UserAvatar(
-                  userImage: null,
+                  userImage: userModel?.userImage,
                 ),
                 HSpace(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Enema',
+                      userModel?.name ?? '...',
                       style: h2TextStyle,
                     ),
                     Text(

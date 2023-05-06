@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import, dead_code
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
@@ -27,6 +29,8 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:student_evaluation/transformers/collections.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 
@@ -104,26 +108,26 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                           Radius.circular(largeBorderRadius),
                                     ),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      VSpace(factor: 1.5),
-                                      VSpace(),
-                                      MessagesTabsTitle(
-                                        content: activeContent,
-                                        setContent: setActiveContent,
-                                      ),
-                                      if (activeContent ==
-                                          MessageScreenContent.individual)
-                                        ...List.generate(
-                                          10,
-                                          (index) => IndividualChatCard(),
-                                        )
-                                      else
-                                        ...List.generate(
-                                          3,
-                                          (index) => GroupChatCard(),
+                                  child: Container(
+                                    constraints: BoxConstraints(minHeight: 400),
+                                    child: Column(
+                                      children: [
+                                        VSpace(factor: 1.5),
+                                        VSpace(),
+                                        MessagesTabsTitle(
+                                          content: activeContent,
+                                          setContent: setActiveContent,
                                         ),
-                                    ],
+                                        if (activeContent ==
+                                            MessageScreenContent.individual)
+                                          RoomsStreamBuilder()
+                                        else
+                                          ...List.generate(
+                                            3,
+                                            (index) => GroupChatCard(),
+                                          ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -153,6 +157,65 @@ class _MessagesScreenState extends State<MessagesScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class RoomsStreamBuilder extends StatelessWidget {
+  const RoomsStreamBuilder({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseDatabase.instance
+          .ref(
+            DBCollections.getRef(
+              [
+                DBCollections.users,
+                Providers.userPf(context).userModel!.uid,
+                DBCollections.rooms,
+              ],
+            ),
+          )
+          .onValue,
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data!.snapshot.children.isNotEmpty) {
+          return Column(
+            children: snapshot.data!.snapshot.children
+                .map(
+                  (e) => IndividualChatCard(
+                    roomID: e.key!,
+                  ),
+                )
+                .toList(),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            color: colorTheme.backGround,
+            alignment: Alignment.center,
+            height: 400,
+            child: Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+              ),
+            ),
+          );
+        } else {
+          return Container(
+            color: colorTheme.backGround,
+            alignment: Alignment.center,
+            height: 400,
+            child: Center(
+              child: Text(
+                'No rooms yet',
+                style: h4TextStyleInactive,
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }

@@ -7,7 +7,6 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_search_box.dart';
-import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -88,7 +87,6 @@ class SearchScreen extends StatelessWidget {
                                         String myId = Providers.userPf(context)
                                             .userModel!
                                             .uid;
-                                        String roomId =
                                             await Providers.msgPf(context)
                                                 .createRoom(
                                           myId: myId,

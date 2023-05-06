@@ -140,7 +140,7 @@ class CustomTextField extends StatelessWidget {
                       HSpace(factor: .5),
                       Expanded(
                         child: Material(
-                          color: colorTheme.backGround,
+                          color: backgroundColor ?? colorTheme.backGround,
                           child: TextFormField(
                             focusNode: focusNode,
                             onFieldSubmitted: onSubmitted,

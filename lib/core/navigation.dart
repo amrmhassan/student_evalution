@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 class CNav {
   static Future<dynamic> pushNamed(
     BuildContext context,
-    String routeName,
-  ) {
+    String routeName, {
+    Object? arguments,
+  }) {
     if (context.mounted) {
-      return Navigator.pushNamed(context, routeName);
+      return Navigator.pushNamed(
+        context,
+        routeName,
+        arguments: arguments,
+      );
     } else {
       return Future.value();
     }
@@ -14,10 +19,15 @@ class CNav {
 
   static Future<dynamic> pushReplacementNamed(
     BuildContext context,
-    String routeName,
-  ) {
+    String routeName, {
+    Object? arguments,
+  }) {
     if (context.mounted) {
-      return Navigator.pushReplacementNamed(context, routeName);
+      return Navigator.pushReplacementNamed(
+        context,
+        routeName,
+        arguments: arguments,
+      );
     } else {
       return Future.value();
     }
