@@ -10,7 +10,8 @@ import '../../transformers/models_fields.dart';
 
 class StudentBehaviourProvider extends ChangeNotifier {
   List<BehaviourModel> behaveData = [];
-  List<BehaviourMonthModel> months = [];
+  final List<BehaviourMonthModel> _months = [];
+  List<BehaviourMonthModel> get months => [..._months.reversed];
 
   TeacherClass activeClass = TeacherClass.biology;
 
@@ -52,11 +53,11 @@ class StudentBehaviourProvider extends ChangeNotifier {
     // normal to be .6
     // worry to be .4
 
-    months.clear();
+    _months.clear();
     var copiedData = [...behaveData];
     var nullModel = BehaviourModel(
       id: 'id',
-      day: '2020-05-06',
+      day: DateFormat('yyy-MM-dd').format(DateTime(1900)),
       state: BehaviorState.active,
       userId: 'userId',
       studentGrade: StudentGrade.k1SectionA,
@@ -88,13 +89,13 @@ class StudentBehaviourProvider extends ChangeNotifier {
           month: currentMonth,
           avg: avg,
         );
-        months.add(model);
+        _months.add(model);
         currentMonth = month;
-      } else {
-        // here just increment counter
-        double stateMap = _stateBehaveMap(data.state);
-        statesMap.add(stateMap);
+        statesMap.clear();
       }
+      // here just increment counter
+      double stateMap = _stateBehaveMap(data.state);
+      statesMap.add(stateMap);
     }
     notifyListeners();
   }

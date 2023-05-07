@@ -82,11 +82,10 @@ class StudentAttendProvider extends ChangeNotifier {
         );
         _months.add(model);
         currentMonth = month;
-        attended = 1;
-      } else {
-        // here just increment counter
-        attended++;
+        attended = 0;
       }
+      // here just increment counter
+      attended++;
     }
 
     notifyListeners();

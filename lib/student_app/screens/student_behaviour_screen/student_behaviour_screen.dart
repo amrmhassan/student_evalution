@@ -194,12 +194,25 @@ class StudentBehaviourCard extends StatelessWidget {
               ),
             ],
           ),
-          child: RatingStars(
-            starCount: 5,
-            valueLabelVisibility: false,
-            starSize: largeIconSize,
-            maxValue: 5,
-            value: model.stars,
+          child: Row(
+            children: [
+              Text(
+                '${(model.avg * 100).toInt()}%',
+                style: h4TextStyleInactive,
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: RatingStars(
+                    starCount: 5,
+                    valueLabelVisibility: false,
+                    starSize: largeIconSize,
+                    maxValue: 5,
+                    value: model.stars,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
