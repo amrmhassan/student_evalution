@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/transformers/remote_storage.dart';
-import 'package:student_evaluation/utils/global_utils.dart';
+import 'package:uuid/uuid.dart';
 
 import '../transformers/collections.dart';
 import '../transformers/models_fields.dart';
@@ -21,6 +21,7 @@ class HomeWorkProvider extends ChangeNotifier {
   String? documentName;
   int? documentSize;
   String? documentLink;
+  TaskSnapshot? taskSnapshot;
 
   //? other home work info
   StudentGrade activeGrade = StudentGrade.k1SectionA;
@@ -95,14 +96,32 @@ class HomeWorkProvider extends ChangeNotifier {
   }
 
   Future<void> uploadDocument(File file) async {
-    uploadingDocument = true;
-    notifyListeners();
-    var res = await FirebaseStorage.instance
-        .ref(RemoteStorage.homeWorkDocuments)
-        .putFile(file);
-    documentLink = await res.ref.getDownloadURL();
-    documentName = path_utils.basename(file.path);
-    uploadingDocument = false;
+    try {
+      String docID = Uuid().v4();
+      uploadingDocument = true;
+      notifyListeners();
+      var res = await FirebaseStorage.instance
+          .ref(RemoteStorage.homeWorkDocuments)
+          .child(docID)
+          .putFile(file);
+
+      documentLink = await res.ref.getDownloadURL();
+      documentName = path_utils.basename(file.path);
+      taskSnapshot = res;
+      uploadingDocument = false;
+      notifyListeners();
+    } catch (e) {
+      uploadingDocument = false;
+      clearUploadedDoc();
+      rethrow;
+    }
+  }
+
+  void clearUploadedDoc() async {
+    await taskSnapshot?.ref.delete();
+    documentLink = null;
+    documentName = null;
+    taskSnapshot = null;
     notifyListeners();
   }
 }
