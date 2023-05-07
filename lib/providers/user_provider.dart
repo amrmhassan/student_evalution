@@ -74,8 +74,6 @@ class UserProvider extends ChangeNotifier with UserMixin {
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
 
-    // facebook logout
-
     // delete saved user data
     await _deleteCurrentUserInfo();
   }

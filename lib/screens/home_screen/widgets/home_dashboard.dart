@@ -9,6 +9,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
@@ -28,19 +29,26 @@ class HomeDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var timeLineProvider = Providers.timeLP(context);
+    var today = DateTime.now();
+    bool future = timeLineProvider.currentDay
+        .isAfter(DateTime(today.year, today.month, today.day + 1));
+    logger.e(future);
+
     return PaddingWrapper(
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              DashboardItem(
-                title: 'Attendance',
-                iconName: 'attendance',
-                onTap: () {
-                  CNav.pushNamed(context, AttendanceScreen.routeName);
-                },
-              ),
+              if (!future)
+                DashboardItem(
+                  title: 'Attendance',
+                  iconName: 'attendance',
+                  onTap: () {
+                    CNav.pushNamed(context, AttendanceScreen.routeName);
+                  },
+                ),
               DashboardItem(
                 title: 'Home Works',
                 iconName: 'home_work',
@@ -48,42 +56,43 @@ class HomeDashboard extends StatelessWidget {
                   CNav.pushNamed(context, HomeWorkScreen.routeName);
                 },
               ),
-              DashboardItem(
-                title: 'Behavior',
-                iconName: 'behaviour',
-                onTap: () {
-                  CNav.pushNamed(context, BehaviorScreen.routeName);
-                },
-              ),
-            ],
-          ),
-          VSpace(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DashboardItem(
-                title: 'Time Table',
-                iconName: 'time_table',
-                onTap: () {},
-              ),
-              DashboardItem(
-                title: 'Messages',
-                iconName: 'messages',
-                onTap: () {
-                  CNav.pushReplacementNamed(context, MessagesScreen.routeName);
-                  Providers.appSPf(context).setActiveNavBar(1);
-                },
-              ),
-              Opacity(
-                opacity: 0,
-                child: DashboardItem(
-                  title: 'Messages',
-                  iconName: 'messages',
-                  onTap: null,
+              if (!future)
+                DashboardItem(
+                  title: 'Behavior',
+                  iconName: 'behaviour',
+                  onTap: () {
+                    CNav.pushNamed(context, BehaviorScreen.routeName);
+                  },
                 ),
-              ),
             ],
           ),
+          // VSpace(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     DashboardItem(
+          //       title: 'Time Table',
+          //       iconName: 'time_table',
+          //       onTap: () {},
+          //     ),
+          //     DashboardItem(
+          //       title: 'Messages',
+          //       iconName: 'messages',
+          //       onTap: () {
+          //         CNav.pushReplacementNamed(context, MessagesScreen.routeName);
+          //         Providers.appSPf(context).setActiveNavBar(1);
+          //       },
+          //     ),
+          //     Opacity(
+          //       opacity: 0,
+          //       child: DashboardItem(
+          //         title: 'Messages',
+          //         iconName: 'messages',
+          //         onTap: null,
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
