@@ -16,8 +16,8 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class MessagesTabsTitle extends StatelessWidget {
-  final MessageScreenContent content;
-  final Function(MessageScreenContent content) setContent;
+  final MessagesMode content;
+  final Function(MessagesMode content) setContent;
 
   const MessagesTabsTitle({
     super.key,
@@ -33,18 +33,18 @@ class MessagesTabsTitle extends StatelessWidget {
           Row(
             children: [
               HomeScreenTabItem(
-                active: content == MessageScreenContent.individual,
+                active: content == MessagesMode.individual,
                 title: 'Individual',
                 onTap: () {
-                  setContent(MessageScreenContent.individual);
+                  setContent(MessagesMode.individual);
                 },
               ),
               Spacer(),
               HomeScreenTabItem(
-                active: content == MessageScreenContent.groups,
+                active: content == MessagesMode.groups,
                 title: 'Groups',
                 onTap: () {
-                  setContent(MessageScreenContent.groups);
+                  setContent(MessagesMode.groups);
                 },
               ),
             ],

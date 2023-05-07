@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/models/message_model.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/server_msg.dart';
+import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../fast_tools/helpers/responsive.dart';
@@ -13,10 +14,12 @@ import '../../../theming/theme_calls.dart';
 
 class MessageCard extends StatelessWidget {
   final MessageModel messageModel;
+  final MessagesMode mode;
 
   const MessageCard({
     super.key,
     required this.messageModel,
+    required this.mode,
   });
 
   @override

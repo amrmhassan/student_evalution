@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/models/group_data_model.dart';
+import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 import 'group_chat_card.dart';
@@ -13,8 +13,6 @@ class GroupsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Providers.msgP(context);
-
     return StreamBuilder<Object?>(
         stream: Providers.msgPf(context)
             .getGroupsStream(Providers.userPf(context))
@@ -41,7 +39,12 @@ class GroupsBuilder extends StatelessWidget {
               ],
             );
           } else {
-            return CircularProgressIndicator();
+            return Container(
+              padding: EdgeInsets.only(top: kVPad * 3),
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+              ),
+            );
           }
         });
   }

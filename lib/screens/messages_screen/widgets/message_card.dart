@@ -9,6 +9,7 @@ import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
+import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
@@ -45,6 +46,8 @@ class _IndividualChatCardState extends State<IndividualChatCard> {
           loadUserModel();
         });
       }
+
+      if (!mounted) return;
       setState(() {
         userModel = model;
 
@@ -69,6 +72,7 @@ class _IndividualChatCardState extends State<IndividualChatCard> {
           arguments: {
             'roomId': widget.roomID,
             'user': userModel,
+            'mode': MessagesMode.individual,
           },
         );
       },

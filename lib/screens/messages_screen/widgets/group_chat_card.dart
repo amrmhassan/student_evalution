@@ -8,12 +8,15 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/group_data_model.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+
+import '../messages_screen.dart';
 
 class GroupChatCard extends StatelessWidget {
   final GroupDataModel groupDataModel;
@@ -26,7 +29,17 @@ class GroupChatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonWrapper(
       onTap: () {
-        CNav.pushNamed(context, ChatScreen.routeName);
+        UserModel groupUserModel = AdminModel(
+          email: '',
+          name: groupDataModel.name,
+          uid: '',
+          userImage: null,
+        );
+        CNav.pushNamed(context, ChatScreen.routeName, arguments: {
+          'roomId': groupDataModel.id,
+          'user': groupUserModel,
+          'mode': MessagesMode.groups,
+        });
       },
       child: PaddingWrapper(
         child: Column(
@@ -37,6 +50,7 @@ class GroupChatCard extends StatelessWidget {
               children: [
                 UserAvatar(
                   userImage: null,
+                  group: true,
                 ),
                 HSpace(),
                 Column(
@@ -46,22 +60,16 @@ class GroupChatCard extends StatelessWidget {
                       groupDataModel.name,
                       style: h2TextStyle,
                     ),
-                    // Text(
-                    //   'F: Jane Cooper | 6th 8',
-                    //   style: h4TextStyleInactive,
-                    // ),
                   ],
                 ),
                 Spacer(),
                 SmallVerticalDash(),
-                IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(
-                    'assets/icons/message2.png',
-                    color: colorTheme.kBlueColor,
-                    width: mediumIconSize,
-                  ),
-                ),
+                ButtonWrapper(
+                    child: Image.asset(
+                  'assets/icons/message2.png',
+                  color: colorTheme.kBlueColor,
+                  width: mediumIconSize,
+                )),
                 SmallVerticalDash(),
               ],
             ),

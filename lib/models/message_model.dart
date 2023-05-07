@@ -10,7 +10,6 @@ class MessageModel {
   final String id;
   final DateTime createdAt;
   final String senderID;
-  final String receiverID;
   final String content;
   final MessageType messageType;
 
@@ -18,7 +17,6 @@ class MessageModel {
     required this.id,
     required this.createdAt,
     required this.senderID,
-    required this.receiverID,
     required this.content,
     required this.messageType,
   });
@@ -28,7 +26,6 @@ class MessageModel {
       ModelsFields.id: id,
       ModelsFields.createdAt: createdAt.toIso8601String(),
       ModelsFields.senderID: senderID,
-      ModelsFields.receiverId: receiverID,
       ModelsFields.content: content,
       ModelsFields.messageType: messageType.name,
     };
@@ -39,7 +36,6 @@ class MessageModel {
       id: obj[ModelsFields.id],
       createdAt: DateTime.parse(obj[ModelsFields.createdAt]),
       senderID: obj[ModelsFields.senderID],
-      receiverID: obj[ModelsFields.receiverId],
       content: obj[ModelsFields.content],
       messageType: GlobalUtils.stringToEnum(
         obj[ModelsFields.messageType],

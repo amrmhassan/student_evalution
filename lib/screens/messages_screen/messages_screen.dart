@@ -15,7 +15,7 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 
-enum MessageScreenContent { individual, groups }
+enum MessagesMode { individual, groups }
 
 class MessagesScreen extends StatefulWidget {
   static const String routeName = '/MessagesScreen';
@@ -26,8 +26,8 @@ class MessagesScreen extends StatefulWidget {
 }
 
 class _MessagesScreenState extends State<MessagesScreen> {
-  MessageScreenContent activeContent = MessageScreenContent.individual;
-  void setActiveContent(MessageScreenContent content) {
+  MessagesMode activeContent = MessagesMode.individual;
+  void setActiveContent(MessagesMode content) {
     setState(() {
       activeContent = content;
     });
@@ -100,7 +100,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                           setContent: setActiveContent,
                                         ),
                                         if (activeContent ==
-                                            MessageScreenContent.individual)
+                                            MessagesMode.individual)
                                           RoomsStreamBuilder()
                                         else
                                           GroupsBuilder(),

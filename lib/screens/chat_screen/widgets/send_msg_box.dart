@@ -11,13 +11,16 @@ import 'package:student_evaluation/utils/providers_calls.dart';
 import '../../../fast_tools/widgets/button_wrapper.dart';
 import '../../../fast_tools/widgets/custom_text_field.dart';
 import '../../../theming/constants/sizes.dart';
+import '../../messages_screen/messages_screen.dart';
 
 class SendMessageBox extends StatefulWidget {
   final String roomId;
+  final MessagesMode mode;
   const SendMessageBox({
     super.key,
     required this.focusNode,
     required this.roomId,
+    required this.mode,
   });
 
   final FocusNode focusNode;
@@ -60,10 +63,10 @@ class _SendMessageBoxState extends State<SendMessageBox> {
               // here send the message
               String senderId = Providers.userPf(context).userModel!.uid;
               await Providers.msgPf(context).sendMessage(
+                mode: widget.mode,
                 roomId: widget.roomId,
                 content: msgController.text,
                 messageType: MessageType.user,
-                receiverId: '',
                 senderId: senderId,
               );
               msgController.text = '';

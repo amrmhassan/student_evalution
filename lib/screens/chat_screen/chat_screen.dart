@@ -30,6 +30,7 @@ import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.d
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_line.dart';
+import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/message_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/messages_screen_tabs_title.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
@@ -59,18 +60,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   List<MessageModel> messages = [];
   UserModel? otherUser;
   String? roomId;
+  MessagesMode? mode;
 
   @override
   void initState() {
     loadMessages();
     _listenToKeyboardVisibility();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   focusNode.addListener(() {
-    //     print('object');
-    //     scrollToEnd();
-    //   });
-    // });
-
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -177,6 +172,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                                             children: messages
                                                 .map((e) => MessageCard(
                                                       messageModel: e,
+                                                      mode: mode ??
+                                                          MessagesMode
+                                                              .individual,
                                                     ))
                                                 .toList(),
                                           ),
@@ -196,6 +194,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
               SendMessageBox(
                 focusNode: focusNode,
                 roomId: roomId!,
+                mode: mode ?? MessagesMode.individual,
               ),
           ],
         ),
@@ -208,8 +207,10 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       var passedData =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       String roomId = passedData['roomId'];
+      MessagesMode mode = passedData['mode'];
       setState(() {
         this.roomId = roomId;
+        this.mode = mode;
         loadingMessages = true;
       });
       setOtherUser();
@@ -224,10 +225,29 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     });
   }
 
+  String get getRefListener {
+    if (mode == MessagesMode.groups) {
+      return DBCollections.getRef(
+        [
+          DBCollections.groups,
+          roomId!,
+          DBCollections.messages,
+        ],
+      );
+    } else {
+      return DBCollections.getRef(
+        [
+          DBCollections.rooms,
+          roomId!,
+          DBCollections.messages,
+        ],
+      );
+    }
+  }
+
   void runMessagesListener(String roomId) {
     messagesListener = FirebaseDatabase.instance
-        .ref(DBCollections.getRef(
-            [DBCollections.rooms, roomId, DBCollections.messages]))
+        .ref(getRefListener)
         .limitToLast(1)
         .onValue
         .listen((msgJson) {
@@ -247,10 +267,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   }
 
   Future<void> loadAllMessages(String roomId) async {
-    var data = await FirebaseDatabase.instance
-        .ref(DBCollections.getRef(
-            [DBCollections.rooms, roomId, DBCollections.messages]))
-        .get();
+    var data = await FirebaseDatabase.instance.ref(getRefListener).get();
     for (var msgJson in data.children) {
       var test = (msgJson.value as Map<dynamic, dynamic>);
       Map<String, dynamic> data = {};

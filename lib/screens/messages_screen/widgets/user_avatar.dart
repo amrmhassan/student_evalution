@@ -5,9 +5,11 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 
 class UserAvatar extends StatelessWidget {
   final String? userImage;
+  final bool group;
   const UserAvatar({
     super.key,
     required this.userImage,
+    this.group = false,
   });
 
   @override
@@ -25,7 +27,7 @@ class UserAvatar extends StatelessWidget {
       ),
       child: userImage == null
           ? Icon(
-              Icons.person,
+              group ? Icons.group : Icons.person,
               size: mediumIconSize,
               color: Colors.black.withOpacity(.8),
             )

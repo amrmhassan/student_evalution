@@ -8,6 +8,7 @@ import 'package:student_evaluation/models/group_data_model.dart';
 import 'package:student_evaluation/models/message_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/providers/user_provider.dart';
+import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:uuid/uuid.dart';
@@ -131,8 +132,8 @@ class MessageProvider extends ChangeNotifier with UserMixin {
       roomId: roomId,
       content: firstServerMessage.content,
       messageType: firstServerMessage.messageType,
-      receiverId: firstServerMessage.receiverID,
       senderId: firstServerMessage.senderID,
+      mode: MessagesMode.individual,
     );
 
     // creating a room path to watch messages
@@ -143,9 +144,9 @@ class MessageProvider extends ChangeNotifier with UserMixin {
   Future<String> sendMessage({
     required String roomId,
     required String senderId,
-    required String receiverId,
     required String content,
     required MessageType messageType,
+    required MessagesMode mode,
   }) async {
     String msgId = Uuid().v4();
     DateTime createdAt = DateTime.now();
@@ -154,12 +155,15 @@ class MessageProvider extends ChangeNotifier with UserMixin {
       id: msgId,
       createdAt: createdAt,
       senderID: senderId,
-      receiverID: receiverId,
       content: content,
       messageType: messageType,
     );
     var res = FirebaseDatabase.instance
-        .ref(DBCollections.getRef([DBCollections.rooms]))
+        .ref(DBCollections.getRef([
+          mode == MessagesMode.individual
+              ? DBCollections.rooms
+              : DBCollections.groups,
+        ]))
         .child(roomId)
         .child(DBCollections.messages)
         .push();

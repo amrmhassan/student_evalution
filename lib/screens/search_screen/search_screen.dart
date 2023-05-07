@@ -13,6 +13,8 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
+import '../messages_screen/messages_screen.dart';
+
 class SearchScreen extends StatelessWidget {
   static const String routeName = '/SearchScreen';
   const SearchScreen({super.key});
@@ -99,6 +101,7 @@ class SearchScreen extends StatelessWidget {
                                           arguments: {
                                             'roomId': roomID,
                                             'user': e,
+                                            'mode': MessagesMode.individual
                                           },
                                         );
                                       } catch (e) {

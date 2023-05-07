@@ -10,7 +10,6 @@ MessageModel firstServerMessage = MessageModel(
   id: Uuid().v4(),
   createdAt: DateTime.now(),
   senderID: serverId,
-  receiverID: serverId,
   content: 'Chat Created 😁',
   messageType: MessageType.server,
 );
