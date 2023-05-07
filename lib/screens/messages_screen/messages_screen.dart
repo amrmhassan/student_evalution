@@ -5,7 +5,6 @@ import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_search_box.dart';
-import 'package:student_evaluation/screens/messages_screen/widgets/group_chat_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/groups_builder.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/messages_screen_tabs_title.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/rooms_stream_builder.dart';

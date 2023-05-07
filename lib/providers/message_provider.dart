@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:student_evaluation/mixins/user_mixins.dart';
+import 'package:student_evaluation/models/group_data_model.dart';
 import 'package:student_evaluation/models/message_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/providers/user_provider.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:uuid/uuid.dart';
@@ -196,20 +198,14 @@ class MessageProvider extends ChangeNotifier with UserMixin {
         String studentGroupName = classTransformer(teacherClass);
 
         // creating groups for the teachers, (teachers will listen for these groups of their students) this will appear on the teachers screen
-        await FirebaseDatabase.instance
-            .ref(DBCollections.groupsMaps)
-            .child(DBCollections.teachersGroups)
-            .child(teacherClass.name)
+        await _teacherGroupsRef(teacherClass)
             .child(studentGrade.name)
-            .set({'id': groupId, 'name': teacherGroupName});
+            .set(GroupDataModel(id: groupId, name: teacherGroupName).toJSON());
 
         // creating groups for the students, (students will listen for these groups of their teachers) this will appear on the student screen
-        await FirebaseDatabase.instance
-            .ref(DBCollections.groupsMaps)
-            .child(DBCollections.studentsGroups)
-            .child(studentGrade.name)
+        await _studentGroupsRef(studentGrade)
             .child(teacherClass.name)
-            .set({'id': groupId, 'name': studentGroupName});
+            .set(GroupDataModel(id: groupId, name: studentGroupName).toJSON());
 
         // then create the actual group with the first message
         await FirebaseDatabase.instance
@@ -221,5 +217,27 @@ class MessageProvider extends ChangeNotifier with UserMixin {
       }
     }
     logger.i('All Groups created');
+  }
+
+  DatabaseReference _teacherGroupsRef(TeacherClass teacherClass) =>
+      FirebaseDatabase.instance
+          .ref(DBCollections.groupsMaps)
+          .child(DBCollections.teachersGroups)
+          .child(teacherClass.name);
+
+  DatabaseReference _studentGroupsRef(StudentGrade studentGrade) =>
+      FirebaseDatabase.instance
+          .ref(DBCollections.groupsMaps)
+          .child(DBCollections.studentsGroups)
+          .child(studentGrade.name);
+
+  DatabaseReference? getGroupsStream(UserProvider userProvider) {
+    UserModel userModel = userProvider.userModel!;
+    if (userModel is TeacherModel) {
+      return _teacherGroupsRef(userModel.teacherClass);
+    } else if (userModel is StudentModel) {
+      return _studentGroupsRef(userModel.studentGrade);
+    }
+    return null;
   }
 }

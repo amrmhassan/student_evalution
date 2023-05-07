@@ -38,7 +38,6 @@ class ScreensInit {
   static Widget? home = StreamBuilder(
     stream: FirebaseAuth.instance.userChanges(),
     builder: (context, snapshot) {
-      print('Changes');
       if (snapshot.connectionState == ConnectionState.waiting) {
         return LoadingScreen();
       } else if (snapshot.data != null) {

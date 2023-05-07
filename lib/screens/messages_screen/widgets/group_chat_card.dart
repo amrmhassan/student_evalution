@@ -7,6 +7,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/group_data_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/small_vertical_dash.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
@@ -15,8 +16,10 @@ import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
 class GroupChatCard extends StatelessWidget {
+  final GroupDataModel groupDataModel;
   const GroupChatCard({
     super.key,
+    required this.groupDataModel,
   });
 
   @override
@@ -40,7 +43,7 @@ class GroupChatCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'K1, Math',
+                      groupDataModel.name,
                       style: h2TextStyle,
                     ),
                     // Text(
