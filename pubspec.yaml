@@ -53,6 +53,10 @@ dependencies:
   intl: ^0.17.0
   flutter_lorem: ^2.0.0
   uuid: ^3.0.7
+  firebase_storage: ^11.1.2
+  image_picker: ^0.8.7+4
+  syncfusion_flutter_datepicker: ^21.2.3
+  file_picker: ^5.2.11
 
 
 dev_dependencies:
