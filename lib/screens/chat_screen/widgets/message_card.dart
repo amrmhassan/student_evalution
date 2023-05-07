@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/message_model.dart';
+import 'package:student_evaluation/screens/chat_screen/widgets/sender_little_info.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/server_msg.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
@@ -36,52 +38,62 @@ class MessageCard extends StatelessWidget {
       textDirection: mine ? TextDirection.rtl : null,
       children: [
         HSpace(),
-        Container(
-          margin: EdgeInsets.only(
-            bottom: largePadding,
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: kHPad,
-            vertical: kVPad / 2,
-          ),
-          decoration: BoxDecoration(
-            color: mine
-                ? colorTheme.kBlueColor
-                : colorTheme.kInactiveColor.withOpacity(
-                    .2,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (!mine && mode == MessagesMode.groups)
+              SenderLittleInfo(
+                userId: messageModel.senderID,
+              ),
+            VSpace(factor: .2),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: largePadding,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: kHPad,
+                vertical: kVPad / 2,
+              ),
+              decoration: BoxDecoration(
+                color: mine
+                    ? colorTheme.kBlueColor
+                    : colorTheme.kInactiveColor.withOpacity(
+                        .2,
+                      ),
+                borderRadius: BorderRadius.only(
+                  topLeft: !mine
+                      ? Radius.zero
+                      : Radius.circular(
+                          largeBorderRadius,
+                        ),
+                  topRight: Radius.circular(
+                    largeBorderRadius,
                   ),
-            borderRadius: BorderRadius.only(
-              topRight: mine
-                  ? Radius.zero
-                  : Radius.circular(
-                      largeBorderRadius,
-                    ),
-              topLeft: Radius.circular(
-                largeBorderRadius,
+                  bottomRight: !mine
+                      ? Radius.circular(
+                          largeBorderRadius,
+                        )
+                      : Radius.zero,
+                  bottomLeft: Radius.circular(
+                    largeBorderRadius,
+                  ),
+                ),
               ),
-              bottomLeft: mine
-                  ? Radius.circular(
-                      largeBorderRadius,
-                    )
-                  : Radius.zero,
-              bottomRight: Radius.circular(
-                largeBorderRadius,
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: Responsive.getWidth(context) / 1.6,
+                ),
+                child: Text(
+                  messageModel.content,
+                  style: h4TextStyleInactive.copyWith(
+                    color: mine ? Colors.white : colorTheme.kBlueColor,
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                ),
               ),
             ),
-          ),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: Responsive.getWidth(context) / 1.6,
-            ),
-            child: Text(
-              messageModel.content,
-              style: h4TextStyleInactive.copyWith(
-                color: mine ? Colors.white : colorTheme.kBlueColor,
-              ),
-              overflow: TextOverflow.visible,
-              softWrap: true,
-            ),
-          ),
+          ],
         ),
       ],
     );

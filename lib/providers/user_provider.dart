@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/mixins/user_mixins.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
@@ -10,7 +11,7 @@ import '../init/runtime_variables.dart';
 import '../models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserProvider extends ChangeNotifier {
+class UserProvider extends ChangeNotifier with UserMixin {
   //# inputs
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();

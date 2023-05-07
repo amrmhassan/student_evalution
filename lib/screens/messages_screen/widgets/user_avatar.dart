@@ -6,10 +6,13 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 class UserAvatar extends StatelessWidget {
   final String? userImage;
   final bool group;
+  final double radius;
+
   const UserAvatar({
     super.key,
     required this.userImage,
     this.group = false,
+    this.radius = largeIconSize * 1.2,
   });
 
   @override
@@ -17,8 +20,8 @@ class UserAvatar extends StatelessWidget {
     return Container(
       clipBehavior: Clip.hardEdge,
       alignment: Alignment.center,
-      width: largeIconSize * 1.2,
-      height: largeIconSize * 1.2,
+      width: radius,
+      height: radius,
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(.5),
         borderRadius: BorderRadius.circular(
@@ -26,10 +29,15 @@ class UserAvatar extends StatelessWidget {
         ),
       ),
       child: userImage == null
-          ? Icon(
-              group ? Icons.group : Icons.person,
-              size: mediumIconSize,
-              color: Colors.black.withOpacity(.8),
+          ? Container(
+              padding: EdgeInsets.all(smallPadding),
+              child: Icon(
+                group ? Icons.group : Icons.person,
+                size: (radius - smallPadding * 2) > mediumIconSize
+                    ? mediumIconSize
+                    : (radius - smallPadding * 2),
+                color: Colors.black.withOpacity(.8),
+              ),
             )
           : Image.network(
               userImage!,
