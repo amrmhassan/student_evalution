@@ -1,36 +1,18 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import, dead_code
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:student_evaluation/core/navigation.dart';
-import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
-import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
-import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
-import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
-import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
-import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
-import 'package:student_evaluation/fast_tools/widgets/v_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/home_dashboard.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_search_box.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/home_screen_tabs_title.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_line.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/group_chat_card.dart';
-import 'package:student_evaluation/screens/messages_screen/widgets/message_card.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/groups_builder.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/messages_screen_tabs_title.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/rooms_stream_builder.dart';
 import 'package:student_evaluation/screens/search_screen/search_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
-import 'package:intl/intl.dart' as intl;
-import 'package:student_evaluation/transformers/collections.dart';
-import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 
@@ -122,10 +104,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                             MessageScreenContent.individual)
                                           RoomsStreamBuilder()
                                         else
-                                          ...List.generate(
-                                            3,
-                                            (index) => GroupChatCard(),
-                                          ),
+                                          GroupsBuilder(),
                                       ],
                                     ),
                                   ),
@@ -157,69 +136,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class RoomsStreamBuilder extends StatelessWidget {
-  const RoomsStreamBuilder({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseDatabase.instance
-          .ref(
-            DBCollections.getRef(
-              [
-                DBCollections.users,
-                Providers.userPf(context).userModel!.uid,
-                DBCollections.rooms,
-              ],
-            ),
-          )
-          .orderByChild(DBCollections.createdAt)
-          .onValue,
-      builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data!.snapshot.children.isNotEmpty) {
-          return Column(
-            children: snapshot.data!.snapshot.children
-                .toList()
-                .reversed
-                .map(
-                  (e) => IndividualChatCard(
-                    key: Key(e.key!),
-                    roomID: e.key!,
-                  ),
-                )
-                .toList(),
-          );
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            color: colorTheme.backGround,
-            alignment: Alignment.center,
-            height: 400,
-            child: Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 3,
-              ),
-            ),
-          );
-        } else {
-          return Container(
-            color: colorTheme.backGround,
-            alignment: Alignment.center,
-            height: 400,
-            child: Center(
-              child: Text(
-                'No rooms yet',
-                style: h4TextStyleInactive,
-              ),
-            ),
-          );
-        }
-      },
     );
   }
 }

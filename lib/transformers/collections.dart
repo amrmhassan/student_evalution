@@ -10,6 +10,12 @@ class DBCollections {
   static const String createdAt = 'createdAt';
   static const String otherUser = 'otherUser';
 
+  // groups
+  static const String groupsMaps = 'groupsMaps';
+  static const String groups = 'groups';
+  static const String teachersGroups = 'teachers';
+  static const String studentsGroups = 'students';
+
   static String getRef(List<String> collections) {
     return collections.join('/');
   }

@@ -13,6 +13,7 @@ import 'package:student_evaluation/screens/signup_screen/signup_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 
 import '../screens/attendance_screen/attendance_screen.dart';
+import '../screens/create_groups_screen/create_groups_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
 import '../screens/messages_screen/messages_screen.dart';
@@ -31,11 +32,13 @@ class ScreensInit {
     EventScreen.routeName: (context) => EventScreen(),
     SignUpScreen.routeName: (context) => SignUpScreen(),
     SearchScreen.routeName: (context) => SearchScreen(),
+    CreateGroupsScreen.routeName: (context) => CreateGroupsScreen(),
   };
 
   static Widget? home = StreamBuilder(
     stream: FirebaseAuth.instance.userChanges(),
     builder: (context, snapshot) {
+      print('Changes');
       if (snapshot.connectionState == ConnectionState.waiting) {
         return LoadingScreen();
       } else if (snapshot.data != null) {

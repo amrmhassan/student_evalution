@@ -11,8 +11,11 @@ import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:uuid/uuid.dart';
 
 import '../constants/global_constants.dart';
+import '../init/runtime_variables.dart';
+import '../transformers/enums_transformers.dart';
 
 class MessageProvider extends ChangeNotifier with UserMixin {
+  //# messages stuff
   Iterable<UserModel> searchResult = [];
   bool searching = false;
 
@@ -176,5 +179,47 @@ class MessageProvider extends ChangeNotifier with UserMixin {
         users.where((element) => element != myId).first.toString();
     UserModel userModel = await getUserModelById(otherUserId);
     return userModel;
+  }
+
+  //# groups stuff
+
+  //? this will just run once after setting the enum TeacherClass values and  enum StudentGrade values to create
+  //? the groups that will appear on students screen and teachers screen
+  Future<void> createClassesGradesGroups() async {
+    // i want to create a groups mapping for teachers like grade1, grade2, grade3
+    // and groups for students like science, biology
+    // and these groups will map to each other like
+    for (var teacherClass in TeacherClass.values) {
+      for (var studentGrade in StudentGrade.values) {
+        String groupId = Uuid().v4();
+        String teacherGroupName = gradeTransformer(studentGrade);
+        String studentGroupName = classTransformer(teacherClass);
+
+        // creating groups for the teachers, (teachers will listen for these groups of their students) this will appear on the teachers screen
+        await FirebaseDatabase.instance
+            .ref(DBCollections.groupsMaps)
+            .child(DBCollections.teachersGroups)
+            .child(teacherClass.name)
+            .child(studentGrade.name)
+            .set({'id': groupId, 'name': teacherGroupName});
+
+        // creating groups for the students, (students will listen for these groups of their teachers) this will appear on the student screen
+        await FirebaseDatabase.instance
+            .ref(DBCollections.groupsMaps)
+            .child(DBCollections.studentsGroups)
+            .child(studentGrade.name)
+            .child(teacherClass.name)
+            .set({'id': groupId, 'name': studentGroupName});
+
+        // then create the actual group with the first message
+        await FirebaseDatabase.instance
+            .ref(DBCollections.groups)
+            .child(groupId)
+            .child(DBCollections.messages)
+            .push()
+            .set(firstServerMessage.toJSON());
+      }
+    }
+    logger.i('All Groups created');
   }
 }

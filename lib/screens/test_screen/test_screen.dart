@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/screen_wrapper.dart';
-import 'package:student_evaluation/utils/providers_calls.dart';
 
 class TestScreen extends StatefulWidget {
   static const String routeName = '/TestScreen';
@@ -18,13 +17,8 @@ class _TestScreenState extends State<TestScreen> {
     return ScreenWrapper(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            Providers.msgPf(context).createRoom(
-              myId: 'myId',
-              consumerId: 'consumerId',
-            );
-          },
-          child: Text('Add'),
+          onPressed: () {},
+          child: Text('Create Groups'),
         ),
       ),
     );

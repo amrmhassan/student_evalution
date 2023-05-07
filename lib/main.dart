@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Students Evaluation',
         home: testing ? TestScreen() : ScreensInit.home,
-        // home: testing ? TestScreen() : SearchScreen(),
+        // home: testing ? TestScreen() : CreateGroupsScreen(),
         routes: ScreensInit.routes,
       ),
     );
