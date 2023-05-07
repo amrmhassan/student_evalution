@@ -6,6 +6,7 @@ import 'package:student_evaluation/providers/behavior_provider.dart';
 import 'package:student_evaluation/providers/home_work_provider.dart';
 import 'package:student_evaluation/providers/message_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
+import 'package:student_evaluation/student_app/providers/students_attend_provider.dart';
 
 import '../providers/user_provider.dart';
 import '../theming/providers/theme_provider.dart';
@@ -20,5 +21,6 @@ class ProvidersInit {
     ChangeNotifierProvider(create: (context) => BehaviorProvider()),
     ChangeNotifierProvider(create: (context) => HomeWorkProvider()),
     ChangeNotifierProvider(create: (context) => MessageProvider()),
+    ChangeNotifierProvider(create: (context) => StudentAttendProvider()),
   ];
 }

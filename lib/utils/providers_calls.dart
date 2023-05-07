@@ -5,6 +5,7 @@ import 'package:student_evaluation/providers/attendance_provider.dart';
 import 'package:student_evaluation/providers/home_work_provider.dart';
 import 'package:student_evaluation/providers/message_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
+import 'package:student_evaluation/student_app/providers/students_attend_provider.dart';
 
 import '../providers/behavior_provider.dart';
 import '../providers/user_provider.dart';
@@ -64,5 +65,13 @@ class Providers {
 
   static MessageProvider msgP(BuildContext context) {
     return Provider.of<MessageProvider>(context);
+  }
+
+  static StudentAttendProvider userAttendPf(BuildContext context) {
+    return Provider.of<StudentAttendProvider>(context, listen: false);
+  }
+
+  static StudentAttendProvider studentAttendP(BuildContext context) {
+    return Provider.of<StudentAttendProvider>(context);
   }
 }

@@ -10,6 +10,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/init/runtime_variables.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
@@ -20,6 +21,7 @@ import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../../../student_app/screens/students_attendance_screen/students_attendance_screen.dart';
 import '../../../utils/providers_calls.dart';
 
 class HomeDashboard extends StatelessWidget {
@@ -33,7 +35,7 @@ class HomeDashboard extends StatelessWidget {
     var today = DateTime.now();
     bool future = timeLineProvider.currentDay
         .isAfter(DateTime(today.year, today.month, today.day + 1));
-    logger.e(future);
+    UserType userType = Providers.userPf(context).userModel!.userType;
 
     return PaddingWrapper(
       child: Column(
@@ -46,7 +48,12 @@ class HomeDashboard extends StatelessWidget {
                   title: 'Attendance',
                   iconName: 'attendance',
                   onTap: () {
-                    CNav.pushNamed(context, AttendanceScreen.routeName);
+                    if (userType == UserType.student) {
+                      CNav.pushNamed(
+                          context, StudentAttendanceScreen.routeName);
+                    } else {
+                      CNav.pushNamed(context, AttendanceScreen.routeName);
+                    }
                   },
                 ),
               DashboardItem(

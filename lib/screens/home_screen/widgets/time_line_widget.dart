@@ -22,20 +22,24 @@ class TimeLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final startDate = DateTime.now();
-    final endDate = startDate.add(Duration(days: 7));
-
     return PaddingWrapper(
       padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          for (var date = DateTime.now();
-              date.isBefore(endDate);
-              date = date.add(Duration(days: 1)))
-            Expanded(child: TimeLineItem(dateTime: date))
+          for (var date in dates) Expanded(child: TimeLineItem(dateTime: date))
         ],
       ),
     );
   }
+}
+
+List<DateTime> get dates {
+  final now = DateTime.now();
+  final beginningOfWeek = now.subtract(Duration(days: now.weekday - 1));
+
+  return List.generate(
+    7,
+    (index) => beginningOfWeek.add(Duration(days: index)),
+  );
 }

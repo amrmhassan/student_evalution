@@ -12,6 +12,7 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 class TimeLineTitle extends StatelessWidget {
   const TimeLineTitle({
@@ -20,6 +21,7 @@ class TimeLineTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currentDate = Providers.timeLP(context).currentDay;
     return PaddingWrapper(
       padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
       child: Row(
@@ -44,7 +46,7 @@ class TimeLineTitle extends StatelessWidget {
           ),
           HSpace(factor: .5),
           Text(
-            intl.DateFormat('MMM yyyy').format(DateTime.now()),
+            intl.DateFormat('dd, MMM yyyy').format(currentDate),
             style: h3LightTextStyle,
           ),
         ],

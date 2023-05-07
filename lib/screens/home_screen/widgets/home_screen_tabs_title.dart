@@ -8,12 +8,14 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_tab_item.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 class HomeScreenTabsTitle extends StatelessWidget {
   final HomeScreenContent content;
@@ -26,6 +28,7 @@ class HomeScreenTabsTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel userModel = Providers.userP(context).userModel!;
     return PaddingWrapper(
       child: Column(
         children: [
@@ -33,7 +36,9 @@ class HomeScreenTabsTitle extends StatelessWidget {
             children: [
               HomeScreenTabItem(
                 active: content == HomeScreenContent.updates,
-                title: 'Updates',
+                title: userModel.userType == UserType.student
+                    ? 'Reports'
+                    : 'Updates',
                 onTap: () {
                   setContent(HomeScreenContent.updates);
                 },
