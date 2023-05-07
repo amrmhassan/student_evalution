@@ -67,7 +67,7 @@ class Providers {
     return Provider.of<MessageProvider>(context);
   }
 
-  static StudentAttendProvider userAttendPf(BuildContext context) {
+  static StudentAttendProvider studentAttendPf(BuildContext context) {
     return Provider.of<StudentAttendProvider>(context, listen: false);
   }
 

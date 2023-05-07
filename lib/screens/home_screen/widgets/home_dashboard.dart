@@ -16,6 +16,7 @@ import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart'
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
+import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -68,7 +69,11 @@ class HomeDashboard extends StatelessWidget {
                   title: 'Behavior',
                   iconName: 'behaviour',
                   onTap: () {
-                    CNav.pushNamed(context, BehaviorScreen.routeName);
+                    if (userType == UserType.student) {
+                      CNav.pushNamed(context, StudentBehaviorScreen.routeName);
+                    } else {
+                      CNav.pushNamed(context, BehaviorScreen.routeName);
+                    }
                   },
                 ),
             ],

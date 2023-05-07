@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_screen_events.dart';
@@ -44,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var userProvider = Providers.userP(context);
+
     if (userProvider.userModel == null) {
       return Scaffold(
         body: Center(
@@ -84,14 +86,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         SizedBox(width: double.infinity),
                         VSpace(factor: 6),
-                        TopLineTimeLine(),
-                        VSpace(factor: .9),
-                        TimeLineTitle(),
-                        VSpace(factor: .9),
-                        TimeLineWidget(),
-                        VSpace(factor: .9),
-                        BottomLineTimeLine(),
-                        VSpace(),
+                        if (userProvider.userModel is TeacherModel)
+                          Column(
+                            children: [
+                              TopLineTimeLine(),
+                              VSpace(factor: .9),
+                              TimeLineTitle(),
+                              VSpace(factor: .9),
+                              TimeLineWidget(),
+                              VSpace(factor: .9),
+                              BottomLineTimeLine(),
+                              VSpace(),
+                            ],
+                          ),
                         Stack(
                           alignment: Alignment.topCenter,
                           children: [

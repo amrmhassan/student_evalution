@@ -11,6 +11,13 @@ class StudentAttendProvider extends ChangeNotifier {
   List<AttendanceModel> attendData = [];
   List<AttendanceMonthModel> months = [];
 
+  TeacherClass activeClass = TeacherClass.biology;
+
+  void setActiveClass(TeacherClass g) {
+    activeClass = g;
+    notifyListeners();
+  }
+
   var loading = false;
   Future<void> loadAttendData(StudentModel studentModel) async {
     try {
@@ -20,6 +27,7 @@ class StudentAttendProvider extends ChangeNotifier {
       var docs = (await FirebaseFirestore.instance
               .collection(DBCollections.attendance)
               .where(ModelsFields.userId, isEqualTo: studentModel.uid)
+              .where(ModelsFields.teacherClass, isEqualTo: activeClass.name)
               .get())
           .docs;
       for (var doc in docs) {
