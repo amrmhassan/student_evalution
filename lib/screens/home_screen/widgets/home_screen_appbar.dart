@@ -9,7 +9,6 @@ import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
-import 'package:student_evaluation/screens/loading_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';

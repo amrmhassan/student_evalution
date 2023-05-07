@@ -9,7 +9,8 @@ import 'package:student_evaluation/transformers/models_fields.dart';
 
 class StudentAttendProvider extends ChangeNotifier {
   List<AttendanceModel> attendData = [];
-  List<AttendanceMonthModel> months = [];
+  final List<AttendanceMonthModel> _months = [];
+  List<AttendanceMonthModel> get months => [..._months.reversed];
 
   TeacherClass activeClass = TeacherClass.biology;
 
@@ -45,11 +46,11 @@ class StudentAttendProvider extends ChangeNotifier {
   }
 
   void _calcAttendance() {
-    months.clear();
+    _months.clear();
     var copiedData = [...attendData];
     var nullModel = AttendanceModel(
       id: 'id',
-      day: '2020-05-06',
+      day: DateFormat('yyy-MM-dd').format(DateTime(1900)),
       state: AttendanceState.absent,
       userId: 'userId',
       studentGrade: StudentGrade.k1SectionA,
@@ -79,14 +80,15 @@ class StudentAttendProvider extends ChangeNotifier {
           month: currentMonth,
           attended: attended,
         );
-        months.add(model);
+        _months.add(model);
         currentMonth = month;
-        attended = 0;
+        attended = 1;
       } else {
         // here just increment counter
         attended++;
       }
     }
+
     notifyListeners();
   }
 }
