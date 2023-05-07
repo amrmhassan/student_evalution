@@ -48,6 +48,8 @@ class UserProvider extends ChangeNotifier with UserMixin {
         email: email,
         password: password,
       );
+      loggingIn = false;
+      notifyListeners();
     } catch (e) {
       loggingIn = false;
       notifyListeners();

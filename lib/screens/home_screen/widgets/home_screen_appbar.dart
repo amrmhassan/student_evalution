@@ -1,12 +1,15 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:ui';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
+import 'package:student_evaluation/screens/loading_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
@@ -38,8 +41,9 @@ class HAppBarActions extends StatelessWidget {
             ),
             HSpace(factor: .7),
             IconButton(
-              onPressed: () {
-                Providers.userPf(context).logout();
+              onPressed: () async {
+                await Providers.userPf(context).logout();
+                CNav.pushReplacementNamed(context, IntroScreen.routeName);
               },
               icon: Image.asset(
                 'assets/icons/icon_other.png',
