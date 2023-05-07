@@ -26,7 +26,7 @@ class AttendanceCard extends StatelessWidget {
     var attendProvider = Providers.attendP(context);
     var attendModel =
         attendProvider.getAttendanceModelByUserId(userId: userModel.uid);
-    AttendanceState state = attendModel?.state ?? AttendanceState.absent;
+    AttendanceState? state = attendModel?.state;
 
     return Container(
       margin: EdgeInsets.only(

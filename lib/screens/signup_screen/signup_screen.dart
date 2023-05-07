@@ -34,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController imageLinkController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
   UserType userType = UserType.student;
   StudentGrade studentGrade = StudentGrade.values.first;
   TeacherClass teacherClass = TeacherClass.values.first;
@@ -100,6 +101,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 title: 'Enter image link',
                 backgroundColor: Colors.white,
                 controller: imageLinkController,
+                enabled: !loading,
+              ),
+              VSpace(factor: .5),
+              CustomTextField(
+                padding: EdgeInsets.zero,
+                title: 'Enter Mobile number',
+                backgroundColor: Colors.white,
+                controller: mobileNumberController,
                 enabled: !loading,
               ),
               VSpace(factor: .5),
@@ -204,6 +213,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   String password = passwordController.text;
                   String name = nameController.text;
                   String imageLink = imageLinkController.text;
+                  String mobileNumber = mobileNumberController.text;
                   signUp(
                     email: email,
                     password: password,
@@ -212,6 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     uType: userType,
                     sGrade: studentGrade,
                     tClass: teacherClass,
+                    mobileNumber: mobileNumber,
                   );
                 },
                 child: Text(
@@ -251,6 +262,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           uType: user.userType,
           sGrade: StudentGrade.k1SectionA,
           tClass: TeacherClass.biology,
+          mobileNumber: user.mobileNumber,
         );
       } else if (user is TeacherModel) {
         await signUp(
@@ -261,6 +273,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           uType: user.userType,
           sGrade: StudentGrade.k1SectionA,
           tClass: user.teacherClass,
+          mobileNumber: user.mobileNumber,
         );
       } else if (user is StudentModel) {
         await signUp(
@@ -271,6 +284,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           uType: user.userType,
           sGrade: user.studentGrade,
           tClass: TeacherClass.biology,
+          mobileNumber: user.mobileNumber,
         );
       }
     }
@@ -299,14 +313,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return emailError == null && passwordError == null && nameError == null;
   }
 
-  Future<void> signUp(
-      {required String email,
-      required String password,
-      required String name,
-      required String? imageLink,
-      required UserType uType,
-      required StudentGrade sGrade,
-      required TeacherClass tClass}) async {
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String name,
+    required String? imageLink,
+    required UserType uType,
+    required StudentGrade sGrade,
+    required TeacherClass tClass,
+    required String mobileNumber,
+  }) async {
     setState(() {
       loading = true;
       clicked = true;
@@ -348,6 +364,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         teacherClass: tClass,
         studentGrade: sGrade,
         userImage: imageLink,
+        mobileNumber: mobileNumber,
       );
       await FirebaseFirestore.instance
           .collection(DBCollections.users)

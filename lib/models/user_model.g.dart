@@ -22,6 +22,7 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       uid: fields[0] as String,
       userImage: fields[3] as String?,
       studentGrade: fields[5] as StudentGrade,
+      mobileNumber: defaultMobileNumber,
     );
   }
 
@@ -70,6 +71,7 @@ class TeacherModelAdapter extends TypeAdapter<TeacherModel> {
       uid: fields[0] as String,
       userImage: fields[3] as String?,
       teacherClass: fields[5] as TeacherClass,
+      mobileNumber: defaultMobileNumber,
     );
   }
 
@@ -117,6 +119,7 @@ class AdminModelAdapter extends TypeAdapter<AdminModel> {
       name: fields[2] as String,
       uid: fields[0] as String,
       userImage: fields[3] as String?,
+      mobileNumber: defaultMobileNumber,
     );
   }
 
@@ -206,6 +209,14 @@ class StudentGradeAdapter extends TypeAdapter<StudentGrade> {
         return StudentGrade.k2SectionA;
       case 3:
         return StudentGrade.k2SectionB;
+      case 4:
+        return StudentGrade.seniorSectionA;
+      case 5:
+        return StudentGrade.seniorSectionB;
+      case 6:
+        return StudentGrade.juniorSectionA;
+      case 7:
+        return StudentGrade.juniorSectionB;
       default:
         return StudentGrade.k1SectionA;
     }
@@ -225,6 +236,18 @@ class StudentGradeAdapter extends TypeAdapter<StudentGrade> {
         break;
       case StudentGrade.k2SectionB:
         writer.writeByte(3);
+        break;
+      case StudentGrade.seniorSectionA:
+        writer.writeByte(4);
+        break;
+      case StudentGrade.seniorSectionB:
+        writer.writeByte(5);
+        break;
+      case StudentGrade.juniorSectionA:
+        writer.writeByte(6);
+        break;
+      case StudentGrade.juniorSectionB:
+        writer.writeByte(7);
         break;
     }
   }

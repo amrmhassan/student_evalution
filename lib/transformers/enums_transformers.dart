@@ -10,7 +10,16 @@ String gradeTransformer(StudentGrade grade) {
     return 'K2 Section A';
   } else if (grade == StudentGrade.k2SectionB) {
     return 'K2 Section B';
+  } else if (grade == StudentGrade.seniorSectionA) {
+    return 'Senior Section A';
+  } else if (grade == StudentGrade.seniorSectionB) {
+    return 'Senior Section B';
+  } else if (grade == StudentGrade.juniorSectionA) {
+    return 'Junior Section A';
+  } else if (grade == StudentGrade.juniorSectionB) {
+    return 'Junior Section B';
   }
+
   return 'please add this grade transformer';
 }
 

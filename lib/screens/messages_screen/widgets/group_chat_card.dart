@@ -34,6 +34,7 @@ class GroupChatCard extends StatelessWidget {
           name: groupDataModel.name,
           uid: '',
           userImage: null,
+          mobileNumber: '',
         );
         CNav.pushNamed(context, ChatScreen.routeName, arguments: {
           'roomId': groupDataModel.id,

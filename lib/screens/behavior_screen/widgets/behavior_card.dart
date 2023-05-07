@@ -26,7 +26,7 @@ class BehaviorCard extends StatelessWidget {
     var behaveProvider = Providers.behaveP(context);
     var attendModel =
         behaveProvider.getBehaviourModelByUserId(userId: userModel.uid);
-    BehaviorState state = attendModel?.state ?? BehaviorState.active;
+    BehaviorState? state = attendModel?.state;
 
     return Container(
       margin: EdgeInsets.only(

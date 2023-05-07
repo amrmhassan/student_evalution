@@ -9,6 +9,7 @@ class FakeUsers {
       name: 'Admin',
       uid: 'kdjfklaj',
       userImage: null,
+      mobileNumber: defaultMobileNumber,
     ),
     TeacherModel(
       email: 'teacher@$emailSuffix',
@@ -16,6 +17,7 @@ class FakeUsers {
       uid: ';lfkj',
       userImage: null,
       teacherClass: TeacherClass.biology,
+      mobileNumber: defaultMobileNumber,
     ),
     StudentModel(
       email: 'student1@$emailSuffix',
@@ -23,6 +25,7 @@ class FakeUsers {
       uid: ';s;adjfal;',
       userImage: null,
       studentGrade: StudentGrade.k1SectionA,
+      mobileNumber: defaultMobileNumber,
     ),
     StudentModel(
       email: 'student2@$emailSuffix',
@@ -30,6 +33,7 @@ class FakeUsers {
       uid: ';fadhfa',
       userImage: null,
       studentGrade: StudentGrade.k1SectionB,
+      mobileNumber: defaultMobileNumber,
     ),
     StudentModel(
       email: 'student3@$emailSuffix',
@@ -37,6 +41,7 @@ class FakeUsers {
       uid: ';s;akdjfla;',
       userImage: null,
       studentGrade: StudentGrade.k2SectionA,
+      mobileNumber: defaultMobileNumber,
     ),
     StudentModel(
       email: 'student4@$emailSuffix',
@@ -44,6 +49,7 @@ class FakeUsers {
       uid: ';adlkfj',
       userImage: null,
       studentGrade: StudentGrade.k2SectionB,
+      mobileNumber: defaultMobileNumber,
     ),
   ];
 }

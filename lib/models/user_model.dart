@@ -5,6 +5,7 @@ import '../utils/global_utils.dart';
 
 part 'user_model.g.dart';
 
+String defaultMobileNumber = '011********';
 //! add address
 //! add phone
 
@@ -28,6 +29,14 @@ enum StudentGrade {
   k2SectionA,
   @HiveField(3)
   k2SectionB,
+  @HiveField(4)
+  seniorSectionA,
+  @HiveField(5)
+  seniorSectionB,
+  @HiveField(6)
+  juniorSectionA,
+  @HiveField(7)
+  juniorSectionB,
 }
 
 @HiveType(typeId: 3)
@@ -52,6 +61,8 @@ abstract class UserModel {
   final String? userImage;
   @HiveField(4)
   final UserType userType;
+  @HiveField(5)
+  final String mobileNumber;
 
   const UserModel({
     required this.email,
@@ -59,6 +70,7 @@ abstract class UserModel {
     required this.uid,
     required this.userImage,
     required this.userType,
+    required this.mobileNumber,
   });
 
   Map<String, dynamic> toJSON();
@@ -85,6 +97,7 @@ abstract class UserModel {
     required TeacherClass teacherClass,
     required StudentGrade studentGrade,
     required String? userImage,
+    required String mobileNumber,
   }) {
     if (userType == UserType.admin) {
       return AdminModel(
@@ -92,6 +105,7 @@ abstract class UserModel {
         name: name,
         uid: uid,
         userImage: userImage,
+        mobileNumber: mobileNumber,
       );
     } else if (userType == UserType.teacher) {
       return TeacherModel(
@@ -100,6 +114,7 @@ abstract class UserModel {
         uid: uid,
         userImage: userImage,
         teacherClass: teacherClass,
+        mobileNumber: mobileNumber,
       );
     } else {
       return StudentModel(
@@ -108,6 +123,7 @@ abstract class UserModel {
         uid: uid,
         userImage: userImage,
         studentGrade: studentGrade,
+        mobileNumber: mobileNumber,
       );
     }
   }
@@ -121,6 +137,7 @@ class StudentModel extends UserModel {
     required String email,
     required String name,
     required String uid,
+    required String mobileNumber,
     required String? userImage,
     required this.studentGrade,
   }) : super(
@@ -129,6 +146,7 @@ class StudentModel extends UserModel {
           uid: uid,
           userImage: userImage,
           userType: UserType.student,
+          mobileNumber: mobileNumber,
         );
 
   @override
@@ -153,6 +171,7 @@ class StudentModel extends UserModel {
         obj[ModelsFields.studentGrade],
         StudentGrade.values,
       ),
+      mobileNumber: obj[ModelsFields.mobileNumber] ?? defaultMobileNumber,
     );
   }
 }
@@ -167,12 +186,14 @@ class TeacherModel extends UserModel {
     required String uid,
     required String? userImage,
     required this.teacherClass,
+    required String mobileNumber,
   }) : super(
           email: email,
           name: name,
           uid: uid,
           userImage: userImage,
           userType: UserType.teacher,
+          mobileNumber: mobileNumber,
         );
 
   @override
@@ -197,6 +218,7 @@ class TeacherModel extends UserModel {
         obj[ModelsFields.teacherClass],
         TeacherClass.values,
       ),
+      mobileNumber: obj[ModelsFields.mobileNumber] ?? defaultMobileNumber,
     );
   }
 }
@@ -208,12 +230,14 @@ class AdminModel extends UserModel {
     required String name,
     required String uid,
     required String? userImage,
+    required String mobileNumber,
   }) : super(
           email: email,
           name: name,
           uid: uid,
           userImage: userImage,
           userType: UserType.admin,
+          mobileNumber: mobileNumber,
         );
 
   @override
@@ -233,6 +257,7 @@ class AdminModel extends UserModel {
       name: obj[ModelsFields.name],
       uid: obj[ModelsFields.uid],
       userImage: obj[ModelsFields.userImage],
+      mobileNumber: obj[ModelsFields.mobileNumber] ?? defaultMobileNumber,
     );
   }
 }

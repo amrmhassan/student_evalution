@@ -8,6 +8,8 @@ import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 
+//! make the default state to be null
+//! add select all
 class AttendanceProvider extends ChangeNotifier {
   bool loadingAttendance = false;
   StudentGrade activeGrade = StudentGrade.k1SectionA;
