@@ -3,10 +3,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/models/home_work_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/transformers/remote_storage.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:uuid/uuid.dart';
 
 import '../transformers/collections.dart';
@@ -97,6 +100,10 @@ class HomeWorkProvider extends ChangeNotifier {
 
   Future<void> uploadDocument(File file) async {
     try {
+      if (taskSnapshot != null) {
+        await taskSnapshot!.ref.delete();
+        taskSnapshot = null;
+      }
       String docID = Uuid().v4();
       uploadingDocument = true;
       notifyListeners();
@@ -119,6 +126,44 @@ class HomeWorkProvider extends ChangeNotifier {
 
   void clearUploadedDoc() async {
     await taskSnapshot?.ref.delete();
+    documentLink = null;
+    documentName = null;
+    taskSnapshot = null;
+    notifyListeners();
+  }
+
+  Future<void> sendHomeWork(TeacherClass teacherClass) async {
+    sendingHomeWork = true;
+    notifyListeners();
+    String id = Uuid().v4();
+    if (endDate.isBefore(startDate)) {
+      throw Exception('Start date is after end data');
+    }
+    if (assignedUsersIDs.isEmpty) {
+      throw Exception('Please assign the home work to at least one student');
+    }
+    if (documentLink == null && description == null) {
+      throw Exception('Please set either a description or a document');
+    }
+    HomeWorkModel homeWorkModel = HomeWorkModel(
+      id: id,
+      day: GlobalUtils.dateToString(DateTime.now()),
+      studentGrade: activeGrade,
+      teacherClass: teacherClass,
+      documentLink: documentLink,
+      description: description,
+      startDate: GlobalUtils.dateToString(startDate),
+      endDate: GlobalUtils.dateToString(endDate),
+      usersIds: assignedUsersIDs,
+    );
+    await FirebaseDatabase.instance
+        .ref(DBCollections.homeWorks)
+        .child(activeGrade.name)
+        .child(id)
+        .set(homeWorkModel.toJSON());
+    assignedUsersIDs.clear();
+    gradeUsers.clear();
+    sendingHomeWork = false;
     documentLink = null;
     documentName = null;
     taskSnapshot = null;

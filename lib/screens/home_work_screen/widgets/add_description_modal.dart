@@ -49,7 +49,7 @@ class _AddDescriptionModalState extends State<AddDescriptionModal> {
             title: 'Description',
             padding: EdgeInsets.zero,
             borderColor: Colors.transparent,
-            backgroundColor: colorTheme.inActiveText.withOpacity(.1),
+            backgroundColor: colorTheme.backGround,
             maxLines: 1,
             textInputType: TextInputType.multiline,
             textInputAction: TextInputAction.newline,

@@ -1,5 +1,6 @@
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
 
 class HomeWorkModel {
   String? id;
@@ -36,5 +37,26 @@ class HomeWorkModel {
       ModelsFields.endDate: endDate,
       ModelsFields.usersIds: usersIds,
     };
+  }
+
+  static HomeWorkModel fromJSON(Map<String, dynamic> obj) {
+    List<String> fetchedUserIds = (obj[ModelsFields.usersIds] as List).cast();
+    return HomeWorkModel(
+      id: obj[ModelsFields.id],
+      day: obj[ModelsFields.day],
+      studentGrade: GlobalUtils.stringToEnum(
+        obj[ModelsFields.studentGrade],
+        StudentGrade.values,
+      ),
+      teacherClass: GlobalUtils.stringToEnum(
+        obj[ModelsFields.teacherClass],
+        TeacherClass.values,
+      ),
+      documentLink: obj[ModelsFields.documentLink],
+      description: obj[ModelsFields.description],
+      startDate: obj[ModelsFields.startDate],
+      endDate: obj[ModelsFields.endDate],
+      usersIds: fetchedUserIds,
+    );
   }
 }

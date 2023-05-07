@@ -1,9 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/core/navigation.dart';
+import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
@@ -15,6 +18,7 @@ import 'package:student_evaluation/screens/home_work_screen/widgets/upload_doc_c
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
 
 import '../../utils/providers_calls.dart';
 import '../home_screen/widgets/home_screen_appbar.dart';
@@ -150,8 +154,37 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                               onTap: () {},
                                             ),
                                             ApplyAttendanceButton(
+                                              active: !homeWProvider
+                                                  .sendingHomeWork,
                                               title: 'Send',
-                                              onTap: () {},
+                                              onTap: () async {
+                                                try {
+                                                  TeacherClass teacherClass =
+                                                      (Providers.userPf(context)
+                                                                  .userModel
+                                                              as TeacherModel)
+                                                          .teacherClass;
+                                                  await Providers.homeWPf(
+                                                          context)
+                                                      .sendHomeWork(
+                                                          teacherClass);
+                                                  GlobalUtils.showSnackBar(
+                                                    context: context,
+                                                    message:
+                                                        'Home work assigned',
+                                                    snackBarType:
+                                                        SnackBarType.success,
+                                                  );
+                                                  CNav.pop(context);
+                                                } catch (e) {
+                                                  GlobalUtils.showSnackBar(
+                                                    context: context,
+                                                    message: e.toString(),
+                                                    snackBarType:
+                                                        SnackBarType.error,
+                                                  );
+                                                }
+                                              },
                                             ),
                                           ],
                                         ),

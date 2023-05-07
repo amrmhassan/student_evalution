@@ -9,18 +9,25 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 class ApplyAttendanceButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final bool active;
   const ApplyAttendanceButton({
     super.key,
     required this.title,
     required this.onTap,
+    this.active = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
+      active: active,
       onTap: onTap,
       decoration: BoxDecoration(
-        color: colorTheme.kBlueColor,
+        color: active
+            ? colorTheme.kBlueColor
+            : colorTheme.kBlueColor.withOpacity(
+                .5,
+              ),
         borderRadius: BorderRadius.circular(
           mediumBorderRadius,
         ),
