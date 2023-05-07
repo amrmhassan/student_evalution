@@ -124,7 +124,10 @@ class MessageProvider extends ChangeNotifier with UserMixin {
 
     await sendMessage(
       roomId: roomId,
-      messageModel: firstServerMessage,
+      content: firstServerMessage.content,
+      messageType: firstServerMessage.messageType,
+      receiverId: firstServerMessage.receiverID,
+      senderId: firstServerMessage.senderID,
     );
 
     // creating a room path to watch messages
@@ -134,8 +137,22 @@ class MessageProvider extends ChangeNotifier with UserMixin {
 
   Future<String> sendMessage({
     required String roomId,
-    required MessageModel messageModel,
+    required String senderId,
+    required String receiverId,
+    required String content,
+    required MessageType messageType,
   }) async {
+    String msgId = Uuid().v4();
+    DateTime createdAt = DateTime.now();
+
+    MessageModel messageModel = MessageModel(
+      id: msgId,
+      createdAt: createdAt,
+      senderID: senderId,
+      receiverID: receiverId,
+      content: content,
+      messageType: messageType,
+    );
     var res = FirebaseDatabase.instance
         .ref(DBCollections.getRef([DBCollections.rooms]))
         .child(roomId)

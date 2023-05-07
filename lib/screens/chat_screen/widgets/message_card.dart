@@ -1,11 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
-import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
-import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/models/message_model.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/server_msg.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';

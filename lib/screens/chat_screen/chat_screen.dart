@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
@@ -14,7 +15,9 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/models/message_model.dart';
+import 'package:student_evaluation/models/room_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/message_card.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/send_msg_box.dart';
@@ -52,18 +55,21 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   FocusNode focusNode = FocusNode();
   bool loadingMessages = false;
   StreamSubscription? messagesListener;
+  StreamSubscription? keyboardListener;
   List<MessageModel> messages = [];
   UserModel? otherUser;
+  String? roomId;
 
   @override
   void initState() {
-    scrollToEnd();
     loadMessages();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      focusNode.addListener(() {
-        scrollToEnd();
-      });
-    });
+    _listenToKeyboardVisibility();
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   focusNode.addListener(() {
+    //     print('object');
+    //     scrollToEnd();
+    //   });
+    // });
 
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -73,6 +79,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   void dispose() {
     controller.dispose();
     messagesListener?.cancel();
+    keyboardListener?.cancel();
     super.dispose();
   }
 
@@ -81,6 +88,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: colorTheme.backGround,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         foregroundColor: Colors.white,
         elevation: 0,
@@ -184,7 +192,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                 ],
               ),
             ),
-            SendMessageBox(focusNode: focusNode),
+            if (roomId != null)
+              SendMessageBox(
+                focusNode: focusNode,
+                roomId: roomId!,
+              ),
           ],
         ),
       ),
@@ -197,10 +209,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       String roomId = passedData['roomId'];
       setState(() {
+        this.roomId = roomId;
         loadingMessages = true;
       });
       setOtherUser();
       await loadAllMessages(roomId);
+      scrollToEnd();
 
       setState(() {
         loadingMessages = false;
@@ -218,12 +232,17 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         .onValue
         .listen((msgJson) {
       var test = (msgJson.snapshot.value as Map<dynamic, dynamic>);
+      var oneMsgJson = test.entries.first.value;
       Map<String, dynamic> data = {};
-      test.forEach((key, value) {
+      oneMsgJson.forEach((key, value) {
         data[key.toString()] = value;
       });
       MessageModel model = MessageModel.fromJSON(data);
-      messages.add(model);
+      if (messages.any((element) => element.id == model.id)) return;
+      setState(() {
+        messages.add(model);
+      });
+      scrollToEnd();
     });
   }
 
@@ -245,8 +264,11 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
 
   void scrollToEnd() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      double maxExtent = controller.position.maxScrollExtent;
+      var bottomHeight = MediaQuery.of(context).viewInsets.bottom;
+      logger.e('scrolling to ${maxExtent.toInt()} ${bottomHeight.toInt()}');
       controller.animateTo(
-        controller.position.maxScrollExtent,
+        maxExtent + bottomHeight,
         duration: Duration(milliseconds: 300),
         curve: Curves.bounceInOut,
       );
@@ -258,6 +280,18 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     setState(() {
       otherUser = data['user'];
+    });
+  }
+
+  void _listenToKeyboardVisibility() {
+    keyboardListener =
+        KeyboardVisibilityController().onChange.listen((bool visible) {
+      if (visible) {
+        if (!mounted) return;
+        setState(() {
+          scrollToEnd();
+        });
+      }
     });
   }
 }

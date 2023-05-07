@@ -57,6 +57,7 @@ dependencies:
   image_picker: ^0.8.7+4
   syncfusion_flutter_datepicker: ^21.2.3
   file_picker: ^5.2.11
+  flutter_keyboard_visibility: ^5.4.1
 
 
 dev_dependencies:
