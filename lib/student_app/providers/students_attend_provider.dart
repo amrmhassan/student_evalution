@@ -65,8 +65,6 @@ class StudentAttendProvider extends ChangeNotifier {
       ),
     );
     int attended = 0;
-    const int monthDays = 30;
-    const int holidays = 4;
 
     for (var data in copiedData) {
       String month = AttendanceMonthModel.dateConvert(
@@ -80,8 +78,6 @@ class StudentAttendProvider extends ChangeNotifier {
         AttendanceMonthModel model = AttendanceMonthModel(
           month: currentMonth,
           attended: attended,
-          monthDays: monthDays,
-          holidays: holidays,
         );
         months.add(model);
         currentMonth = month;

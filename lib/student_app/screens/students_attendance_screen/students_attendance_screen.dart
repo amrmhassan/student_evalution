@@ -230,8 +230,7 @@ class MonthAttendanceReportCard extends StatelessWidget {
                     child: CircularProgressIndicator(
                       strokeWidth: 5,
                       color: colorTheme.kBlueColor,
-                      value:
-                          model.attended / (model.monthDays - model.holidays),
+                      value: model.attended / (model.getWorkingDays),
                       // value: 1,
                     ),
                   ),
@@ -253,7 +252,7 @@ class MonthAttendanceReportCard extends StatelessWidget {
                   ),
                   VSpace(factor: .1),
                   Text(
-                    '${(model.monthDays - model.holidays)} days',
+                    '${(model.getWorkingDays)} days',
                     style: h4TextStyleInactive,
                   ),
                   VSpace(),
@@ -265,7 +264,7 @@ class MonthAttendanceReportCard extends StatelessWidget {
                   ),
                   VSpace(factor: .1),
                   Text(
-                    '${(model.holidays)} days',
+                    '${(model.getHolidaysDays)} days',
                     style: h4TextStyleInactive,
                   ),
                 ],
