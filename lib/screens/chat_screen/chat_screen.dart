@@ -17,6 +17,7 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/message_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/widgets/message_card.dart';
+import 'package:student_evaluation/screens/chat_screen/widgets/send_msg_box.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_navbar.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/home_dashboard.dart';
@@ -52,7 +53,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   bool loadingMessages = false;
   StreamSubscription? messagesListener;
   List<MessageModel> messages = [];
-  late UserModel otherUser;
+  UserModel? otherUser;
 
   @override
   void initState() {
@@ -79,6 +80,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: colorTheme.backGround,
       appBar: AppBar(
         foregroundColor: Colors.white,
         elevation: 0,
@@ -88,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Jasmine',
+              otherUser?.name ?? '...',
               style: h1LightTextStyle,
             ),
             Text(
@@ -102,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
           Row(
             children: [
               UserAvatar(
-                userImage: null,
+                userImage: otherUser?.userImage,
               ),
               HSpace(),
             ],
@@ -136,7 +138,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                             Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: colorTheme.backGround,
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(
                                     largeBorderRadius,
@@ -150,11 +152,26 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                                 children: [
                                   VSpace(factor: 1.5),
                                   VSpace(),
-                                  ...List.generate(
-                                    100,
-                                    (index) => MessageCard(
-                                      mine: Random().nextBool(),
+                                  Container(
+                                    color: colorTheme.backGround,
+                                    alignment: Alignment.topCenter,
+                                    constraints: BoxConstraints(
+                                      minHeight:
+                                          Responsive.getHeight(context) / 2,
                                     ),
+                                    child: loadingMessages
+                                        ? Center(
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 3,
+                                            ),
+                                          )
+                                        : Column(
+                                            children: messages
+                                                .map((e) => MessageCard(
+                                                      messageModel: e,
+                                                    ))
+                                                .toList(),
+                                          ),
                                   ),
                                 ],
                               ),
@@ -242,50 +259,5 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     setState(() {
       otherUser = data['user'];
     });
-  }
-}
-
-class SendMessageBox extends StatelessWidget {
-  const SendMessageBox({
-    super.key,
-    required this.focusNode,
-  });
-
-  final FocusNode focusNode;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: colorTheme.backGround,
-      padding: EdgeInsets.symmetric(
-        horizontal: kHPad,
-        vertical: kVPad / 2,
-      ),
-      child: CustomTextField(
-        focusNode: focusNode,
-        borderRadius: BorderRadius.circular(1000),
-        backgroundColor: colorTheme.kBlueColor,
-        hintStyle: h4LightTextStyle.copyWith(
-          color: Colors.white.withOpacity(
-            .7,
-          ),
-        ),
-        textStyle: h4LightTextStyle,
-        padding: EdgeInsets.zero,
-        title: 'Type Something...',
-        color: colorTheme.kBlueColor,
-        trailingIcon: ButtonWrapper(
-          padding: EdgeInsets.all(largePadding),
-          borderRadius: 1000,
-          onTap: () {},
-          backgroundColor: colorTheme.kBlueColor,
-          child: Icon(
-            Icons.send,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
   }
 }

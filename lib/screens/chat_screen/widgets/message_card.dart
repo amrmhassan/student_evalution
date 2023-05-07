@@ -4,6 +4,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
+import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
+import 'package:student_evaluation/models/message_model.dart';
+import 'package:student_evaluation/screens/chat_screen/widgets/server_msg.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../fast_tools/helpers/responsive.dart';
 import '../../../fast_tools/widgets/h_space.dart';
@@ -12,15 +17,23 @@ import '../../../theming/constants/styles.dart';
 import '../../../theming/theme_calls.dart';
 
 class MessageCard extends StatelessWidget {
-  final bool mine;
+  final MessageModel messageModel;
 
   const MessageCard({
     super.key,
-    required this.mine,
+    required this.messageModel,
   });
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Providers.userP(context);
+    String myId = userProvider.userModel!.uid;
+    bool mine = messageModel.senderID == myId;
+
+    if (messageModel.messageType == MessageType.server) {
+      return ServerMsg(messageModel: messageModel);
+    }
+
     return Row(
       textDirection: mine ? TextDirection.rtl : null,
       children: [
@@ -63,10 +76,7 @@ class MessageCard extends StatelessWidget {
               maxWidth: Responsive.getWidth(context) / 1.6,
             ),
             child: Text(
-              lorem(
-                paragraphs: Random().nextInt(5) + 1,
-                words: Random().nextInt(20) + 1,
-              ),
+              messageModel.content,
               style: h4TextStyleInactive.copyWith(
                 color: mine ? Colors.white : colorTheme.kBlueColor,
               ),
