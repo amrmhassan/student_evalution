@@ -107,10 +107,15 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                 : Column(
                                     children: [
                                       ChooseGradeSection(
-                                        afterChange: (grade) {},
+                                        afterChange: (grade) {
+                                          loadData();
+                                        },
                                         activeStudentGrade:
-                                            StudentGrade.k1SectionA,
-                                        onChangeGrade: (grade) {},
+                                            homeWProvider.activeGrade,
+                                        onChangeGrade: (grade) {
+                                          Providers.homeWPf(context)
+                                              .setActiveGrade(grade);
+                                        },
                                       ),
                                       VSpace(factor: .5),
                                       UploadDocumentCard(),

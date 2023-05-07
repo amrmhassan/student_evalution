@@ -1,37 +1,46 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/transformers/remote_storage.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 
 import '../transformers/collections.dart';
 import '../transformers/models_fields.dart';
+import 'package:path/path.dart' as path_utils;
 
 class HomeWorkProvider extends ChangeNotifier {
   bool loadingUsers = false;
   bool sendingHomeWork = false;
-  StudentGrade activeGrade = StudentGrade.k1SectionA;
+  //? document  info
+  bool uploadingDocument = false;
+  String? documentName;
+  int? documentSize;
   String? documentLink;
+
+  //? other home work info
+  StudentGrade activeGrade = StudentGrade.k1SectionA;
   String? description;
-  String startDate = GlobalUtils.dateToString(DateTime.now());
-  String endDate = GlobalUtils.dateToString(
-    DateTime.now().add(
-      Duration(
-        days: 2,
-      ),
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now().add(
+    Duration(
+      days: 2,
     ),
   );
   List<String> assignedUsersIDs = [];
   List<UserModel> gradeUsers = [];
 
   void setStartDate(DateTime d) {
-    startDate = GlobalUtils.dateToString(d);
+    startDate = d;
     notifyListeners();
   }
 
   void setEndDate(DateTime d) {
-    endDate = GlobalUtils.dateToString(d);
+    endDate = d;
     notifyListeners();
   }
 
@@ -66,6 +75,8 @@ class HomeWorkProvider extends ChangeNotifier {
 
   Future<void> loadUserGrades() async {
     loadingUsers = true;
+    gradeUsers.clear();
+    assignedUsersIDs.clear();
     notifyListeners();
     var docs = (await FirebaseFirestore.instance
             .collection(DBCollections.users)
@@ -80,6 +91,18 @@ class HomeWorkProvider extends ChangeNotifier {
       gradeUsers.add(u);
     }
     loadingUsers = false;
+    notifyListeners();
+  }
+
+  Future<void> uploadDocument(File file) async {
+    uploadingDocument = true;
+    notifyListeners();
+    var res = await FirebaseStorage.instance
+        .ref(RemoteStorage.homeWorkDocuments)
+        .putFile(file);
+    documentLink = await res.ref.getDownloadURL();
+    documentName = path_utils.basename(file.path);
+    uploadingDocument = false;
     notifyListeners();
   }
 }
