@@ -7,12 +7,14 @@ class UserAvatar extends StatelessWidget {
   final String? userImage;
   final bool group;
   final double radius;
+  final bool largeIcon;
 
   const UserAvatar({
     super.key,
     required this.userImage,
     this.group = false,
     this.radius = largeIconSize * 1.2,
+    this.largeIcon = false,
   });
 
   @override
@@ -33,10 +35,12 @@ class UserAvatar extends StatelessWidget {
               padding: EdgeInsets.all(smallPadding),
               child: Icon(
                 group ? Icons.group : Icons.person,
-                size: (radius - smallPadding * 2) > mediumIconSize
-                    ? mediumIconSize
-                    : (radius - smallPadding * 2),
-                color: Colors.black.withOpacity(.8),
+                size: largeIcon
+                    ? (radius - smallPadding * 7)
+                    : (radius - smallPadding * 2) > mediumIconSize
+                        ? mediumIconSize
+                        : (radius - smallPadding * 2),
+                color: Colors.black.withOpacity(.6),
               ),
             )
           : Image.network(

@@ -12,6 +12,7 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/navbar_item.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
+import 'package:student_evaluation/screens/settings_screen/settings_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -70,9 +71,10 @@ class BottomNavBar extends StatelessWidget {
           NavBarItem(
             title: 'Settings',
             iconName: 'setting',
-            active: appStateProvider.activeNavBarIndex == 3,
+            active: appStateProvider.activeNavBarIndex == 2,
             onTap: () {
-              Providers.appSPf(context).setActiveNavBar(3);
+              Providers.appSPf(context).setActiveNavBar(2);
+              CNav.pushReplacementNamed(context, SettingsScreen.routeName);
             },
           ),
         ],

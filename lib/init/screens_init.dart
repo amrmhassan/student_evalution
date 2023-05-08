@@ -9,6 +9,7 @@ import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dar
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
 import 'package:student_evaluation/screens/search_screen/search_screen.dart';
+import 'package:student_evaluation/screens/settings_screen/settings_screen.dart';
 import 'package:student_evaluation/screens/signup_screen/signup_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
@@ -37,6 +38,7 @@ class ScreensInit {
     CreateGroupsScreen.routeName: (context) => CreateGroupsScreen(),
     StudentAttendanceScreen.routeName: (context) => StudentAttendanceScreen(),
     StudentBehaviorScreen.routeName: (context) => StudentBehaviorScreen(),
+    SettingsScreen.routeName: (context) => SettingsScreen(),
   };
 
   static Widget? home = StreamBuilder(

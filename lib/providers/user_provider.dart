@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/mixins/user_mixins.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
+import 'package:student_evaluation/transformers/remote_storage.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
 
 import '../core/constants/global_constants.dart';
@@ -126,6 +130,58 @@ class UserProvider extends ChangeNotifier with UserMixin {
   //       .doc(userModel.uid)
   //       .set(userModel.toJSON());
   // }
+  Future<String> changeUserPhoto(File file) async {
+    UserModel me = userModel!;
+    // upload the image
+    var res = await FirebaseStorage.instance
+        .ref(RemoteStorage.usersImages)
+        .child(me.uid)
+        .putFile(file);
+    String imageLink = await res.ref.getDownloadURL();
+    // update the new user model locally in hive
+
+    late UserModel newMe;
+    if (me.userType == UserType.student) {
+      StudentModel oldMe = me as StudentModel;
+      newMe = StudentModel(
+        email: oldMe.email,
+        name: oldMe.name,
+        uid: oldMe.uid,
+        mobileNumber: oldMe.mobileNumber,
+        userImage: imageLink,
+        studentGrade: oldMe.studentGrade,
+      );
+    } else if (me.userType == UserType.teacher) {
+      TeacherModel oldMe = me as TeacherModel;
+      newMe = TeacherModel(
+        email: oldMe.email,
+        name: oldMe.name,
+        uid: oldMe.uid,
+        userImage: imageLink,
+        teacherClass: oldMe.teacherClass,
+        mobileNumber: oldMe.mobileNumber,
+      );
+    } else {
+      AdminModel oldMe = me as AdminModel;
+      newMe = AdminModel(
+        email: oldMe.email,
+        name: oldMe.name,
+        uid: oldMe.uid,
+        userImage: imageLink,
+        mobileNumber: oldMe.mobileNumber,
+      );
+    }
+    await _saveCurrentUserInfo(newMe);
+    userModel = newMe;
+    notifyListeners();
+    // save the updated user model version on firebase
+    await FirebaseFirestore.instance
+        .collection(DBCollections.users)
+        .doc(newMe.uid)
+        .set(newMe.toJSON());
+
+    return imageLink;
+  }
 
   //# validation
   String? emailError;
