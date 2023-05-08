@@ -64,6 +64,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     children: [
                       VSpace(),
                       Container(
+                        constraints: BoxConstraints(minHeight: 500),
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: colorTheme.backGround,
@@ -193,6 +194,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                                 title: 'Add',
                                                 onTap: () async {
                                                   try {
+                                                    if (titleController
+                                                        .text.isEmpty) {
+                                                      throw Exception(
+                                                        'title can\'t be empty',
+                                                      );
+                                                    }
                                                     var eventProviderFalse =
                                                         Providers.eventPf(
                                                             context);
