@@ -53,14 +53,20 @@ class HomeScreenUpdates extends StatelessWidget {
               TimeTableCard(
                 title: 'Science Class',
                 onTap: () {},
+                imageLink: null,
+                subTitle: 'This is a subtitle',
               ),
               TimeTableCard(
                 title: 'Biology Class',
                 onTap: () {},
+                imageLink: null,
+                subTitle: 'This is a subtitle',
               ),
               TimeTableCard(
                 title: 'Maths Class',
                 onTap: () {},
+                imageLink: null,
+                subTitle: 'This is a subtitle',
               ),
             ],
           ),

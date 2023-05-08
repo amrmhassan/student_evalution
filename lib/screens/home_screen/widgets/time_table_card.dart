@@ -17,6 +17,8 @@ import 'package:intl/intl.dart' as intl;
 class TimeTableCard extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
+  final String subTitle;
+  final String? imageLink;
   // final String desc;
   // final String imageURL;
 
@@ -24,6 +26,8 @@ class TimeTableCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
+    required this.imageLink,
+    required this.subTitle,
     // required this.desc,
     // required this.imageURL,
   });
@@ -57,29 +61,44 @@ class TimeTableCard extends StatelessWidget {
                 mediumBorderRadius,
               ),
             ),
-            child: Image.network(
-              'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-              width: largeIconSize * 2,
-              height: largeIconSize * 2,
-              fit: BoxFit.cover,
-            ),
+            child: imageLink == null
+                ? Container(
+                    width: largeIconSize * 2,
+                    height: largeIconSize * 2,
+                    color: Colors.grey.withOpacity(.3),
+                    child: Icon(
+                      Icons.photo,
+                      size: largeIconSize,
+                      color: Colors.grey,
+                    ),
+                  )
+                : Image.network(
+                    imageLink!,
+                    width: largeIconSize * 2,
+                    height: largeIconSize * 2,
+                    fit: BoxFit.cover,
+                  ),
           ),
           HSpace(factor: .8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: h3TextStyle,
-              ),
-              VSpace(factor: .4),
-              Text(
-                '6th class B Section | 12:00PM',
-                style: h4TextStyleInactive,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: double.infinity),
+                Text(
+                  title,
+                  style: h3TextStyle,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                VSpace(factor: .4),
+                Text(
+                  subTitle,
+                  style: h4TextStyleInactive,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
-          Spacer(),
           Icon(
             FontAwesomeIcons.chevronRight,
             size: smallIconSize,

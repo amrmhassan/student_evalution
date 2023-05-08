@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/data/fake_events.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
@@ -38,23 +39,19 @@ class HomeScreenEvents extends StatelessWidget {
             ],
           ),
           // VSpace(factor: .4),
-          TimeTableCard(
-            title: 'Personal Trainings',
-            onTap: () {
-              CNav.pushNamed(context, EventScreen.routeName);
-            },
-          ),
-          TimeTableCard(
-            title: 'Yoga',
-            onTap: () {
-              CNav.pushNamed(context, EventScreen.routeName);
-            },
-          ),
-          TimeTableCard(
-            title: 'Stretch',
-            onTap: () {
-              CNav.pushNamed(context, EventScreen.routeName);
-            },
+          ...FakeEvents.events.map(
+            (e) => TimeTableCard(
+              title: e.title,
+              subTitle: e.subTitle,
+              imageLink: e.imageLink,
+              onTap: () {
+                CNav.pushNamed(
+                  context,
+                  EventScreen.routeName,
+                  arguments: e,
+                );
+              },
+            ),
           ),
         ],
       ),

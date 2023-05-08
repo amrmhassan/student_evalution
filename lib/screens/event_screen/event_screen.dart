@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:intl/intl.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/models/events_model.dart';
+import 'package:student_evaluation/screens/event_screen/widgets/event_info_item.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -17,6 +18,8 @@ class EventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    EventModel eventModel =
+        ModalRoute.of(context)!.settings.arguments as EventModel;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -25,7 +28,7 @@ class EventScreen extends StatelessWidget {
         flexibleSpace: HAppBarFlexibleArea(),
         foregroundColor: Colors.white,
         title: Text(
-          'Event Yoga',
+          eventModel.title,
           style: h1TextStyle.copyWith(
             color: Colors.white,
           ),
@@ -63,30 +66,31 @@ class EventScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             VSpace(),
-                            Container(
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  mediumBorderRadius,
+                            if (eventModel.imageLink != null)
+                              Container(
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    mediumBorderRadius,
+                                  ),
+                                ),
+                                child: Image.network(
+                                  eventModel.imageLink!,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
                                 ),
                               ),
-                              child: Image.network(
-                                'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                              ),
-                            ),
                             VSpace(),
                             EventInfoItem(
                               title: 'Event Date',
                               value: DateFormat('dd/MM/yyyy | hh:mm aa').format(
-                                DateTime.now(),
+                                eventModel.date,
                               ),
                             ),
                             VSpace(),
                             EventInfoItem(
                               title: 'Place',
-                              value: 'Yoga section in Madag club',
+                              value: eventModel.place,
                             ),
                             VSpace(),
                             Text(
@@ -94,7 +98,7 @@ class EventScreen extends StatelessWidget {
                               style: h2TextStyle,
                             ),
                             Text(
-                              lorem(paragraphs: 2, words: 100),
+                              eventModel.details,
                             ),
                             VSpace(),
                             Text(
@@ -102,7 +106,7 @@ class EventScreen extends StatelessWidget {
                               style: h2TextStyle,
                             ),
                             Text(
-                              lorem(paragraphs: 2, words: 20),
+                              eventModel.notes,
                             ),
                             VSpace(),
                           ],
@@ -116,33 +120,6 @@ class EventScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class EventInfoItem extends StatelessWidget {
-  final String title;
-  final String value;
-  const EventInfoItem({
-    super.key,
-    required this.title,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: h2TextStyle,
-        ),
-        Spacer(),
-        Text(
-          value,
-          style: h3InactiveTextStyle,
-        ),
-      ],
     );
   }
 }
