@@ -75,7 +75,7 @@ class AddEventImage extends StatelessWidget {
                 ],
               ),
             )
-          : eventProvider.imageName == null
+          : eventProvider.imageLink == null
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

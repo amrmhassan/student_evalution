@@ -22,7 +22,7 @@ class EventModel {
     required this.notes,
     required this.creatorId,
   });
-  String get subTitle => DateFormat('MMM dd HH:mm').format(date);
+  String get subTitle => DateFormat('MMM dd | HH:mm').format(date);
 
   Map<String, dynamic> toJSON() {
     return {

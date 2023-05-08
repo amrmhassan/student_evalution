@@ -48,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (userProvider.userModel == null) {
       return Scaffold(
+        backgroundColor: colorTheme.backGround,
         body: Center(
           child: CircularProgressIndicator(
             strokeWidth: 2,
@@ -56,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     return Scaffold(
+      backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -108,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorTheme.backGround,
                                       borderRadius: BorderRadius.only(
                                         topLeft:
                                             Radius.circular(largeBorderRadius),

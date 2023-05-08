@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:student_evaluation/models/events_model.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/remote_storage.dart';
@@ -13,7 +12,6 @@ import 'package:uuid/uuid.dart';
 
 class EventProvider extends ChangeNotifier {
   String? imageLink;
-  String? imageName;
   TaskSnapshot? imageRef;
 
   DateTime date = DateTime.now();
@@ -56,6 +54,7 @@ class EventProvider extends ChangeNotifier {
         EventModel eventModel = EventModel.fromJson(doc.data());
         _events.add(eventModel);
       }
+      _events.sort((a, b) => a.date.compareTo(b.date));
       loadingEvents = false;
       notifyListeners();
     } catch (e) {
@@ -96,6 +95,8 @@ class EventProvider extends ChangeNotifier {
     uploadingEvent = false;
 
     notifyListeners();
+    imageLink = null;
+    imageRef = null;
 
     return eventModel;
   }
@@ -111,14 +112,12 @@ class EventProvider extends ChangeNotifier {
     String imageLink = await ref.ref.getDownloadURL();
     uploadingEventImage = false;
     this.imageLink = imageLink;
-    imageName = basename(file.path);
     notifyListeners();
     return imageLink;
   }
 
   Future<void> clearEventImage() async {
     imageLink = null;
-    imageName = null;
     await imageRef?.ref.delete();
     imageRef = null;
     notifyListeners();
