@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:student_evaluation/constants/global_constants.dart';
+import 'package:student_evaluation/core/constants/global_constants.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';

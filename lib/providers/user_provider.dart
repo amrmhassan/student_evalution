@@ -5,7 +5,7 @@ import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
 
-import '../constants/global_constants.dart';
+import '../core/constants/global_constants.dart';
 import '../core/hive/hive_helper.dart';
 import '../init/runtime_variables.dart';
 import '../models/user_model.dart';

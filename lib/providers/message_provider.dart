@@ -13,7 +13,7 @@ import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:uuid/uuid.dart';
 
-import '../constants/global_constants.dart';
+import '../core/constants/global_constants.dart';
 import '../init/runtime_variables.dart';
 import '../transformers/enums_transformers.dart';
 
@@ -64,7 +64,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
         ]))
         .get();
     for (var room in res.children) {
-      var value = room.value;
+      var value = (room.value as Map)['otherUser'];
       // if exists then return and never create a new one
       if (value == consumerId) return room.key!;
     }

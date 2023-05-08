@@ -1,4 +1,4 @@
-import 'package:student_evaluation/constants/global_constants.dart';
+import 'package:student_evaluation/core/constants/global_constants.dart';
 import 'package:student_evaluation/models/user_model.dart';
 
 class FakeUsers {

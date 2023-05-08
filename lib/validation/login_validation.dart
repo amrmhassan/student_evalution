@@ -1,4 +1,4 @@
-import 'package:student_evaluation/constants/global_constants.dart';
+import 'package:student_evaluation/core/constants/global_constants.dart';
 
 abstract class Validate {
   String? error(String value);
