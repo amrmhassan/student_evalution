@@ -59,14 +59,14 @@ class BottomNavBar extends StatelessWidget {
               CNav.pushReplacementNamed(context, MessagesScreen.routeName);
             },
           ),
-          NavBarItem(
-            title: 'Notification',
-            iconName: 'Notification',
-            active: appStateProvider.activeNavBarIndex == 2,
-            onTap: () {
-              Providers.appSPf(context).setActiveNavBar(2);
-            },
-          ),
+          // NavBarItem(
+          //   title: 'Notification',
+          //   iconName: 'Notification',
+          //   active: appStateProvider.activeNavBarIndex == 2,
+          //   onTap: () {
+          //     Providers.appSPf(context).setActiveNavBar(2);
+          //   },
+          // ),
           NavBarItem(
             title: 'Settings',
             iconName: 'setting',

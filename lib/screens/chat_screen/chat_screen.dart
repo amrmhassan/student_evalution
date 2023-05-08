@@ -31,7 +31,7 @@ import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.
 import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_line.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
-import 'package:student_evaluation/screens/messages_screen/widgets/message_card.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/individual_chat_card.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/messages_screen_tabs_title.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';

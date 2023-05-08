@@ -5,7 +5,7 @@ import '../utils/global_utils.dart';
 
 part 'user_model.g.dart';
 
-String defaultMobileNumber = '011********';
+String defaultMobileNumber = '01100000000';
 //! add address
 //! add phone
 

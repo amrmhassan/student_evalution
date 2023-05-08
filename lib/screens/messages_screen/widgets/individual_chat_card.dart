@@ -7,6 +7,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
@@ -15,6 +16,7 @@ import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.d
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../theming/constants/sizes.dart';
 
@@ -103,7 +105,11 @@ class _IndividualChatCardState extends State<IndividualChatCard> {
                 Spacer(),
                 SmallVerticalDash(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String phoneUrl = 'tel:+2${userModel!.mobileNumber}';
+                    launchUrl(Uri.parse(phoneUrl));
+                    logger.i(userModel?.mobileNumber);
+                  },
                   icon: Image.asset(
                     'assets/icons/phone.png',
                     color: colorTheme.kBlueColor,

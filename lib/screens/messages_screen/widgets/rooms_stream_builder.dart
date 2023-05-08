@@ -2,7 +2,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:student_evaluation/screens/messages_screen/widgets/message_card.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/individual_chat_card.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/transformers/collections.dart';
