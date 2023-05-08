@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/admin_app/screens/admin_home_screen/admin_home_screen.dart';
+import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
@@ -46,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var userProvider = Providers.userP(context);
 
+    //? loading the saved user model
     if (userProvider.userModel == null) {
       return Scaffold(
         backgroundColor: colorTheme.backGround,
@@ -56,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
+
     return Scaffold(
       backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
@@ -154,10 +158,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _loadCurrentUser() {
-    Future.delayed(Duration.zero).then((value) {
+    Future.delayed(Duration.zero).then((value) async {
       var userProvider = Providers.userPf(context);
       if (userProvider.userModel == null) {
-        userProvider.loadCurrentUserInfo();
+        await userProvider.loadCurrentUserInfo();
+      }
+      if (userProvider.userModel != null) {
+        //? to direct to admin home screen
+        CNav.pushReplacementNamed(context, AdminHomeScreen.routeName);
       }
     });
   }

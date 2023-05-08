@@ -129,21 +129,23 @@ class UserProvider extends ChangeNotifier with UserMixin {
   //       .collection(DBCollections.users)
   //       .doc(userModel.uid)
   //       .set(userModel.toJSON());
+
   // }
-  Future<String> changeUserPhoto(File file) async {
-    UserModel me = userModel!;
-    // upload the image
+
+  Future<UserModel> changeUserPhotoOnStorageOnly({
+    required File file,
+    required UserModel userModel,
+  }) async {
     var res = await FirebaseStorage.instance
         .ref(RemoteStorage.usersImages)
-        .child(me.uid)
+        .child(userModel.uid)
         .putFile(file);
     String imageLink = await res.ref.getDownloadURL();
-    // update the new user model locally in hive
 
-    late UserModel newMe;
-    if (me.userType == UserType.student) {
-      StudentModel oldMe = me as StudentModel;
-      newMe = StudentModel(
+    late UserModel newUserModel;
+    if (userModel.userType == UserType.student) {
+      StudentModel oldMe = userModel as StudentModel;
+      newUserModel = StudentModel(
         email: oldMe.email,
         name: oldMe.name,
         uid: oldMe.uid,
@@ -151,9 +153,9 @@ class UserProvider extends ChangeNotifier with UserMixin {
         userImage: imageLink,
         studentGrade: oldMe.studentGrade,
       );
-    } else if (me.userType == UserType.teacher) {
-      TeacherModel oldMe = me as TeacherModel;
-      newMe = TeacherModel(
+    } else if (userModel.userType == UserType.teacher) {
+      TeacherModel oldMe = userModel as TeacherModel;
+      newUserModel = TeacherModel(
         email: oldMe.email,
         name: oldMe.name,
         uid: oldMe.uid,
@@ -162,8 +164,8 @@ class UserProvider extends ChangeNotifier with UserMixin {
         mobileNumber: oldMe.mobileNumber,
       );
     } else {
-      AdminModel oldMe = me as AdminModel;
-      newMe = AdminModel(
+      AdminModel oldMe = userModel as AdminModel;
+      newUserModel = AdminModel(
         email: oldMe.email,
         name: oldMe.name,
         uid: oldMe.uid,
@@ -171,16 +173,31 @@ class UserProvider extends ChangeNotifier with UserMixin {
         mobileNumber: oldMe.mobileNumber,
       );
     }
+    return newUserModel;
+  }
+
+  Future<String> changeMyPhoto(File file) async {
+    UserModel me = userModel!;
+    // upload the image
+    // update the new user model locally in hive
+
+    UserModel newMe =
+        await changeUserPhotoOnStorageOnly(file: file, userModel: me);
+
     await _saveCurrentUserInfo(newMe);
     userModel = newMe;
     notifyListeners();
     // save the updated user model version on firebase
+
+    await updateUserModel(newMe);
+    return newMe.userImage!;
+  }
+
+  Future<void> updateUserModel(UserModel userModel) async {
     await FirebaseFirestore.instance
         .collection(DBCollections.users)
-        .doc(newMe.uid)
-        .set(newMe.toJSON());
-
-    return imageLink;
+        .doc(userModel.uid)
+        .set(userModel.toJSON());
   }
 
   //# validation

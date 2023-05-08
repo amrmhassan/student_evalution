@@ -8,7 +8,6 @@ import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/home_work_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
-import 'package:student_evaluation/student_app/models/attendance_month_model.dart';
 import 'package:student_evaluation/student_app/screens/students_attendance_screen/widgets/teacher_class_chooser.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';

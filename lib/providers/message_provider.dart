@@ -200,16 +200,18 @@ class MessageProvider extends ChangeNotifier with UserMixin {
         String groupId = Uuid().v4();
         String teacherGroupName = gradeTransformer(studentGrade);
         String studentGroupName = classTransformer(teacherClass);
+        String groupName = (studentGroupName + teacherGroupName);
+        groupName = groupName.replaceAll('Sections', 'S');
 
         // creating groups for the teachers, (teachers will listen for these groups of their students) this will appear on the teachers screen
         await _teacherGroupsRef(teacherClass)
             .child(studentGrade.name)
-            .set(GroupDataModel(id: groupId, name: teacherGroupName).toJSON());
+            .set(GroupDataModel(id: groupId, name: groupName).toJSON());
 
         // creating groups for the students, (students will listen for these groups of their teachers) this will appear on the student screen
         await _studentGroupsRef(studentGrade)
             .child(teacherClass.name)
-            .set(GroupDataModel(id: groupId, name: studentGroupName).toJSON());
+            .set(GroupDataModel(id: groupId, name: groupName).toJSON());
 
         // then create the actual group with the first message
         await FirebaseDatabase.instance

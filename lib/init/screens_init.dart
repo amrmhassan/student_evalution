@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/admin_app/screens/admin_home_screen/admin_home_screen.dart';
 import 'package:student_evaluation/screens/add_event_screen/add_event_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
@@ -11,7 +12,7 @@ import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
 import 'package:student_evaluation/screens/search_screen/search_screen.dart';
 import 'package:student_evaluation/screens/settings_screen/settings_screen.dart';
-import 'package:student_evaluation/screens/signup_screen/signup_screen.dart';
+import 'package:student_evaluation/admin_app/screens/signup_screen/signup_screen.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 
@@ -43,6 +44,7 @@ class ScreensInit {
     SettingsScreen.routeName: (context) => SettingsScreen(),
     AddEventScreen.routeName: (context) => AddEventScreen(),
     StudentHomeWorkScreen.routeName: (context) => StudentHomeWorkScreen(),
+    AdminHomeScreen.routeName: (context) => AdminHomeScreen(),
   };
 
   static Widget? home = StreamBuilder(

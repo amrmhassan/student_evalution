@@ -38,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         throw Exception('Image not picked');
       }
       File file = File(res.path);
-      await Providers.userPf(context).changeUserPhoto(file);
+      await Providers.userPf(context).changeMyPhoto(file);
     } catch (e) {
       GlobalUtils.showSnackBar(
         context: context,

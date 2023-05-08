@@ -3,10 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:student_evaluation/core/constants/global_constants.dart';
 import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
+import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/screen_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
@@ -19,7 +22,12 @@ import 'package:student_evaluation/transformers/enums_transformers.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
 
-import '../../data/fake_users.dart';
+import '../../../data/fake_users.dart';
+
+enum SignupMode {
+  add,
+  edit,
+}
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = '/SignUpScreen';
@@ -57,6 +65,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool loading = false;
   bool clicked = false;
+
+  SignupMode signupMode = SignupMode.add;
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) {
+      UserModel? userModel =
+          ModalRoute.of(context)?.settings.arguments as UserModel?;
+      if (userModel != null) {
+        setState(() {
+          signupMode = SignupMode.edit;
+        });
+        print(userModel);
+        emailController.text = userModel.email.replaceAll('@$emailSuffix', '');
+        nameController.text = userModel.name;
+        mobileNumberController.text = userModel.mobileNumber;
+        userType = userModel.userType;
+        if (userModel is TeacherModel) {
+          teacherClass = userModel.teacherClass;
+        } else if (userModel is StudentModel) {
+          studentGrade = userModel.studentGrade;
+        }
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
@@ -78,14 +113,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 errorText: emailError,
               ),
               VSpace(factor: .5),
-              CustomTextField(
-                padding: EdgeInsets.zero,
-                title: 'Enter password',
-                backgroundColor: Colors.white,
-                controller: passwordController,
-                errorText: passwordError,
-                enabled: !loading,
-              ),
+              if (signupMode == SignupMode.add)
+                CustomTextField(
+                  padding: EdgeInsets.zero,
+                  title: 'Enter password',
+                  backgroundColor: Colors.white,
+                  controller: passwordController,
+                  errorText: passwordError,
+                  enabled: !loading,
+                ),
               VSpace(factor: .5),
               CustomTextField(
                 padding: EdgeInsets.zero,
@@ -96,13 +132,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 enabled: !loading,
               ),
               VSpace(factor: .5),
-              CustomTextField(
-                padding: EdgeInsets.zero,
-                title: 'Enter image link',
-                backgroundColor: Colors.white,
-                controller: imageLinkController,
-                enabled: !loading,
-              ),
+              if (signupMode == SignupMode.edit)
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        padding: EdgeInsets.zero,
+                        title: 'Enter image link',
+                        backgroundColor: Colors.white,
+                        controller: imageLinkController,
+                        enabled: !loading,
+                      ),
+                    ),
+                    HSpace(),
+                    IconButton(
+                      onPressed: () async {
+                        var file = await ImagePicker.platform
+                            .pickImage(source: ImageSource.gallery);
+                        if (file == null) {
+                          return;
+                        }
+                      },
+                      icon: Icon(
+                        Icons.photo,
+                      ),
+                    ),
+                  ],
+                ),
               VSpace(factor: .5),
               CustomTextField(
                 padding: EdgeInsets.zero,
@@ -226,7 +282,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   );
                 },
                 child: Text(
-                  'Sign User',
+                  signupMode == SignupMode.add ? 'Sign User' : 'Save User',
                   style: h3LightTextStyle,
                 ),
               ),
