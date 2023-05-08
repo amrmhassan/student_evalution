@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/data/fake_events.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
+import 'package:student_evaluation/screens/add_event_screen/add_event_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_table_card.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
@@ -29,7 +30,9 @@ class HomeScreenEvents extends StatelessWidget {
               ),
               Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  CNav.pushNamed(context, AddEventScreen.routeName);
+                },
                 icon: Image.asset(
                   'assets/icons/add.png',
                   width: largeIconSize,

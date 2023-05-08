@@ -37,4 +37,13 @@ class ModelsFields {
   static const String receiverId = 'receiverId';
   static const String content = 'content';
   static const String messageType = 'messageType';
+
+  // event model
+  static const String title = 'title';
+  static const String imageLink = 'imageLink';
+  static const String date = 'date';
+  static const String place = 'place';
+  static const String details = 'details';
+  static const String notes = 'notes';
+  static const String creatorId = 'creatorId';
 }

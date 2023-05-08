@@ -9,10 +9,8 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/apply_attendance_button.dart';
 import 'package:student_evaluation/screens/attendance_screen/widgets/choose_grade_section.dart';
-import 'package:student_evaluation/screens/attendance_screen/widgets/reset_attendance_button.dart';
 import 'package:student_evaluation/screens/home_work_screen/widgets/home_desc_card.dart';
 import 'package:student_evaluation/screens/home_work_screen/widgets/home_work_card.dart';
-import 'package:student_evaluation/screens/home_work_screen/widgets/home_work_deadline_row.dart';
 import 'package:student_evaluation/screens/home_work_screen/widgets/home_work_table_title.dart';
 import 'package:student_evaluation/screens/home_work_screen/widgets/upload_doc_card.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
@@ -125,7 +123,6 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                       VSpace(factor: .5),
                                       HomeDescCard(),
                                       VSpace(factor: .5),
-                                      HomeWorkDeadlineRow(),
                                       VSpace(),
                                       HLine(
                                         thickness: .4,
@@ -147,12 +144,8 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
                                           children: [
-                                            ResetAttendanceButton(
-                                              title: 'Reset',
-                                              onTap: () {},
-                                            ),
                                             ApplyAttendanceButton(
                                               active: !homeWProvider
                                                   .sendingHomeWork,

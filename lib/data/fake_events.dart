@@ -8,6 +8,8 @@ class FakeEvents {
     ...List.generate(
       Random().nextInt(10) + 1,
       (index) => EventModel(
+        creatorId: 'dlskfjl',
+        id: 'dkjfakl;',
         title: lorem(paragraphs: 1, words: 7),
         imageLink: Random().nextBool() ? 'https://picsum.photos/200/200' : null,
         date: DateTime.now().add(

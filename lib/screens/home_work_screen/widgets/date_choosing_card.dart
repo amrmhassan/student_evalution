@@ -11,18 +11,23 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 
 class DateChoosingCard extends StatelessWidget {
   final String title;
-  final DateTime dateTime;
+  final DateTime? dateTime;
   final VoidCallback onTap;
+  final TimeOfDay? timeOfDay;
 
   const DateChoosingCard({
     super.key,
     required this.title,
-    required this.dateTime,
+    this.dateTime,
     required this.onTap,
+    this.timeOfDay,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (dateTime == null && timeOfDay == null) {
+      throw Exception('You must enter either a date or a time ');
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -56,9 +61,19 @@ class DateChoosingCard extends StatelessWidget {
               ),
               HSpace(factor: .4),
               Text(
-                DateFormat('MMM dd,yyyy').format(
-                  dateTime,
-                ),
+                dateTime == null
+                    ? DateFormat.jm().format(
+                        DateTime(
+                          2023,
+                          1,
+                          1,
+                          timeOfDay!.hour,
+                          timeOfDay!.minute,
+                        ),
+                      )
+                    : DateFormat('MMM dd,yyyy').format(
+                        dateTime!,
+                      ),
                 style: h4TextStyleInactive,
               ),
             ],

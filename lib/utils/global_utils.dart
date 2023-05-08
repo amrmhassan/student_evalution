@@ -20,6 +20,10 @@ class GlobalUtils {
   }) {
     logger.i(message);
     try {
+      if (!context.mounted) {
+        logger.e('context is disposed $message');
+        return;
+      }
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

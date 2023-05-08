@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/screens/add_event_screen/add_event_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/event_screen/event_screen.dart';
@@ -39,6 +40,7 @@ class ScreensInit {
     StudentAttendanceScreen.routeName: (context) => StudentAttendanceScreen(),
     StudentBehaviorScreen.routeName: (context) => StudentBehaviorScreen(),
     SettingsScreen.routeName: (context) => SettingsScreen(),
+    AddEventScreen.routeName: (context) => AddEventScreen(),
   };
 
   static Widget? home = StreamBuilder(
