@@ -20,6 +20,7 @@ import '../screens/create_groups_screen/create_groups_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
 import '../screens/messages_screen/messages_screen.dart';
+import '../student_app/screens/student_homework_screen/student_homework_screen.dart';
 import '../student_app/screens/students_attendance_screen/students_attendance_screen.dart';
 
 class ScreensInit {
@@ -41,6 +42,7 @@ class ScreensInit {
     StudentBehaviorScreen.routeName: (context) => StudentBehaviorScreen(),
     SettingsScreen.routeName: (context) => SettingsScreen(),
     AddEventScreen.routeName: (context) => AddEventScreen(),
+    StudentHomeWorkScreen.routeName: (context) => StudentHomeWorkScreen(),
   };
 
   static Widget? home = StreamBuilder(

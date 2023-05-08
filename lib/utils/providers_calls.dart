@@ -7,6 +7,7 @@ import 'package:student_evaluation/providers/home_work_provider.dart';
 import 'package:student_evaluation/providers/message_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
 import 'package:student_evaluation/student_app/providers/student_behaviour_provider.dart';
+import 'package:student_evaluation/student_app/providers/student_homework_provider.dart';
 import 'package:student_evaluation/student_app/providers/students_attend_provider.dart';
 
 import '../providers/behavior_provider.dart';
@@ -91,5 +92,13 @@ class Providers {
 
   static EventProvider eventP(BuildContext context) {
     return Provider.of<EventProvider>(context);
+  }
+
+  static StudentHomeWorkProvider studentHWPf(BuildContext context) {
+    return Provider.of<StudentHomeWorkProvider>(context, listen: false);
+  }
+
+  static StudentHomeWorkProvider studentHWP(BuildContext context) {
+    return Provider.of<StudentHomeWorkProvider>(context);
   }
 }

@@ -135,38 +135,44 @@ class HomeWorkProvider extends ChangeNotifier {
   Future<void> sendHomeWork(TeacherClass teacherClass) async {
     sendingHomeWork = true;
     notifyListeners();
-    String id = Uuid().v4();
-    if (endDate.isBefore(startDate)) {
-      throw Exception('Start date is after end data');
+    try {
+      String id = Uuid().v4();
+      if (endDate.isBefore(startDate)) {
+        throw Exception('Start date is after end data');
+      }
+      if (assignedUsersIDs.isEmpty) {
+        throw Exception('Please assign the home work to at least one student');
+      }
+      if (documentLink == null && description == null) {
+        throw Exception('Please set either a description or a document');
+      }
+      HomeWorkModel homeWorkModel = HomeWorkModel(
+        id: id,
+        day: GlobalUtils.dateToString(DateTime.now()),
+        studentGrade: activeGrade,
+        teacherClass: teacherClass,
+        documentLink: documentLink,
+        description: description,
+        startDate: GlobalUtils.dateToString(startDate),
+        endDate: GlobalUtils.dateToString(endDate),
+        usersIds: assignedUsersIDs,
+      );
+      await FirebaseDatabase.instance
+          .ref(DBCollections.homeWorks)
+          .child(activeGrade.name)
+          .child(id)
+          .set(homeWorkModel.toJSON());
+      assignedUsersIDs.clear();
+      gradeUsers.clear();
+      sendingHomeWork = false;
+      documentLink = null;
+      documentName = null;
+      taskSnapshot = null;
+      notifyListeners();
+    } catch (e) {
+      sendingHomeWork = false;
+      notifyListeners();
+      rethrow;
     }
-    if (assignedUsersIDs.isEmpty) {
-      throw Exception('Please assign the home work to at least one student');
-    }
-    if (documentLink == null && description == null) {
-      throw Exception('Please set either a description or a document');
-    }
-    HomeWorkModel homeWorkModel = HomeWorkModel(
-      id: id,
-      day: GlobalUtils.dateToString(DateTime.now()),
-      studentGrade: activeGrade,
-      teacherClass: teacherClass,
-      documentLink: documentLink,
-      description: description,
-      startDate: GlobalUtils.dateToString(startDate),
-      endDate: GlobalUtils.dateToString(endDate),
-      usersIds: assignedUsersIDs,
-    );
-    await FirebaseDatabase.instance
-        .ref(DBCollections.homeWorks)
-        .child(activeGrade.name)
-        .child(id)
-        .set(homeWorkModel.toJSON());
-    assignedUsersIDs.clear();
-    gradeUsers.clear();
-    sendingHomeWork = false;
-    documentLink = null;
-    documentName = null;
-    taskSnapshot = null;
-    notifyListeners();
   }
 }

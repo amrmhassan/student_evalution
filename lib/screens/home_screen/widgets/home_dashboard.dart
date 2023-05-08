@@ -17,6 +17,7 @@ import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.d
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
+import 'package:student_evaluation/student_app/screens/student_homework_screen/student_homework_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -61,7 +62,11 @@ class HomeDashboard extends StatelessWidget {
                 title: 'Home Works',
                 iconName: 'home_work',
                 onTap: () {
-                  CNav.pushNamed(context, HomeWorkScreen.routeName);
+                  if (userType == UserType.student) {
+                    CNav.pushNamed(context, StudentHomeWorkScreen.routeName);
+                  } else {
+                    CNav.pushNamed(context, HomeWorkScreen.routeName);
+                  }
                 },
               ),
               if (!future)
