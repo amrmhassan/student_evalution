@@ -1,11 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, sized_box_for_whitespace, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, sized_box_for_whitespace, use_build_context_synchronously, invalid_use_of_visible_for_testing_member
+
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:student_evaluation/core/constants/global_constants.dart';
+import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
@@ -14,12 +16,14 @@ import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/screen_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/enums_transformers.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 import 'package:student_evaluation/validation/login_validation.dart';
 
 import '../../../data/fake_users.dart';
@@ -67,6 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool clicked = false;
 
   SignupMode signupMode = SignupMode.add;
+  UserModel? userModel;
 
   @override
   void initState() {
@@ -81,12 +86,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         emailController.text = userModel.email.replaceAll('@$emailSuffix', '');
         nameController.text = userModel.name;
         mobileNumberController.text = userModel.mobileNumber;
+        imageLinkController.text = userModel.userImage ?? '';
         userType = userModel.userType;
         if (userModel is TeacherModel) {
           teacherClass = userModel.teacherClass;
         } else if (userModel is StudentModel) {
           studentGrade = userModel.studentGrade;
         }
+        this.userModel = userModel;
       }
     });
     super.initState();
@@ -105,6 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: EdgeInsets.zero,
                 title: 'User email',
                 backgroundColor: Colors.white,
+                enabled: signupMode == SignupMode.add,
                 controller: emailController,
                 trailingIcon: Text(
                   '@$emailSuffix',
@@ -152,10 +160,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (file == null) {
                           return;
                         }
+                        File f = File(file.path);
+                        UserModel newUserModel = await Providers.userPf(context)
+                            .changeUserPhotoOnStorageOnly(
+                          file: f,
+                          userModel: userModel!,
+                        );
+                        imageLinkController.text = newUserModel.userImage!;
+                        setState(() {});
                       },
-                      icon: Icon(
-                        Icons.photo,
-                      ),
+                      icon: imageLinkController.text.isEmpty
+                          ? Icon(
+                              Icons.photo,
+                            )
+                          : UserAvatar(
+                              userImage: imageLinkController.text,
+                            ),
                     ),
                   ],
                 ),
@@ -264,47 +284,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   vertical: kVPad / 2,
                 ),
                 backgroundColor: colorTheme.kBlueColor,
-                onTap: () {
-                  String email = '${emailController.text}@$emailSuffix';
-                  String password = passwordController.text;
-                  String name = nameController.text;
-                  String imageLink = imageLinkController.text;
-                  String mobileNumber = mobileNumberController.text;
-                  signUp(
-                    email: email,
-                    password: password,
-                    name: name,
-                    imageLink: imageLink,
-                    uType: userType,
-                    sGrade: studentGrade,
-                    tClass: teacherClass,
-                    mobileNumber: mobileNumber,
-                  );
-                },
+                onTap:
+                    signupMode == SignupMode.add ? applySignUp : applyUserEdit,
                 child: Text(
                   signupMode == SignupMode.add ? 'Sign User' : 'Save User',
                   style: h3LightTextStyle,
                 ),
               ),
               VSpace(),
-              ButtonWrapper(
-                active: !loading,
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHPad,
-                  vertical: kVPad / 2,
+              if (signupMode == SignupMode.add)
+                ButtonWrapper(
+                  active: !loading,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPad,
+                    vertical: kVPad / 2,
+                  ),
+                  backgroundColor: colorTheme.kBlueColor,
+                  onTap: signFakeUsers,
+                  child: Text(
+                    'Sign Fake Users',
+                    style: h3LightTextStyle,
+                  ),
                 ),
-                backgroundColor: colorTheme.kBlueColor,
-                onTap: signFakeUsers,
-                child: Text(
-                  'Sign Fake Users',
-                  style: h3LightTextStyle,
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void applySignUp() {
+    String email = '${emailController.text}@$emailSuffix';
+    String password = passwordController.text;
+    String name = nameController.text;
+    String imageLink = imageLinkController.text;
+    String mobileNumber = mobileNumberController.text;
+    signUp(
+      email: email,
+      password: password,
+      name: name,
+      imageLink: imageLink,
+      uType: userType,
+      sGrade: studentGrade,
+      tClass: teacherClass,
+      mobileNumber: mobileNumber,
+    );
+  }
+
+  void applyUserEdit() async {
+    if (userModel == null) return;
+    UserModel u = UserModel.fromEntries(
+      uid: userModel!.uid,
+      email: userModel!.email,
+      name: nameController.text,
+      userType: userType,
+      teacherClass: teacherClass,
+      studentGrade: studentGrade,
+      userImage:
+          imageLinkController.text.isEmpty ? null : imageLinkController.text,
+      mobileNumber: mobileNumberController.text,
+    );
+    await Providers.userPf(context).updateUserModel(u);
+    CNav.pop(context);
   }
 
   void signFakeUsers() async {
