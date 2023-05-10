@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/fast_tools/widgets/screen_wrapper.dart';
+import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 class CreateGroupsScreen extends StatefulWidget {
@@ -17,11 +19,21 @@ class _CreateGroupsScreenState extends State<CreateGroupsScreen> {
   Widget build(BuildContext context) {
     return ScreenWrapper(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Providers.msgPf(context).createClassesGradesGroups();
-          },
-          child: Text('Create Groups'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Please don\'t create groups if your already created them',
+              style: h4TextStyleInactive,
+            ),
+            VSpace(),
+            ElevatedButton(
+              onPressed: () {
+                Providers.msgPf(context).createClassesGradesGroups();
+              },
+              child: Text('Create Groups'),
+            ),
+          ],
         ),
       ),
     );

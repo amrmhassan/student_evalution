@@ -200,7 +200,7 @@ class MessageProvider extends ChangeNotifier with UserMixin {
         String groupId = Uuid().v4();
         String teacherGroupName = gradeTransformer(studentGrade);
         String studentGroupName = classTransformer(teacherClass);
-        String groupName = (studentGroupName + teacherGroupName);
+        String groupName = ('$studentGroupName $teacherGroupName');
         groupName = groupName.replaceAll('Sections', 'S');
 
         // creating groups for the teachers, (teachers will listen for these groups of their students) this will appear on the teachers screen

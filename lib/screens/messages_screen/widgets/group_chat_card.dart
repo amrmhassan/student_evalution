@@ -59,7 +59,7 @@ class GroupChatCard extends StatelessWidget {
                   children: [
                     Text(
                       groupDataModel.name,
-                      style: h2TextStyle,
+                      style: h3TextStyle,
                     ),
                   ],
                 ),

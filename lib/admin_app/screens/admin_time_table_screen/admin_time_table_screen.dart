@@ -52,10 +52,16 @@ class _AdminTimeTableScreenState extends State<AdminTimeTableScreen> {
     return res;
   }
 
-  void deleteTimeTable(String id) async {
+  Future<void> deleteTimeTable(String id) async {
     setState(() {
       _tableItems.removeWhere((element) => element.id == id);
     });
+    await FirebaseFirestore.instance
+        .collection(DBCollections.timeTable)
+        .doc(id)
+        .delete();
+    GlobalUtils.showSnackBar(
+        context: context, message: 'Time table item deleted');
   }
 
   void setStudentGrade(StudentGrade? grade) {
@@ -239,7 +245,6 @@ class _AdminTimeTableScreenState extends State<AdminTimeTableScreen> {
                                   ...tableItems.map(
                                     (e) => Dismissible(
                                       key: Key(e.id),
-                                      onDismissed: (direction) {},
                                       confirmDismiss: (direction) async {
                                         bool delete = false;
                                         var res = await showModalBottomSheet(
@@ -262,7 +267,7 @@ class _AdminTimeTableScreenState extends State<AdminTimeTableScreen> {
                                         delete = (res == true);
                                         //? delete here
                                         if (delete) {
-                                          deleteTimeTable(e.id);
+                                          await deleteTimeTable(e.id);
                                         }
                                         return Future.value(delete);
                                       },

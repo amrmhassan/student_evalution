@@ -10,6 +10,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/screens/create_groups_screen/create_groups_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
@@ -50,22 +51,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     return Scaffold(
       backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
+      endDrawer: HomeScreenEndDrawer(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: colorTheme.kBlueColor.withOpacity(.5),
         flexibleSpace: HAppBarFlexibleArea(),
         title: HAppBarTitle(),
         actions: [
-          IconButton(
-            onPressed: () async {
-              await Providers.userPf(context).logout();
-              CNav.pushReplacementNamed(context, IntroScreen.routeName);
-            },
-            icon: Image.asset(
-              'assets/icons/icon_other.png',
-              width: mediumIconSize,
-            ),
-          ),
+          HAppBarActions(),
         ],
       ),
       body: GestureDetector(
@@ -196,6 +189,26 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               HSpace(),
                                               Text(
                                                 'Time Table',
+                                                style: h3InactiveTextStyle,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        VSpace(factor: .5),
+                                        AdminUnitCard(
+                                          onTap: () {
+                                            CNav.pushNamed(context,
+                                                CreateGroupsScreen.routeName);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                FontAwesomeIcons.userGroup,
+                                                color: colorTheme.kBlueColor,
+                                              ),
+                                              HSpace(),
+                                              Text(
+                                                'Create Groups',
                                                 style: h3InactiveTextStyle,
                                               ),
                                             ],

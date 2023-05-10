@@ -7,4 +7,9 @@ class AppStateProvider extends ChangeNotifier {
     _activeNavBarIndex = i;
     notifyListeners();
   }
+
+  void resetNavBar() {
+    _activeNavBarIndex = 0;
+    notifyListeners();
+  }
 }

@@ -115,6 +115,7 @@ class LoginScreen extends StatelessWidget {
                         onTap: () async {
                           try {
                             await Providers.userPf(context).auth();
+                            Providers.appSPf(context).resetNavBar();
                             CNav.pushReplacementNamed(
                               context,
                               HomeScreen.routeName,

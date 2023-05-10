@@ -19,6 +19,7 @@ import 'package:student_evaluation/utils/providers_calls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../theming/constants/sizes.dart';
+import '../../../transformers/enums_transformers.dart';
 
 class IndividualChatCard extends StatefulWidget {
   final String roomID;
@@ -97,7 +98,13 @@ class _IndividualChatCardState extends State<IndividualChatCard> {
                       style: h2TextStyle,
                     ),
                     Text(
-                      'F: Jane Cooper | 6th 8',
+                      userModel is StudentModel
+                          ? gradeTransformer(
+                              (userModel as StudentModel).studentGrade)
+                          : userModel is TeacherModel
+                              ? classTransformer(
+                                  (userModel as TeacherModel).teacherClass)
+                              : '',
                       style: h4TextStyleInactive,
                     ),
                   ],

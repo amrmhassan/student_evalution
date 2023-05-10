@@ -39,6 +39,7 @@ import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:student_evaluation/transformers/collections.dart';
+import 'package:student_evaluation/transformers/enums_transformers.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
@@ -97,7 +98,12 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
               style: h1LightTextStyle,
             ),
             Text(
-              'F: Jane Cooper | 6th 8',
+              otherUser is StudentModel
+                  ? gradeTransformer((otherUser as StudentModel).studentGrade)
+                  : otherUser is TeacherModel
+                      ? classTransformer(
+                          (otherUser as TeacherModel).teacherClass)
+                      : '',
               style: h4TextStyleInactive.copyWith(
                   color: Colors.white.withOpacity(.8)),
             ),
