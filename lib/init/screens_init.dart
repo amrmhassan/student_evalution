@@ -11,6 +11,7 @@ import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
+import 'package:student_evaluation/screens/notifications_screen/notifications_screen.dart';
 import 'package:student_evaluation/screens/search_screen/search_screen.dart';
 import 'package:student_evaluation/screens/settings_screen/settings_screen.dart';
 import 'package:student_evaluation/admin_app/screens/signup_screen/signup_screen.dart';
@@ -55,6 +56,7 @@ class ScreensInit {
     StudentMaterialsScreen.routeName: (context) => StudentMaterialsScreen(),
     AdminTimeTableScreen.routeName: (context) => AdminTimeTableScreen(),
     AdminAddTimeTableScreen.routeName: (context) => AdminAddTimeTableScreen(),
+    NotificationsScreen.routeName: (context) => NotificationsScreen(),
   };
 
   static Widget? home = StreamBuilder(

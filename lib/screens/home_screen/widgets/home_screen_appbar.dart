@@ -4,9 +4,7 @@ import 'dart:ui';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_evaluation/core/navigation.dart';
-import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
@@ -21,6 +19,7 @@ import '../../../fast_tools/widgets/h_space.dart';
 import '../../../models/saved_accounts_model.dart';
 import '../../../theming/constants/styles.dart';
 import '../../../theming/theme_calls.dart';
+import 'notifications_icon.dart';
 import 'other_student_accounts.dart';
 
 class HAppBarActions extends StatelessWidget {
@@ -30,20 +29,13 @@ class HAppBarActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Providers.userP(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           children: [
-            ButtonWrapper(
-              padding: EdgeInsets.all(largePadding),
-              backgroundColor: colorTheme.backGround,
-              onTap: () {},
-              child: Icon(
-                FontAwesomeIcons.bell,
-                color: colorTheme.kBlueColor,
-              ),
-            ),
+            if (userProvider.userModel is StudentModel) NotificationsIcon(),
             HSpace(factor: .7),
             IconButton(
               onPressed: () async {

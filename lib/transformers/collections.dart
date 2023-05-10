@@ -18,6 +18,7 @@ class DBCollections {
 
   // home work
   static const String homeWorks = 'homeWorks';
+  static const String watchedHomeWorks = 'watchedHomeWorks';
 
   // events
   static const String events = 'events';
