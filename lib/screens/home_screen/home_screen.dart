@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (userProvider.userModel == null) {
         await userProvider.loadCurrentUserInfo();
       }
-      if (userProvider.userModel != null) {
+      if (userProvider.userModel is AdminModel) {
         //? to direct to admin home screen
         CNav.pushReplacementNamed(context, AdminHomeScreen.routeName);
       }

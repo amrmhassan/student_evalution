@@ -36,6 +36,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         foregroundColor: Colors.white,
@@ -81,7 +82,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                 Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: colorTheme.backGround,
                                     borderRadius: BorderRadius.only(
                                       topLeft:
                                           Radius.circular(largeBorderRadius),

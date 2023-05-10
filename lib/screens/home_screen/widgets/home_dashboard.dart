@@ -18,6 +18,7 @@ import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dar
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_homework_screen/student_homework_screen.dart';
+import 'package:student_evaluation/student_app/screens/student_materials_screen/student_materials_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -83,33 +84,50 @@ class HomeDashboard extends StatelessWidget {
                 ),
             ],
           ),
-          // VSpace(),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     DashboardItem(
-          //       title: 'Time Table',
-          //       iconName: 'time_table',
-          //       onTap: () {},
-          //     ),
-          //     DashboardItem(
-          //       title: 'Messages',
-          //       iconName: 'messages',
-          //       onTap: () {
-          //         CNav.pushReplacementNamed(context, MessagesScreen.routeName);
-          //         Providers.appSPf(context).setActiveNavBar(1);
-          //       },
-          //     ),
-          //     Opacity(
-          //       opacity: 0,
-          //       child: DashboardItem(
-          //         title: 'Messages',
-          //         iconName: 'messages',
-          //         onTap: null,
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          if (userType == UserType.student)
+            Column(
+              children: [
+                VSpace(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DashboardItem(
+                      title: 'Materials',
+                      iconData: Icons.book_outlined,
+                      onTap: () {
+                        CNav.pushNamed(
+                          context,
+                          StudentMaterialsScreen.routeName,
+                        );
+                      },
+                      color: colorTheme.kBlueColor,
+                    ),
+                    // DashboardItem(
+                    //   title: 'Time Table',
+                    //   iconName: 'time_table',
+                    //   onTap: () {},
+                    // ),
+                    // DashboardItem(
+                    //   title: 'Messages',
+                    //   iconName: 'messages',
+                    //   onTap: () {
+                    //     CNav.pushReplacementNamed(
+                    //         context, MessagesScreen.routeName);
+                    //     Providers.appSPf(context).setActiveNavBar(1);
+                    //   },
+                    // ),
+                    // Opacity(
+                    //   opacity: 0,
+                    //   child: DashboardItem(
+                    //     title: 'Messages',
+                    //     iconName: 'messages',
+                    //     onTap: null,
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ],
+            ),
         ],
       ),
     );

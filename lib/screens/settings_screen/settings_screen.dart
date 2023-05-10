@@ -56,6 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var userProvider = Providers.userP(context);
 
     return Scaffold(
+      backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -98,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: colorTheme.backGround,
                                       borderRadius: BorderRadius.only(
                                         topLeft:
                                             Radius.circular(largeBorderRadius),
@@ -137,8 +138,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             1000),
-                                                    color: Colors.white
-                                                        .withOpacity(.5),
+                                                    color:
+                                                        colorTheme.backGround,
                                                   ),
                                                   child:
                                                       CircularProgressIndicator(),

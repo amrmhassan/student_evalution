@@ -30,17 +30,15 @@ import 'package:uuid/uuid.dart';
 
 import '../../../screens/home_screen/widgets/home_screen_appbar.dart';
 
-class AdminStudentMaterialScreen extends StatefulWidget {
+class AdminMaterialsScreen extends StatefulWidget {
   static const String routeName = '/AdminStudentMaterialScreen';
-  const AdminStudentMaterialScreen({super.key});
+  const AdminMaterialsScreen({super.key});
 
   @override
-  State<AdminStudentMaterialScreen> createState() =>
-      _AdminStudentMaterialScreenState();
+  State<AdminMaterialsScreen> createState() => _AdminMaterialsScreenState();
 }
 
-class _AdminStudentMaterialScreenState
-    extends State<AdminStudentMaterialScreen> {
+class _AdminMaterialsScreenState extends State<AdminMaterialsScreen> {
   bool loading = false;
   bool uploading = false;
   StudentGrade studentGrade = StudentGrade.k1SectionA;

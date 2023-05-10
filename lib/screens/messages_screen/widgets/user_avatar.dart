@@ -8,6 +8,8 @@ class UserAvatar extends StatelessWidget {
   final bool group;
   final double radius;
   final bool largeIcon;
+  final double? borderRadius;
+  final IconData? defaultIcon;
 
   const UserAvatar({
     super.key,
@@ -15,6 +17,8 @@ class UserAvatar extends StatelessWidget {
     this.group = false,
     this.radius = largeIconSize * 1.2,
     this.largeIcon = false,
+    this.borderRadius,
+    this.defaultIcon,
   });
 
   @override
@@ -27,14 +31,14 @@ class UserAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(.5),
         borderRadius: BorderRadius.circular(
-          1000,
+          borderRadius ?? 1000,
         ),
       ),
       child: userImage == null
           ? Container(
               padding: EdgeInsets.all(smallPadding),
               child: Icon(
-                group ? Icons.group : Icons.person,
+                defaultIcon ?? (group ? Icons.group : Icons.person),
                 size: largeIcon
                     ? (radius - smallPadding * 7)
                     : (radius - smallPadding * 2) > mediumIconSize

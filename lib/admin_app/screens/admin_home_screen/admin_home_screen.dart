@@ -162,10 +162,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                         VSpace(factor: .5),
                                         AdminUnitCard(
                                           onTap: () {
-                                            CNav.pushNamed(
-                                                context,
-                                                AdminStudentMaterialScreen
-                                                    .routeName);
+                                            CNav.pushNamed(context,
+                                                AdminMaterialsScreen.routeName);
                                           },
                                           child: Row(
                                             children: [

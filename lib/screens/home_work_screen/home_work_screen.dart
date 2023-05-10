@@ -119,70 +119,91 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                         },
                                       ),
                                       VSpace(factor: .5),
-                                      UploadDocumentCard(),
-                                      VSpace(factor: .5),
-                                      HomeDescCard(),
-                                      VSpace(factor: .5),
-                                      VSpace(),
-                                      HLine(
-                                        thickness: .4,
-                                        color: colorTheme.inActiveText,
-                                        borderRadius: 1000,
-                                      ),
-                                      VSpace(),
-                                      HomeWorkTableTitle(),
-                                      VSpace(factor: .3),
-                                      ...homeWProvider.gradeUsers.map((e) {
-                                        return HomeWorkCard(
-                                          userModel: e,
-                                        );
-                                      }),
-                                      VSpace(),
-                                      PaddingWrapper(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: kHPad * 2,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            ApplyAttendanceButton(
-                                              active: !homeWProvider
-                                                  .sendingHomeWork,
-                                              title: 'Send',
-                                              onTap: () async {
-                                                try {
-                                                  TeacherClass teacherClass =
-                                                      (Providers.userPf(context)
-                                                                  .userModel
-                                                              as TeacherModel)
-                                                          .teacherClass;
-                                                  await Providers.homeWPf(
-                                                          context)
-                                                      .sendHomeWork(
-                                                          teacherClass);
-                                                  GlobalUtils.showSnackBar(
-                                                    context: context,
-                                                    message:
-                                                        'Home work assigned',
-                                                    snackBarType:
-                                                        SnackBarType.success,
+                                      homeWProvider.gradeUsers.isEmpty
+                                          ? Center(
+                                              child: Text(
+                                                'No students in this grade yet',
+                                                style: h4TextStyleInactive,
+                                              ),
+                                            )
+                                          : Column(
+                                              children: [
+                                                UploadDocumentCard(),
+                                                VSpace(factor: .5),
+                                                HomeDescCard(),
+                                                VSpace(factor: .5),
+                                                VSpace(),
+                                                HLine(
+                                                  thickness: .4,
+                                                  color:
+                                                      colorTheme.inActiveText,
+                                                  borderRadius: 1000,
+                                                ),
+                                                VSpace(),
+                                                HomeWorkTableTitle(),
+                                                VSpace(factor: .3),
+                                                ...homeWProvider.gradeUsers
+                                                    .map((e) {
+                                                  return HomeWorkCard(
+                                                    userModel: e,
                                                   );
-                                                  CNav.pop(context);
-                                                } catch (e) {
-                                                  GlobalUtils.showSnackBar(
-                                                    context: context,
-                                                    message: e.toString(),
-                                                    snackBarType:
-                                                        SnackBarType.error,
-                                                  );
-                                                }
-                                              },
+                                                }),
+                                                VSpace(),
+                                                PaddingWrapper(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: kHPad * 2,
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      ApplyAttendanceButton(
+                                                        active: !homeWProvider
+                                                            .sendingHomeWork,
+                                                        title: 'Send',
+                                                        onTap: () async {
+                                                          try {
+                                                            TeacherClass
+                                                                teacherClass =
+                                                                (Providers.userPf(context)
+                                                                            .userModel
+                                                                        as TeacherModel)
+                                                                    .teacherClass;
+                                                            await Providers
+                                                                    .homeWPf(
+                                                                        context)
+                                                                .sendHomeWork(
+                                                                    teacherClass);
+                                                            GlobalUtils
+                                                                .showSnackBar(
+                                                              context: context,
+                                                              message:
+                                                                  'Home work assigned',
+                                                              snackBarType:
+                                                                  SnackBarType
+                                                                      .success,
+                                                            );
+                                                            CNav.pop(context);
+                                                          } catch (e) {
+                                                            GlobalUtils
+                                                                .showSnackBar(
+                                                              context: context,
+                                                              message:
+                                                                  e.toString(),
+                                                              snackBarType:
+                                                                  SnackBarType
+                                                                      .error,
+                                                            );
+                                                          }
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                VSpace(),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      VSpace(),
                                     ],
                                   ),
                           ],
