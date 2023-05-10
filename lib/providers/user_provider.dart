@@ -195,6 +195,9 @@ class UserProvider extends ChangeNotifier with UserMixin {
     String password,
   ) async {
     var box = await HiveBox.studentUsers;
+    List<SavedAccountModel> savedValues = box.values.toList().cast();
+    if (savedValues.any(
+        (element) => element.userModel.email == studentModel.email)) return;
     SavedAccountModel savedAccountModel = SavedAccountModel(
       userModel: studentModel,
       password: password,

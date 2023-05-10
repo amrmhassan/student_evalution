@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/screens/home_screen/home_screen.dart';
-import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
@@ -45,7 +45,11 @@ class OtherStudentAccounts extends StatelessWidget {
                       savedEmail: e.userModel.email,
                       savedPassword: e.password,
                     );
-                    CNav.pushReplacementNamed(context, HomeScreen.routeName);
+                    await userProviderF.loadCurrentUserInfo();
+                    CNav.pushReplacementNamed(
+                      navigatorKey.currentContext!,
+                      HomeScreen.routeName,
+                    );
                   },
                   title: Text(
                     e.userModel.name,
