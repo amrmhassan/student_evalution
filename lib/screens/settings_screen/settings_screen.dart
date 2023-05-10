@@ -56,6 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var userProvider = Providers.userP(context);
 
     return Scaffold(
+      endDrawer: HomeScreenEndDrawer(),
       backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
       appBar: AppBar(

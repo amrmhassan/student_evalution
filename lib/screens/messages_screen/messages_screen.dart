@@ -38,6 +38,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return Scaffold(
       backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
+      endDrawer: HomeScreenEndDrawer(),
       appBar: AppBar(
         foregroundColor: Colors.white,
         elevation: 0,

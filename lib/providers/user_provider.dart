@@ -30,12 +30,16 @@ class UserProvider extends ChangeNotifier with UserMixin {
 
   // the repos available now are LoginRepo, SignUpRepo or NormalLoginImpl
 
-  Future<void> auth() async {
+  Future<void> auth({
+    String? savedEmail,
+    String? savedPassword,
+  }) async {
     try {
       loggingIn = true;
       notifyListeners();
-      String email = '${emailController.text}@$emailSuffix';
-      String password = passController.text;
+      String email = savedEmail ?? '${emailController.text}@$emailSuffix';
+
+      String password = savedPassword ?? passController.text;
       bool valid = _validateLogin(email: email, password: password);
       if (!valid) {
         loggingIn = false;

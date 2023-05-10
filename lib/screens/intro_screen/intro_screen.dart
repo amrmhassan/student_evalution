@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -17,7 +18,11 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 1)).then((value) {
-      CNav.pushReplacementNamed(context, LoginScreen.routeName);
+      try {
+        CNav.pushReplacementNamed(context, LoginScreen.routeName);
+      } catch (e) {
+        logger.e(e);
+      }
     });
     super.initState();
   }
