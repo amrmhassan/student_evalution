@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/mixins/user_mixins.dart';
+import 'package:student_evaluation/models/saved_accounts_model.dart';
 import 'package:student_evaluation/transformers/collections.dart';
 import 'package:student_evaluation/transformers/models_fields.dart';
 import 'package:student_evaluation/transformers/remote_storage.dart';
@@ -52,6 +53,14 @@ class UserProvider extends ChangeNotifier with UserMixin {
         email: email,
         password: password,
       );
+      //? if the user model is a student model then save his data( email, password )
+      if (remoteUser is StudentModel) {
+        await _addStudentUser(remoteUser, password);
+      } else {
+        await _deleteSavedStudentUsers();
+      }
+
+      //?
       loggingIn = false;
       notifyListeners();
     } catch (e) {
@@ -106,31 +115,6 @@ class UserProvider extends ChangeNotifier with UserMixin {
       logger.e(e);
     }
   }
-
-  // Future<void> signUp({
-  //   required String email,
-  //   required String password,
-  //   required String name,
-  //   required String imageLink,
-  // }) async {
-  //   var cred = await FirebaseAuth.instance
-  //       .createUserWithEmailAndPassword(email: email, password: password);
-  //   if (cred.user == null) {
-  //     throw Exception('User not created');
-  //   }
-  //   UserModel userModel = UserModel(
-  //     email: email,
-  //     name: name,
-  //     uid: cred.user!.uid,
-  //     userImage: imageLink,
-  //     userType: UserType.teacher,
-  //   );
-  //   await FirebaseFirestore.instance
-  //       .collection(DBCollections.users)
-  //       .doc(userModel.uid)
-  //       .set(userModel.toJSON());
-
-  // }
 
   Future<UserModel> changeUserPhotoOnStorageOnly({
     required File file,
@@ -200,6 +184,32 @@ class UserProvider extends ChangeNotifier with UserMixin {
         .collection(DBCollections.users)
         .doc(userModel.uid)
         .set(userModel.toJSON());
+  }
+
+  Future<void> _addStudentUser(
+    StudentModel studentModel,
+    String password,
+  ) async {
+    var box = await HiveBox.studentUsers;
+    SavedAccountModel savedAccountModel = SavedAccountModel(
+      userModel: studentModel,
+      password: password,
+    );
+    await box.add(savedAccountModel);
+  }
+
+  Future<void> _deleteSavedStudentUsers() async {
+    var box = await HiveBox.studentUsers;
+    await box.clear();
+  }
+
+  Future<List<SavedAccountModel>> getSavedAccounts() async {
+    var box = await HiveBox.studentUsers;
+    List<SavedAccountModel> models = box.values.toList().cast();
+    if (userModel != null) {
+      models.removeWhere((element) => element.userModel.uid == userModel!.uid);
+    }
+    return models;
   }
 
   //# validation

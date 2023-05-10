@@ -7,15 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
+import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
+import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
+import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
+import 'package:student_evaluation/transformers/enums_transformers.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../fast_tools/widgets/h_space.dart';
+import '../../../models/saved_accounts_model.dart';
 import '../../../theming/constants/styles.dart';
 import '../../../theming/theme_calls.dart';
+import 'other_student_accounts.dart';
 
 class HAppBarActions extends StatelessWidget {
   const HAppBarActions({
@@ -41,8 +47,9 @@ class HAppBarActions extends StatelessWidget {
             HSpace(factor: .7),
             IconButton(
               onPressed: () async {
-                await Providers.userPf(context).logout();
-                CNav.pushReplacementNamed(context, IntroScreen.routeName);
+                // await Providers.userPf(context).logout();
+                // CNav.pushReplacementNamed(context, IntroScreen.routeName);
+                Scaffold.of(context).openEndDrawer();
               },
               icon: Image.asset(
                 'assets/icons/icon_other.png',
@@ -110,5 +117,103 @@ class HAppBarFlexibleArea extends StatelessWidget {
         color: colorTheme.kBlueColor.withOpacity(.5),
       ),
     ));
+  }
+}
+
+class HomeScreenEndDrawer extends StatefulWidget {
+  const HomeScreenEndDrawer({
+    super.key,
+  });
+
+  @override
+  State<HomeScreenEndDrawer> createState() => _HomeScreenEndDrawerState();
+}
+
+class _HomeScreenEndDrawerState extends State<HomeScreenEndDrawer> {
+  bool loading = false;
+  List<SavedAccountModel> models = [];
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) async {
+      setState(() {
+        loading = true;
+      });
+      models = await Providers.userPf(context).getSavedAccounts();
+      setState(() {
+        loading = false;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var userProvider = Providers.userP(context);
+    var userModel = userProvider.userModel;
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            height: 200,
+            color: Color(0xffEBEBEB),
+            child: PaddingWrapper(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  UserAvatar(
+                    userImage: userProvider.userModel?.userImage,
+                    radius: largeIconSize * 2,
+                    largeIcon: true,
+                  ),
+                  HSpace(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userProvider.userModel!.name,
+                        style: h1TextStyle,
+                      ),
+                      VSpace(factor: .5),
+                      Text(
+                        userModel is StudentModel
+                            ? gradeTransformer(userModel.studentGrade)
+                            : userModel is TeacherModel
+                                ? classTransformer(userModel.teacherClass)
+                                : '',
+                        style: h4TextStyleInactive,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (userModel is StudentModel && models.isNotEmpty)
+            OtherStudentAccounts(
+              models: models,
+            ),
+          ListTile(
+            onTap: () async {
+              await Providers.userPf(context).logout();
+              CNav.pushReplacementNamed(context, IntroScreen.routeName);
+            },
+            leading: Icon(
+              Icons.logout,
+              color: colorTheme.kDangerColor,
+            ),
+            title: Text(
+              'Logout',
+              style: h3LiteTextStyle.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

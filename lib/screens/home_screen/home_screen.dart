@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: colorTheme.backGround,
       extendBodyBehindAppBar: true,
+      endDrawer: HomeScreenEndDrawer(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: colorTheme.kBlueColor.withOpacity(.5),

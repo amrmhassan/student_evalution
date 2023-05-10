@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_evaluation/models/saved_accounts_model.dart';
 
 import '../../models/user_model.dart';
 
@@ -16,5 +17,6 @@ class HiveInitiator {
     Hive.registerAdapter(StudentModelAdapter()); //=>4
     Hive.registerAdapter(TeacherModelAdapter()); //=>5
     Hive.registerAdapter(AdminModelAdapter()); //=>6
+    Hive.registerAdapter(SavedAccountModelAdapter()); //=>7
   }
 }
