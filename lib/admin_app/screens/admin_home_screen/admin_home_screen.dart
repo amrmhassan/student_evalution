@@ -20,6 +20,7 @@ import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../screens/home_screen/widgets/home_screen_appbar.dart';
 import '../../../screens/intro_screen/intro_screen.dart';
+import '../admin_student_materials/admin_student_materials.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   static const String routeName = '/AdminHomeScreen';
@@ -127,7 +128,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                           child: Row(
                                             children: [
                                               Icon(
-                                                Icons.person,
+                                                Icons.person_add_alt,
                                                 color: colorTheme.kBlueColor,
                                               ),
                                               HSpace(),
@@ -158,6 +159,28 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                             ],
                                           ),
                                         ),
+                                        VSpace(factor: .5),
+                                        AdminUnitCard(
+                                          onTap: () {
+                                            CNav.pushNamed(
+                                                context,
+                                                AdminStudentMaterialScreen
+                                                    .routeName);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.book,
+                                                color: colorTheme.kBlueColor,
+                                              ),
+                                              HSpace(),
+                                              Text(
+                                                'Student Materials',
+                                                style: h3InactiveTextStyle,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         VSpace(),
                                       ],
                                     ),
@@ -179,50 +202,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     );
   }
 }
-
-// class EnterUserIdModal extends StatefulWidget {
-//   const EnterUserIdModal({
-//     super.key,
-//   });
-
-//   @override
-//   State<EnterUserIdModal> createState() => _EnterUserIdModalState();
-// }
-
-// class _EnterUserIdModalState extends State<EnterUserIdModal> {
-//   TextEditingController controller = TextEditingController();
-//   @override
-//   Widget build(BuildContext context) {
-//     return DoubleButtonsModal(
-//       autoPop: false,
-//       extra: Column(
-//         children: [
-//           CustomTextField(
-//             controller: controller,
-//             title: 'Enter user id or email',
-//             padding: EdgeInsets.zero,
-//           ),
-//           VSpace(),
-//         ],
-//       ),
-//       onOk: () async {
-//         logger.e('message');
-//         late UserModel userModel;
-//         if (controller.text.contains('@')) {
-//           userModel = await Providers.userPf(context)
-//               .getUserModelByEmail(controller.text);
-//         } else {
-//           userModel =
-//               await Providers.userPf(context).getUserModelById(controller.text);
-//         }
-//         CNav.pushNamed(context, SignUpScreen.routeName, arguments: userModel);
-//       },
-//       okColor: colorTheme.kBlueColor,
-//       okText: 'Edit',
-//       showCancelButton: false,
-//     );
-//   }
-// }
 
 class AdminUnitCard extends StatelessWidget {
   final Widget child;

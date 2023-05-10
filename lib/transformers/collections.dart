@@ -19,8 +19,11 @@ class DBCollections {
   // home work
   static const String homeWorks = 'homeWorks';
 
-  //
+  // events
   static const String events = 'events';
+
+  // students material
+  static const String studentsMaterials = 'studentsMaterials';
 
   static String getRef(List<String> collections) {
     return collections.join('/');

@@ -17,6 +17,7 @@ import 'package:student_evaluation/admin_app/screens/signup_screen/signup_screen
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 
+import '../admin_app/screens/admin_student_materials/admin_student_materials.dart';
 import '../screens/attendance_screen/attendance_screen.dart';
 import '../screens/create_groups_screen/create_groups_screen.dart';
 import '../screens/home_screen/home_screen.dart';
@@ -47,6 +48,8 @@ class ScreensInit {
     StudentHomeWorkScreen.routeName: (context) => StudentHomeWorkScreen(),
     AdminHomeScreen.routeName: (context) => AdminHomeScreen(),
     AdminUsersScreen.routeName: (context) => AdminUsersScreen(),
+    AdminStudentMaterialScreen.routeName: (context) =>
+        AdminStudentMaterialScreen(),
   };
 
   static Widget? home = StreamBuilder(

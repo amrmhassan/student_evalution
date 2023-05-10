@@ -47,4 +47,7 @@ class ModelsFields {
   static const String details = 'details';
   static const String notes = 'notes';
   static const String creatorId = 'creatorId';
+
+  // material model
+  static const String link = 'link';
 }
