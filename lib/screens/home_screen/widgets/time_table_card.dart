@@ -15,9 +15,9 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:intl/intl.dart' as intl;
 
 class TimeTableCard extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String title;
-  final String subTitle;
+  final String? subTitle;
   final String? imageLink;
   // final String desc;
   // final String imageURL;
@@ -25,9 +25,9 @@ class TimeTableCard extends StatelessWidget {
   const TimeTableCard({
     super.key,
     required this.title,
-    required this.onTap,
+    this.onTap,
     required this.imageLink,
-    required this.subTitle,
+    this.subTitle,
     // required this.desc,
     // required this.imageURL,
   });
@@ -90,20 +90,22 @@ class TimeTableCard extends StatelessWidget {
                   style: h3TextStyle,
                   overflow: TextOverflow.ellipsis,
                 ),
-                VSpace(factor: .4),
-                Text(
-                  subTitle,
-                  style: h4TextStyleInactive,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                if (subTitle != null) VSpace(factor: .4),
+                if (subTitle != null)
+                  Text(
+                    subTitle!,
+                    style: h4TextStyleInactive,
+                    overflow: TextOverflow.ellipsis,
+                  ),
               ],
             ),
           ),
-          Icon(
-            FontAwesomeIcons.chevronRight,
-            size: smallIconSize,
-            color: colorTheme.inActiveText,
-          )
+          if (onTap != null)
+            Icon(
+              FontAwesomeIcons.chevronRight,
+              size: smallIconSize,
+              color: colorTheme.inActiveText,
+            )
         ],
       ),
     );

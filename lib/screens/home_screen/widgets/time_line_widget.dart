@@ -16,8 +16,11 @@ import 'package:intl/intl.dart' as intl;
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 class TimeLineWidget extends StatelessWidget {
+  final Function(DateTime dateTime)? onChanged;
+
   const TimeLineWidget({
     super.key,
+    this.onChanged,
   });
 
   @override
@@ -27,7 +30,10 @@ class TimeLineWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          for (var date in dates) Expanded(child: TimeLineItem(dateTime: date))
+          for (var date in dates)
+            Expanded(
+              child: TimeLineItem(dateTime: date, onClick: onChanged),
+            ),
         ],
       ),
     );

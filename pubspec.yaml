@@ -62,6 +62,7 @@ dependencies:
   path: ^1.8.2
   flutter_rating_stars: ^1.0.3+4
   url_launcher: ^6.1.10
+  table_calendar: ^3.0.8
 
 
 dev_dependencies:

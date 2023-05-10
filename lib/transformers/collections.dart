@@ -25,6 +25,9 @@ class DBCollections {
   // students material
   static const String studentsMaterials = 'studentsMaterials';
 
+  // time table
+  static const String timeTable = 'timeTable';
+
   static String getRef(List<String> collections) {
     return collections.join('/');
   }

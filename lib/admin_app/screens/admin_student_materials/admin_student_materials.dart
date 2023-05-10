@@ -131,7 +131,7 @@ class _AdminMaterialsScreenState extends State<AdminMaterialsScreen> {
 
   @override
   void initState() {
-    // loadData();
+    loadData();
     super.initState();
   }
 

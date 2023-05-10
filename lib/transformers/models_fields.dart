@@ -50,4 +50,9 @@ class ModelsFields {
 
   // material model
   static const String link = 'link';
+
+  // time table model
+  static const String weekDay = 'weekDay';
+  static const String hour = 'hour';
+  static const String minute = 'minute';
 }

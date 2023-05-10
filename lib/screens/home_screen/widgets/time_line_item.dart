@@ -17,9 +17,11 @@ import 'package:student_evaluation/utils/providers_calls.dart';
 
 class TimeLineItem extends StatelessWidget {
   final DateTime dateTime;
+  final Function(DateTime dateTime)? onClick;
   const TimeLineItem({
     super.key,
     required this.dateTime,
+    this.onClick,
   });
 
   @override
@@ -33,6 +35,9 @@ class TimeLineItem extends StatelessWidget {
     return ButtonWrapper(
       onTap: () {
         Providers.timeLPf(context).setCurrentDay(dateTime);
+        if (onClick != null) {
+          onClick!(dateTime);
+        }
       },
       padding: EdgeInsets.symmetric(
         vertical: kVPad,

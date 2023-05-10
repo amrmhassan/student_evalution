@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:student_evaluation/admin_app/screens/signup_screen/signup_screen.dart';
 import 'package:student_evaluation/admin_app/screens/users_screen/users_screen.dart';
 import 'package:student_evaluation/core/navigation.dart';
@@ -21,6 +22,7 @@ import 'package:student_evaluation/utils/providers_calls.dart';
 import '../../../screens/home_screen/widgets/home_screen_appbar.dart';
 import '../../../screens/intro_screen/intro_screen.dart';
 import '../admin_student_materials/admin_student_materials.dart';
+import '../admin_time_table_screen/admin_time_table_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   static const String routeName = '/AdminHomeScreen';
@@ -174,6 +176,26 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               HSpace(),
                                               Text(
                                                 'Student Materials',
+                                                style: h3InactiveTextStyle,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        VSpace(factor: .5),
+                                        AdminUnitCard(
+                                          onTap: () {
+                                            CNav.pushNamed(context,
+                                                AdminTimeTableScreen.routeName);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                FontAwesomeIcons.calendar,
+                                                color: colorTheme.kBlueColor,
+                                              ),
+                                              HSpace(),
+                                              Text(
+                                                'Time Table',
                                                 style: h3InactiveTextStyle,
                                               ),
                                             ],

@@ -18,7 +18,9 @@ import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_materials_screen/student_materials_screen.dart';
 
+import '../admin_app/screens/admin_add_time_table_screen/admin_add_time_table_screen.dart';
 import '../admin_app/screens/admin_student_materials/admin_student_materials.dart';
+import '../admin_app/screens/admin_time_table_screen/admin_time_table_screen.dart';
 import '../screens/attendance_screen/attendance_screen.dart';
 import '../screens/create_groups_screen/create_groups_screen.dart';
 import '../screens/home_screen/home_screen.dart';
@@ -51,6 +53,8 @@ class ScreensInit {
     AdminUsersScreen.routeName: (context) => AdminUsersScreen(),
     AdminMaterialsScreen.routeName: (context) => AdminMaterialsScreen(),
     StudentMaterialsScreen.routeName: (context) => StudentMaterialsScreen(),
+    AdminTimeTableScreen.routeName: (context) => AdminTimeTableScreen(),
+    AdminAddTimeTableScreen.routeName: (context) => AdminAddTimeTableScreen(),
   };
 
   static Widget? home = StreamBuilder(
