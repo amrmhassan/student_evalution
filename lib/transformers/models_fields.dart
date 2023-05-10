@@ -11,6 +11,7 @@ class ModelsFields {
   static const String userType = 'userType';
   static const String studentGrade = 'studentGrade';
   static const String teacherClass = 'teacherClass';
+  static const String studentGrades = 'studentGrades';
   static const String mobileNumber = 'mobileNumber';
 
   // attendance model

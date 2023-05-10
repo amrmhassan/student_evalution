@@ -18,6 +18,8 @@ class FakeUsers {
       userImage: null,
       teacherClass: TeacherClass.biology,
       mobileNumber: defaultMobileNumber,
+
+      studentGrades:[],
     ),
     StudentModel(
       email: 'student1@$emailSuffix',

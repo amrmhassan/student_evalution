@@ -98,6 +98,7 @@ abstract class UserModel {
     required StudentGrade studentGrade,
     required String? userImage,
     required String mobileNumber,
+    required List<StudentGrade> studentGrades,
   }) {
     if (userType == UserType.admin) {
       return AdminModel(
@@ -115,6 +116,7 @@ abstract class UserModel {
         userImage: userImage,
         teacherClass: teacherClass,
         mobileNumber: mobileNumber,
+        studentGrades: studentGrades,
       );
     } else {
       return StudentModel(
@@ -131,7 +133,7 @@ abstract class UserModel {
 
 @HiveType(typeId: 4)
 class StudentModel extends UserModel {
-  @HiveField(5)
+  @HiveField(6)
   final StudentGrade studentGrade;
   StudentModel({
     required String email,
@@ -178,8 +180,11 @@ class StudentModel extends UserModel {
 
 @HiveType(typeId: 5)
 class TeacherModel extends UserModel {
-  @HiveField(5)
+  @HiveField(6)
   final TeacherClass teacherClass;
+  @HiveField(7)
+  final List<StudentGrade> studentGrades;
+
   TeacherModel({
     required String email,
     required String name,
@@ -187,6 +192,7 @@ class TeacherModel extends UserModel {
     required String? userImage,
     required this.teacherClass,
     required String mobileNumber,
+    required this.studentGrades,
   }) : super(
           email: email,
           name: name,
@@ -205,10 +211,17 @@ class TeacherModel extends UserModel {
       ModelsFields.userImage: userImage,
       ModelsFields.userType: userType.name,
       ModelsFields.teacherClass: teacherClass.name,
+      ModelsFields.studentGrades: studentGrades.map((e) => e.name).toList(),
     };
   }
 
   static TeacherModel _fromJSON(Map<String, dynamic> obj) {
+    List<StudentGrade> studentGrades = obj[ModelsFields.studentGrades] == null
+        ? []
+        : (obj[ModelsFields.studentGrades] as List)
+            .map((e) => GlobalUtils.stringToEnum(e, StudentGrade.values))
+            .toList()
+            .cast();
     return TeacherModel(
       email: obj[ModelsFields.email],
       name: obj[ModelsFields.name],
@@ -219,6 +232,7 @@ class TeacherModel extends UserModel {
         TeacherClass.values,
       ),
       mobileNumber: obj[ModelsFields.mobileNumber] ?? defaultMobileNumber,
+      studentGrades: studentGrades,
     );
   }
 }

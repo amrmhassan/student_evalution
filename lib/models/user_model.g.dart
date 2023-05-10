@@ -20,17 +20,17 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       email: fields[1] as String,
       name: fields[2] as String,
       uid: fields[0] as String,
+      mobileNumber: fields[5] as String,
       userImage: fields[3] as String?,
-      studentGrade: fields[5] as StudentGrade,
-      mobileNumber: defaultMobileNumber,
+      studentGrade: fields[6] as StudentGrade,
     );
   }
 
   @override
   void write(BinaryWriter writer, StudentModel obj) {
     writer
+      ..writeByte(7)
       ..writeByte(6)
-      ..writeByte(5)
       ..write(obj.studentGrade)
       ..writeByte(0)
       ..write(obj.uid)
@@ -41,7 +41,9 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       ..writeByte(3)
       ..write(obj.userImage)
       ..writeByte(4)
-      ..write(obj.userType);
+      ..write(obj.userType)
+      ..writeByte(5)
+      ..write(obj.mobileNumber);
   }
 
   @override
@@ -70,17 +72,20 @@ class TeacherModelAdapter extends TypeAdapter<TeacherModel> {
       name: fields[2] as String,
       uid: fields[0] as String,
       userImage: fields[3] as String?,
-      teacherClass: fields[5] as TeacherClass,
-      mobileNumber: defaultMobileNumber,
+      teacherClass: fields[6] as TeacherClass,
+      mobileNumber: fields[5] as String,
+      studentGrades: (fields[7] as List).cast<StudentGrade>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TeacherModel obj) {
     writer
+      ..writeByte(8)
       ..writeByte(6)
-      ..writeByte(5)
       ..write(obj.teacherClass)
+      ..writeByte(7)
+      ..write(obj.studentGrades)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -90,7 +95,9 @@ class TeacherModelAdapter extends TypeAdapter<TeacherModel> {
       ..writeByte(3)
       ..write(obj.userImage)
       ..writeByte(4)
-      ..write(obj.userType);
+      ..write(obj.userType)
+      ..writeByte(5)
+      ..write(obj.mobileNumber);
   }
 
   @override
@@ -119,14 +126,14 @@ class AdminModelAdapter extends TypeAdapter<AdminModel> {
       name: fields[2] as String,
       uid: fields[0] as String,
       userImage: fields[3] as String?,
-      mobileNumber: defaultMobileNumber,
+      mobileNumber: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AdminModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -136,7 +143,9 @@ class AdminModelAdapter extends TypeAdapter<AdminModel> {
       ..writeByte(3)
       ..write(obj.userImage)
       ..writeByte(4)
-      ..write(obj.userType);
+      ..write(obj.userType)
+      ..writeByte(5)
+      ..write(obj.mobileNumber);
   }
 
   @override

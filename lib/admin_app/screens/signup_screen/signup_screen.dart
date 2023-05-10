@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, sized_box_for_whitespace, use_build_context_synchronously, invalid_use_of_visible_for_testing_member
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, sized_box_for_whitespace, use_build_context_synchronously, invalid_use_of_visible_for_testing_member, dead_code
 
 import 'dart:io';
 
@@ -50,6 +50,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   UserType userType = UserType.student;
   StudentGrade studentGrade = StudentGrade.values.first;
   TeacherClass teacherClass = TeacherClass.values.first;
+  List<StudentGrade> studentGrades = [];
+
+  void toggleToStudentGrades(StudentGrade grade) {
+    if (studentGrades.contains(grade)) {
+      studentGrades.remove(grade);
+    } else {
+      studentGrades.add(grade);
+    }
+    setState(() {});
+  }
 
   void setStudentGrade(StudentGrade? grade) {
     setState(() {
@@ -82,7 +92,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         setState(() {
           signupMode = SignupMode.edit;
         });
-        print(userModel);
         emailController.text = userModel.email.replaceAll('@$emailSuffix', '');
         nameController.text = userModel.name;
         mobileNumberController.text = userModel.mobileNumber;
@@ -90,6 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userType = userModel.userType;
         if (userModel is TeacherModel) {
           teacherClass = userModel.teacherClass;
+          studentGrades = userModel.studentGrades;
         } else if (userModel is StudentModel) {
           studentGrade = userModel.studentGrade;
         }
@@ -251,28 +261,69 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 )
               else if (userType == UserType.teacher)
-                Row(
+                Column(
                   children: [
-                    Text(
-                      'Teacher Class',
-                      style: h3TextStyle,
+                    Row(
+                      children: [
+                        Text(
+                          'Teacher Class',
+                          style: h3TextStyle,
+                        ),
+                        Spacer(),
+                        DropdownButton(
+                          value: teacherClass,
+                          items: TeacherClass.values
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  key: Key(e.name),
+                                  value: e,
+                                  child: Text(
+                                    e.name,
+                                    style: h3InactiveTextStyle,
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: setTeacherClass,
+                        ),
+                      ],
                     ),
-                    Spacer(),
-                    DropdownButton(
-                      value: teacherClass,
-                      items: TeacherClass.values
-                          .map(
-                            (e) => DropdownMenuItem(
-                              key: Key(e.name),
-                              value: e,
-                              child: Text(
-                                e.name,
-                                style: h3InactiveTextStyle,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: setTeacherClass,
+                    Row(
+                      children: [
+                        Text(
+                          'Student Grades',
+                          style: h3TextStyle,
+                        ),
+                        Spacer(),
+                        DropdownButton(
+                          value: StudentGrade.juniorSectionB,
+                          items: StudentGrade.values
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  key: Key(e.name),
+                                  value: e,
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                        value: studentGrades.contains(e),
+                                        onChanged: (value) {
+                                          toggleToStudentGrades(e);
+                                        },
+                                      ),
+                                      Text(
+                                        e.name,
+                                        style: h3InactiveTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            toggleToStudentGrades(value!);
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -343,7 +394,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       userImage:
           imageLinkController.text.isEmpty ? null : imageLinkController.text,
       mobileNumber: mobileNumberController.text,
+      studentGrades: studentGrades,
     );
+
     await Providers.userPf(context).updateUserModel(u);
     CNav.pop(context);
   }
@@ -462,6 +515,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         studentGrade: sGrade,
         userImage: imageLink,
         mobileNumber: mobileNumber,
+        studentGrades: studentGrades,
       );
       await FirebaseFirestore.instance
           .collection(DBCollections.users)

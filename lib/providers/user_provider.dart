@@ -162,7 +162,9 @@ class UserProvider extends ChangeNotifier with UserMixin {
         userImage: imageLink,
         teacherClass: oldMe.teacherClass,
         mobileNumber: oldMe.mobileNumber,
+        studentGrades: [],
       );
+      throw Exception('Edit student grades');
     } else {
       AdminModel oldMe = userModel as AdminModel;
       newUserModel = AdminModel(
