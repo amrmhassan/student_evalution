@@ -172,8 +172,8 @@ class _StudentMaterialsScreenState extends State<StudentMaterialsScreen> {
                                                   children: [
                                                     UserAvatar(
                                                       defaultIcon: Icons.book,
-                                                      userImage:
-                                                          ClassImage.getImage(
+                                                      userImage: ConstantImages
+                                                          .getClassImage(
                                                         e.teacherClass,
                                                       ),
                                                       borderRadius:

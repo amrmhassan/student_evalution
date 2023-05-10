@@ -34,7 +34,11 @@ class TimeLineItem extends StatelessWidget {
 
     return ButtonWrapper(
       onTap: () {
-        Providers.timeLPf(context).setCurrentDay(dateTime);
+        var userProvider = Providers.userPf(context);
+        Providers.timeLPf(context).setCurrentDay(
+          dateTime,
+          userModel: userProvider.userModel,
+        );
         if (onClick != null) {
           onClick!(dateTime);
         }

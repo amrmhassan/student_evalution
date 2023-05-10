@@ -45,9 +45,11 @@ class _AdminTimeTableScreenState extends State<AdminTimeTableScreen> {
     int weekDay = timeLProvider.currentDay.weekday;
     // current
 
-    return _tableItems.where((element) {
+    var res = _tableItems.where((element) {
       return element.studentGrade == studentGrade && element.weekDay == weekDay;
     }).toList();
+    res.sort((a, b) => (a.hour + a.minute).compareTo(b.hour + b.minute));
+    return res;
   }
 
   void deleteTimeTable(String id) async {
@@ -292,8 +294,8 @@ class _AdminTimeTableScreenState extends State<AdminTimeTableScreen> {
                                             e.minute,
                                           ),
                                         ),
-                                        imageLink:
-                                            ClassImage.getImage(e.teacherClass),
+                                        imageLink: ConstantImages.getClassImage(
+                                            e.teacherClass),
                                       ),
                                     ),
                                   ),
