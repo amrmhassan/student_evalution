@@ -14,6 +14,7 @@ import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../theming/constants/styles.dart';
 import '../../../theming/theme_calls.dart';
+import 'package:localization/localization.dart';
 
 class HomeScreenUpdates extends StatefulWidget {
   const HomeScreenUpdates({
@@ -61,7 +62,7 @@ class _HomeScreenUpdatesState extends State<HomeScreenUpdates> {
                     child: Row(
                       children: [
                         Text(
-                          'Time Table',
+                          'time-table'.i18n(),
                           style: h2TextStyle,
                         ),
                         Spacer(),

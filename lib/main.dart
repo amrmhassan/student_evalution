@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
@@ -9,13 +11,13 @@ import 'package:student_evaluation/screens/test_screen/test_screen.dart';
 import 'core/constants/languages_constants.dart';
 import 'core/hive/hive_initiator.dart';
 import 'init/firebase_init.dart';
+import 'init/language_init.dart';
 import 'init/providers_init.dart';
 import 'init/runtime_variables.dart';
 import 'init/screens_init.dart';
 import 'init/theme_init.dart';
 import 'init/user_initiators.dart';
 import 'package:localization/localization.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 //! fix the time line to view the week from the start
 //! and prevent selection for coming days
@@ -29,6 +31,8 @@ void main() async {
 
   await UserInit.reloadUser();
   await HiveInitiator().setup();
+  await loadCurrentLang();
+
   runApp(const MyApp());
 }
 
@@ -60,8 +64,19 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         theme: ThemeInit.theme,
         debugShowCheckedModeBanner: false,
+        locale: _locale,
+        localizationsDelegates: [
+          // delegate from flutter_localization
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          // delegate from localization package.
+          LocalJsonLocalization.delegate,
+        ],
+
         supportedLocales: supportedLocales,
         localeResolutionCallback: (locale, supportedLocales) {
+          print(locale);
           // to check for the saved locale key
           if (loadedCurrentLocale != null) {
             Locale localeHolder = Locale.fromSubtags(
@@ -72,10 +87,8 @@ class _MyAppState extends State<MyApp> {
 
             return localeHolder;
           }
+          //! this line causes an error
           Intl.defaultLocale = locale?.languageCode;
-          // if (kDebugMode) {
-          //   return arLocale;
-          // }
           for (var l in supportedLocales) {
             if (l.languageCode.toLowerCase() ==
                 locale?.languageCode.toLowerCase()) {

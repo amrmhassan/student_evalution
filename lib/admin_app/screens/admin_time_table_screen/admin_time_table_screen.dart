@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:localization/localization.dart';
 import 'package:student_evaluation/admin_app/screens/admin_add_time_table_screen/admin_add_time_table_screen.dart';
 import 'package:student_evaluation/core/constants/classes_images.dart';
 import 'package:student_evaluation/core/navigation.dart';
@@ -133,7 +134,7 @@ class _AdminTimeTableScreenState extends State<AdminTimeTableScreen> {
         backgroundColor: colorTheme.kBlueColor.withOpacity(.5),
         flexibleSpace: HAppBarFlexibleArea(),
         title: Text(
-          'Time Table',
+          'time-table'.i18n(),
           style: h1TextStyle.copyWith(
             color: Colors.white,
           ),

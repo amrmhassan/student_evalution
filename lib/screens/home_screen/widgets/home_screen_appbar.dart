@@ -1,12 +1,15 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_const_literals_to_create_immutables
 
 import 'dart:ui';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:student_evaluation/core/navigation.dart';
+import 'package:student_evaluation/fast_tools/widgets/modal_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
+import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/widgets/user_avatar.dart';
@@ -15,6 +18,8 @@ import 'package:student_evaluation/transformers/enums_transformers.dart';
 import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
+import '../../../core/constants/languages_constants.dart';
+import '../../../fast_tools/widgets/button_wrapper.dart';
 import '../../../fast_tools/widgets/h_space.dart';
 import '../../../models/saved_accounts_model.dart';
 import '../../../theming/constants/styles.dart';
@@ -190,6 +195,25 @@ class _HomeScreenEndDrawerState extends State<HomeScreenEndDrawer> {
             ),
           ListTile(
             onTap: () async {
+              CNav.pop(context);
+              showModalBottomSheet(
+                context: navigatorKey.currentContext!,
+                builder: (context) => LanguageModal(),
+              );
+            },
+            leading: Icon(
+              Icons.language,
+              color: colorTheme.kBlueColor,
+            ),
+            title: Text(
+              'Language',
+              style: h3LiteTextStyle.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () async {
               await Providers.userPf(context).logout();
               CNav.pushReplacementNamed(context, IntroScreen.routeName);
             },
@@ -207,5 +231,54 @@ class _HomeScreenEndDrawerState extends State<HomeScreenEndDrawer> {
         ],
       ),
     );
+  }
+}
+
+class LanguageModal extends StatelessWidget {
+  const LanguageModal({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var langProvider = Providers.langP(context);
+
+    return ModalWrapper(
+        padding: EdgeInsets.zero,
+        showTopLine: false,
+        bottomPaddingFactor: 0,
+        afterLinePaddingFactor: 0,
+        child: Column(
+          children: [
+            VSpace(),
+            Column(
+              children: List.generate(supportedLocales.length, (index) {
+                var locale = supportedLocales[index];
+                return ButtonWrapper(
+                  backgroundColor: langProvider.locale == locale
+                      ? colorTheme.cardBackground
+                      : null,
+                  onTap: () {
+                    Providers.langPf(context).setLocale(context, locale);
+                    // CustomLocale.changeLocale(context, enLocale);
+                    GlobalUtils.showSnackBar(
+                      context: context,
+                      message: "apply-on-next-startup".i18n(),
+                    );
+                    CNav.pop(context);
+                  },
+                  child: ListTile(
+                    title: Text(
+                      getLanguageNames(supportedLocales)[locale.languageCode] ??
+                          'Unknown',
+                      style: h4TextStyleInactive,
+                    ),
+                  ),
+                );
+              }),
+            ),
+            VSpace(),
+          ],
+        ));
   }
 }
