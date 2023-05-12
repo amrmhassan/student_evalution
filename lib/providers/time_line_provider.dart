@@ -54,6 +54,10 @@ class TimeLineProvider extends ChangeNotifier {
                   ModelsFields.studentGrade,
                   isEqualTo: userModel.studentGrade.name,
                 )
+                .where(
+                  ModelsFields.weekDay,
+                  isEqualTo: currentDay.weekday,
+                )
                 .get())
             .docs;
       }

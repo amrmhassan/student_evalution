@@ -95,7 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         SizedBox(width: double.infinity),
                         VSpace(factor: 6),
-                        if (userProvider.userModel is TeacherModel)
+                        if (userProvider.userModel is TeacherModel ||
+                            userProvider.userModel is StudentModel)
                           Column(
                             children: [
                               TopLineTimeLine(),
