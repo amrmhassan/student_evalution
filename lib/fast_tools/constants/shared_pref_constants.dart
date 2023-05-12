@@ -2,8 +2,8 @@
 const String kFirstTimeRunKey = 'firstTimeRunKey';
 
 //? props key
-const String lastEmailVerificationSentKey = 'lastEmailVerificationSentKey';
-const String emailSentKey = 'emailSentKey';
+
+const String themeKey = 'themeKey';
 
 //? language keys
 const String languageKey = 'languageKey';

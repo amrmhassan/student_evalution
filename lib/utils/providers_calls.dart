@@ -11,6 +11,7 @@ import 'package:student_evaluation/providers/time_line_provider.dart';
 import 'package:student_evaluation/student_app/providers/student_behaviour_provider.dart';
 import 'package:student_evaluation/student_app/providers/student_homework_provider.dart';
 import 'package:student_evaluation/student_app/providers/students_attend_provider.dart';
+import 'package:student_evaluation/theming/providers/theme_provider.dart';
 
 import '../providers/behavior_provider.dart';
 import '../providers/user_provider.dart';
@@ -118,5 +119,13 @@ class Providers {
 
   static LanguageProvider langP(BuildContext context) {
     return Provider.of<LanguageProvider>(context);
+  }
+
+  static ThemeProvider themePf(BuildContext context) {
+    return Provider.of<ThemeProvider>(context, listen: false);
+  }
+
+  static ThemeProvider themeP(BuildContext context) {
+    return Provider.of<ThemeProvider>(context);
   }
 }

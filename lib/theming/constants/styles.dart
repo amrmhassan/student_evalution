@@ -48,7 +48,7 @@ TextStyle h3TextStyle = TextStyle(
   fontFamily: 'Cairo',
 );
 TextStyle h3LiteTextStyle = TextStyle(
-  color: CustomColors.kInactiveColor,
+  color: LightThemeColors.kInactiveColor,
   fontSize: h3TextSize,
   fontFamily: 'Cairo',
 );

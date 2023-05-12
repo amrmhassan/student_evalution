@@ -23,16 +23,16 @@ class ColorTheme {
   final Color inActiveText;
 
   const ColorTheme({
-    this.backGround = CustomColors.kBackgroundColor,
-    this.cardBackground = CustomColors.kCardBackgroundColor,
-    this.cardBackgroundDark = CustomColors.kCardBackgroundColorDark,
-    this.lightCardBackground = CustomColors.kLightCardBackgroundColor,
-    this.kInactiveColor = CustomColors.kInactiveColor,
-    this.kBlueColor = CustomColors.kBlueColor,
-    this.textFieldBackgroundColor = CustomColors.textFieldBackgroundColor,
-    this.kMainIconColor = CustomColors.kBlueColor,
-    this.kDangerColor = CustomColors.kDangerColor,
-    this.kGreenColor = CustomColors.kGreenColor,
+    this.backGround = LightThemeColors.kBackgroundColor,
+    this.cardBackground = LightThemeColors.kCardBackgroundColor,
+    this.cardBackgroundDark = LightThemeColors.kCardBackgroundColorDark,
+    this.lightCardBackground = LightThemeColors.kLightCardBackgroundColor,
+    this.kInactiveColor = LightThemeColors.kInactiveColor,
+    this.kBlueColor = LightThemeColors.kBlueColor,
+    this.textFieldBackgroundColor = LightThemeColors.textFieldBackgroundColor,
+    this.kMainIconColor = LightThemeColors.kBlueColor,
+    this.kDangerColor = LightThemeColors.kDangerColor,
+    this.kGreenColor = LightThemeColors.kGreenColor,
     this.activeText = TextColors.kActiveTextColor,
     this.inActiveText = TextColors.kInActiveTextColor,
   });

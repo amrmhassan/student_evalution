@@ -21,7 +21,6 @@ import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../../screens/home_screen/widgets/home_screen_appbar.dart';
-import '../../../screens/intro_screen/intro_screen.dart';
 import '../admin_student_materials/admin_student_materials.dart';
 import '../admin_time_table_screen/admin_time_table_screen.dart';
 

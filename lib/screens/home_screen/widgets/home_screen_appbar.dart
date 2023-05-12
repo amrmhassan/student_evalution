@@ -23,6 +23,7 @@ import '../../../fast_tools/widgets/button_wrapper.dart';
 import '../../../fast_tools/widgets/h_space.dart';
 import '../../../models/saved_accounts_model.dart';
 import '../../../theming/constants/styles.dart';
+import '../../../theming/providers/theme_provider.dart';
 import '../../../theming/theme_calls.dart';
 import 'notifications_icon.dart';
 import 'other_student_accounts.dart';
@@ -214,6 +215,25 @@ class _HomeScreenEndDrawerState extends State<HomeScreenEndDrawer> {
           ),
           ListTile(
             onTap: () async {
+              CNav.pop(context);
+              showModalBottomSheet(
+                context: navigatorKey.currentContext!,
+                builder: (context) => ThemeModal(),
+              );
+            },
+            leading: Icon(
+              Icons.palette,
+              color: colorTheme.kBlueColor,
+            ),
+            title: Text(
+              'Theme',
+              style: h3LiteTextStyle.copyWith(
+                color: Colors.black,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () async {
               await Providers.userPf(context).logout();
               CNav.pushReplacementNamed(context, IntroScreen.routeName);
             },
@@ -231,6 +251,45 @@ class _HomeScreenEndDrawerState extends State<HomeScreenEndDrawer> {
         ],
       ),
     );
+  }
+}
+
+class ThemeModal extends StatelessWidget {
+  const ThemeModal({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ModalWrapper(
+        padding: EdgeInsets.zero,
+        showTopLine: false,
+        bottomPaddingFactor: 0,
+        afterLinePaddingFactor: 0,
+        child: Column(
+          children: [
+            VSpace(),
+            ...CustomThemeMode.values.map((e) => ButtonWrapper(
+                  onTap: () {
+                    if (e == CustomThemeMode.light) {
+                      Providers.themePf(context).applyLightTheme();
+                    } else {
+                      Providers.themePf(context).applyDarkTheme();
+                    }
+                    // CustomLocale.changeLocale(context, enLocale);
+
+                    CNav.pop(context);
+                  },
+                  child: ListTile(
+                    title: Text(
+                      e.name.capitalize,
+                      style: h4TextStyleInactive,
+                    ),
+                  ),
+                )),
+            VSpace(),
+          ],
+        ));
   }
 }
 

@@ -102,7 +102,7 @@ class CustomTextField extends StatelessWidget {
                   '*',
                   style: TextStyle(
                     height: 1,
-                    color: CustomColors.kDangerColor,
+                    color: LightThemeColors.kDangerColor,
                     fontSize: h2TextSize,
                     fontWeight: FontWeight.bold,
                   ),
@@ -117,8 +117,8 @@ class CustomTextField extends StatelessWidget {
                         border: Border.all(
                           width: 1,
                           color: errorText == null
-                              ? (borderColor ?? CustomColors.kInactiveColor)
-                              : CustomColors.kDangerColor,
+                              ? (borderColor ?? LightThemeColors.kInactiveColor)
+                              : LightThemeColors.kDangerColor,
                         ),
                       ),
                   padding: EdgeInsets.symmetric(
@@ -132,8 +132,8 @@ class CustomTextField extends StatelessWidget {
                           'assets/icons/$iconName.png',
                           width: mediumIconSize,
                           color: errorText == null
-                              ? (color ?? CustomColors.kInactiveColor)
-                              : CustomColors.kDangerColor,
+                              ? (color ?? LightThemeColors.kInactiveColor)
+                              : LightThemeColors.kDangerColor,
                         )
                       else if (leadingIcon != null)
                         leadingIcon!,
@@ -165,7 +165,7 @@ class CustomTextField extends StatelessWidget {
                               hintStyle: errorText == null
                                   ? (hintStyle ?? h3LiteTextStyle)
                                   : h3LiteTextStyle.copyWith(
-                                      color: CustomColors.kDangerColor,
+                                      color: LightThemeColors.kDangerColor,
                                     ),
                             ),
                           ),
@@ -179,7 +179,7 @@ class CustomTextField extends StatelessWidget {
                             'assets/icons/$trailingIconName.png',
                             width: mediumIconSize,
                             color: trailingIconColor ??
-                                CustomColors.kInactiveColor,
+                                LightThemeColors.kInactiveColor,
                           ),
                         ),
                       if (trailingIconWidget != null) trailingIconWidget!
@@ -192,7 +192,8 @@ class CustomTextField extends StatelessWidget {
           if (errorText != null)
             Text(
               errorText.toString(),
-              style: h4LiteTextStyle.copyWith(color: CustomColors.kDangerColor),
+              style: h4LiteTextStyle.copyWith(
+                  color: LightThemeColors.kDangerColor),
             ),
         ],
       ),

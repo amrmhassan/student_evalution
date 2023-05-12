@@ -3,10 +3,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:student_evaluation/screens/test_screen/test_screen.dart';
+import 'package:student_evaluation/theming/providers/theme_provider.dart';
 
 import 'core/constants/languages_constants.dart';
 import 'core/hive/hive_initiator.dart';
@@ -32,6 +32,7 @@ void main() async {
   await UserInit.reloadUser();
   await HiveInitiator().setup();
   await loadCurrentLang();
+  await ThemeProvider.loadTheme();
 
   runApp(const MyApp());
 }
@@ -76,7 +77,6 @@ class _MyAppState extends State<MyApp> {
 
         supportedLocales: supportedLocales,
         localeResolutionCallback: (locale, supportedLocales) {
-          print(locale);
           // to check for the saved locale key
           if (loadedCurrentLocale != null) {
             Locale localeHolder = Locale.fromSubtags(
