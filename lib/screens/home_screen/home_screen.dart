@@ -40,6 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    Providers.langPf(context).loadLocale(context);
+
     _loadCurrentUser();
     super.initState();
   }

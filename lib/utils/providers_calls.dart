@@ -4,6 +4,7 @@ import 'package:student_evaluation/providers/app_state_provider.dart';
 import 'package:student_evaluation/providers/attendance_provider.dart';
 import 'package:student_evaluation/providers/event_provider.dart';
 import 'package:student_evaluation/providers/home_work_provider.dart';
+import 'package:student_evaluation/providers/language_provider.dart';
 import 'package:student_evaluation/providers/message_provider.dart';
 import 'package:student_evaluation/providers/notifications_provider.dart';
 import 'package:student_evaluation/providers/time_line_provider.dart';
@@ -109,5 +110,13 @@ class Providers {
 
   static NotificationProvider notifyP(BuildContext context) {
     return Provider.of<NotificationProvider>(context);
+  }
+
+  static LanguageProvider langPf(BuildContext context) {
+    return Provider.of<LanguageProvider>(context, listen: false);
+  }
+
+  static LanguageProvider langP(BuildContext context) {
+    return Provider.of<LanguageProvider>(context);
   }
 }

@@ -4,3 +4,4 @@ import 'package:logger/logger.dart';
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Logger logger = Logger();
 bool testing = false;
+Locale? loadedCurrentLocale;
