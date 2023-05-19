@@ -15,6 +15,7 @@ import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/all_students_screen/all_students_screen.dart';
 import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
+import 'package:student_evaluation/screens/camera_screen/camera_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/medical_tracking_screen/medical_tracking_screen.dart';
@@ -131,28 +132,23 @@ class HomeDashboard extends StatelessWidget {
                       },
                       color: colorTheme.kGreenColor,
                     ),
-                    // DashboardItem(
-                    //   title: 'Time Table',
-                    //   iconName: 'time_table',
-                    //   onTap: () {},
-                    // ),
-                    // DashboardItem(
-                    //   title: 'Messages',
-                    //   iconName: 'messages',
-                    //   onTap: () {
-                    //     CNav.pushReplacementNamed(
-                    //         context, MessagesScreen.routeName);
-                    //     Providers.appSPf(context).setActiveNavBar(1);
-                    //   },
-                    // ),
-                    // Opacity(
-                    //   opacity: 0,
-                    //   child: DashboardItem(
-                    //     title: 'Messages',
-                    //     iconName: 'messages',
-                    //     onTap: null,
-                    //   ),
-                    // ),
+                  ],
+                ),
+                VSpace(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DashboardItem(
+                      title: 'Camera',
+                      iconData: Icons.camera_alt_outlined,
+                      onTap: () {
+                        CNav.pushNamed(
+                          context,
+                          CameraScreen.routeName,
+                        );
+                      },
+                      color: Colors.cyan,
+                    ),
                   ],
                 ),
               ],

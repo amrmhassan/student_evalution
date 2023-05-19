@@ -8,6 +8,7 @@ import 'package:student_evaluation/screens/add_event_screen/add_event_screen.dar
 import 'package:student_evaluation/screens/add_medical_state_screen/add_medical_state_screen.dart';
 import 'package:student_evaluation/screens/all_students_screen/all_students_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
+import 'package:student_evaluation/screens/camera_screen/camera_screen.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
@@ -65,6 +66,7 @@ class ScreensInit {
     AddMedicalStateScreen.routeName: (context) => AddMedicalStateScreen(),
     AllStudentsScreen.routeName: (context) => AllStudentsScreen(),
     AbsentRequestViewScreen.routeName: (context) => AbsentRequestViewScreen(),
+    CameraScreen.routeName: (context) => CameraScreen(),
   };
 
   static Widget? home = StreamBuilder(

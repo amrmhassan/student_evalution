@@ -10,7 +10,6 @@ import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 
-import '../add_medical_state_screen/add_medical_state_screen.dart';
 import '../home_screen/widgets/home_screen_appbar.dart';
 
 class AbsentRequestViewScreen extends StatelessWidget {
@@ -127,9 +126,4 @@ class AbsentRequestViewScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-String _timesToString(List<int> times) {
-  return times.fold(
-      '', (previousValue, element) => '$previousValue ${getDayName(element)}');
 }
