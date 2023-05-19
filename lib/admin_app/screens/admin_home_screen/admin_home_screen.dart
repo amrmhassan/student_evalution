@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:student_evaluation/admin_app/screens/admin_groups_screen/admin_groups_screen.dart';
 import 'package:student_evaluation/admin_app/screens/signup_screen/signup_screen.dart';
 import 'package:student_evaluation/admin_app/screens/users_screen/users_screen.dart';
 import 'package:student_evaluation/core/navigation.dart';
@@ -10,7 +11,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/user_model.dart';
-import 'package:student_evaluation/screens/create_groups_screen/create_groups_screen.dart';
+import 'package:student_evaluation/admin_app/screens/admin_create_group_screen/admin_create_groups_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
@@ -197,7 +198,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                         AdminUnitCard(
                                           onTap: () {
                                             CNav.pushNamed(context,
-                                                CreateGroupsScreen.routeName);
+                                                AdminGroupsScreen.routeName);
                                           },
                                           child: Row(
                                             children: [
@@ -207,7 +208,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                               ),
                                               HSpace(),
                                               Text(
-                                                'Create Groups',
+                                                'Groups',
                                                 style: h3InactiveTextStyle,
                                               ),
                                             ],

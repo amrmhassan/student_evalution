@@ -15,6 +15,7 @@ import 'package:student_evaluation/student_app/providers/students_attend_provide
 import 'package:student_evaluation/theming/providers/theme_provider.dart';
 
 import '../providers/behavior_provider.dart';
+import '../providers/groups_provider.dart';
 import '../providers/user_provider.dart';
 
 class Providers {
@@ -136,5 +137,13 @@ class Providers {
 
   static AllStudentsProvider allStudentsP(BuildContext context) {
     return Provider.of<AllStudentsProvider>(context);
+  }
+
+  static GroupsProvider groupsPf(BuildContext context) {
+    return Provider.of<GroupsProvider>(context, listen: false);
+  }
+
+  static GroupsProvider groupsP(BuildContext context) {
+    return Provider.of<GroupsProvider>(context);
   }
 }

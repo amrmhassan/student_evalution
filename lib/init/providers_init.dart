@@ -5,6 +5,7 @@ import 'package:student_evaluation/providers/app_state_provider.dart';
 import 'package:student_evaluation/providers/attendance_provider.dart';
 import 'package:student_evaluation/providers/behavior_provider.dart';
 import 'package:student_evaluation/providers/event_provider.dart';
+import 'package:student_evaluation/providers/groups_provider.dart';
 import 'package:student_evaluation/providers/home_work_provider.dart';
 import 'package:student_evaluation/providers/language_provider.dart';
 import 'package:student_evaluation/providers/message_provider.dart';
@@ -34,5 +35,6 @@ class ProvidersInit {
     ChangeNotifierProvider(create: (context) => NotificationProvider()),
     ChangeNotifierProvider(create: (context) => LanguageProvider()),
     ChangeNotifierProvider(create: (context) => AllStudentsProvider()),
+    ChangeNotifierProvider(create: (context) => GroupsProvider()),
   ];
 }

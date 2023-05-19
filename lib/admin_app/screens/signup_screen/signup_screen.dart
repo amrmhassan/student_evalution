@@ -344,18 +344,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               VSpace(),
               if (signupMode == SignupMode.add)
-                ButtonWrapper(
-                  active: !loading,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: kHPad,
-                    vertical: kVPad / 2,
-                  ),
-                  backgroundColor: colorTheme.kBlueColor,
-                  onTap: signFakeUsers,
-                  child: Text(
-                    'Sign Fake Users',
-                    style: h3LightTextStyle,
-                  ),
+                Column(
+                  children: [
+                    ButtonWrapper(
+                      active: !loading,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: kHPad,
+                        vertical: kVPad / 2,
+                      ),
+                      backgroundColor: colorTheme.kBlueColor,
+                      onTap: signFakeUsers,
+                      child: Text(
+                        'Sign users from list',
+                        style: h3LightTextStyle,
+                      ),
+                    ),
+                    Text(
+                      'you can add users to the fake_users.dart file',
+                      style: h4TextStyleInactive,
+                    )
+                  ],
                 ),
             ],
           ),

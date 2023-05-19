@@ -6,15 +6,16 @@ import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
-class CreateGroupsScreen extends StatefulWidget {
+class AdminCreateGroupsScreen extends StatefulWidget {
   static const String routeName = '/CreateGroupsScreen';
-  const CreateGroupsScreen({super.key});
+  const AdminCreateGroupsScreen({super.key});
 
   @override
-  State<CreateGroupsScreen> createState() => _CreateGroupsScreenState();
+  State<AdminCreateGroupsScreen> createState() =>
+      _AdminCreateGroupsScreenState();
 }
 
-class _CreateGroupsScreenState extends State<CreateGroupsScreen> {
+class _AdminCreateGroupsScreenState extends State<AdminCreateGroupsScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(

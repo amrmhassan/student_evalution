@@ -24,11 +24,12 @@ import 'package:student_evaluation/student_app/screens/student_behaviour_screen/
 import 'package:student_evaluation/student_app/screens/student_materials_screen/student_materials_screen.dart';
 
 import '../admin_app/screens/admin_add_time_table_screen/admin_add_time_table_screen.dart';
+import '../admin_app/screens/admin_groups_screen/admin_groups_screen.dart';
 import '../admin_app/screens/admin_student_materials/admin_student_materials.dart';
 import '../admin_app/screens/admin_time_table_screen/admin_time_table_screen.dart';
 import '../screens/absent_request_view_screen/absent_request_view_screen.dart';
 import '../screens/attendance_screen/attendance_screen.dart';
-import '../screens/create_groups_screen/create_groups_screen.dart';
+import '../admin_app/screens/admin_create_group_screen/admin_create_groups_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
 import '../screens/messages_screen/messages_screen.dart';
@@ -49,7 +50,7 @@ class ScreensInit {
     EventScreen.routeName: (context) => EventScreen(),
     SignUpScreen.routeName: (context) => SignUpScreen(),
     SearchScreen.routeName: (context) => SearchScreen(),
-    CreateGroupsScreen.routeName: (context) => CreateGroupsScreen(),
+    AdminCreateGroupsScreen.routeName: (context) => AdminCreateGroupsScreen(),
     StudentAttendanceScreen.routeName: (context) => StudentAttendanceScreen(),
     StudentBehaviorScreen.routeName: (context) => StudentBehaviorScreen(),
     SettingsScreen.routeName: (context) => SettingsScreen(),
@@ -67,6 +68,7 @@ class ScreensInit {
     AllStudentsScreen.routeName: (context) => AllStudentsScreen(),
     AbsentRequestViewScreen.routeName: (context) => AbsentRequestViewScreen(),
     CameraScreen.routeName: (context) => CameraScreen(),
+    AdminGroupsScreen.routeName: (context) => AdminGroupsScreen(),
   };
 
   static Widget? home = StreamBuilder(
