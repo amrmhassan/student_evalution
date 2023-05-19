@@ -5,6 +5,7 @@ import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/custom_text_field.dart';
+import 'package:student_evaluation/fast_tools/widgets/double_modal_button.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
@@ -15,6 +16,7 @@ import 'package:student_evaluation/screens/attendance_screen/attendance_screen.d
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
+import 'package:student_evaluation/screens/medical_tracking_screen/medical_tracking_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_homework_screen/student_homework_screen.dart';
@@ -26,6 +28,7 @@ import 'package:intl/intl.dart' as intl;
 
 import '../../../student_app/screens/students_attendance_screen/students_attendance_screen.dart';
 import '../../../utils/providers_calls.dart';
+import 'absent_modal.dart';
 
 class HomeDashboard extends StatelessWidget {
   const HomeDashboard({
@@ -101,6 +104,28 @@ class HomeDashboard extends StatelessWidget {
                         );
                       },
                       color: colorTheme.kBlueColor,
+                    ),
+                    DashboardItem(
+                      title: 'Medical Tracking',
+                      iconData: Icons.medication_liquid_outlined,
+                      onTap: () {
+                        CNav.pushNamed(
+                          context,
+                          MedicalTrackingScreen.routeName,
+                        );
+                      },
+                      color: colorTheme.kDangerColor,
+                    ),
+                    DashboardItem(
+                      title: 'Absent Request',
+                      iconData: Icons.remove_circle_outline,
+                      onTap: () {
+                        showBottomSheet(
+                          context: context,
+                          builder: (context) => AbsentModal(),
+                        );
+                      },
+                      color: colorTheme.kGreenColor,
                     ),
                     // DashboardItem(
                     //   title: 'Time Table',

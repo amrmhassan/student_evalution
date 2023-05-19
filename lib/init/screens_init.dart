@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:student_evaluation/admin_app/screens/admin_home_screen/admin_home_screen.dart';
 import 'package:student_evaluation/admin_app/screens/users_screen/users_screen.dart';
 import 'package:student_evaluation/screens/add_event_screen/add_event_screen.dart';
+import 'package:student_evaluation/screens/add_medical_state_screen/add_medical_state_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/chat_screen/chat_screen.dart';
 import 'package:student_evaluation/screens/event_screen/event_screen.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
+import 'package:student_evaluation/screens/medical_tracking_screen/medical_tracking_screen.dart';
 import 'package:student_evaluation/screens/notifications_screen/notifications_screen.dart';
 import 'package:student_evaluation/screens/search_screen/search_screen.dart';
 import 'package:student_evaluation/screens/settings_screen/settings_screen.dart';
@@ -57,6 +59,8 @@ class ScreensInit {
     AdminTimeTableScreen.routeName: (context) => AdminTimeTableScreen(),
     AdminAddTimeTableScreen.routeName: (context) => AdminAddTimeTableScreen(),
     NotificationsScreen.routeName: (context) => NotificationsScreen(),
+    MedicalTrackingScreen.routeName: (context) => MedicalTrackingScreen(),
+    AddMedicalStateScreen.routeName: (context) => AddMedicalStateScreen(),
   };
 
   static Widget? home = StreamBuilder(

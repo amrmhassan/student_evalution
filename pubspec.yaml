@@ -66,6 +66,7 @@ dependencies:
   url_launcher: ^6.1.10
   table_calendar: ^3.0.8
   localization: ^2.1.0
+  json_annotation: ^4.8.1
 
 
 dev_dependencies:
@@ -74,6 +75,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   hive_generator: ^2.0.0
   build_runner: ^2.3.3
+  json_serializable: ^6.6.2
 
 
 flutter:

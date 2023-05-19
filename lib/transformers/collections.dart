@@ -29,6 +29,11 @@ class DBCollections {
   // time table
   static const String timeTable = 'timeTable';
 
+  // medical
+  static const String medical = 'medical';
+  // absentRequest
+  static const String absentRequest = 'absentRequest';
+
   static String getRef(List<String> collections) {
     return collections.join('/');
   }
