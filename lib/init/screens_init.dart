@@ -25,6 +25,7 @@ import 'package:student_evaluation/student_app/screens/student_materials_screen/
 import '../admin_app/screens/admin_add_time_table_screen/admin_add_time_table_screen.dart';
 import '../admin_app/screens/admin_student_materials/admin_student_materials.dart';
 import '../admin_app/screens/admin_time_table_screen/admin_time_table_screen.dart';
+import '../screens/absent_request_view_screen/absent_request_view_screen.dart';
 import '../screens/attendance_screen/attendance_screen.dart';
 import '../screens/create_groups_screen/create_groups_screen.dart';
 import '../screens/home_screen/home_screen.dart';
@@ -63,6 +64,7 @@ class ScreensInit {
     MedicalTrackingScreen.routeName: (context) => MedicalTrackingScreen(),
     AddMedicalStateScreen.routeName: (context) => AddMedicalStateScreen(),
     AllStudentsScreen.routeName: (context) => AllStudentsScreen(),
+    AbsentRequestViewScreen.routeName: (context) => AbsentRequestViewScreen(),
   };
 
   static Widget? home = StreamBuilder(

@@ -7,6 +7,7 @@ import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/medical_state_model.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -58,10 +59,10 @@ class _MedicalTrackingScreenState extends State<MedicalTrackingScreen> {
         loadingStates = true;
         myMedicalStates.clear();
       });
-      String myId = Providers.userPf(context).userModel!.uid;
+      String studentId = ModalRoute.of(context)!.settings.arguments as String;
       var docs = (await FirebaseFirestore.instance
               .collection(DBCollections.medical)
-              .where('studentId', isEqualTo: myId)
+              .where('studentId', isEqualTo: studentId)
               .get())
           .docs;
       for (var doc in docs) {
@@ -76,6 +77,7 @@ class _MedicalTrackingScreenState extends State<MedicalTrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel? me = Providers.userPf(context).userModel;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -84,15 +86,17 @@ class _MedicalTrackingScreenState extends State<MedicalTrackingScreen> {
         flexibleSpace: HAppBarFlexibleArea(),
         foregroundColor: Colors.white,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await CNav.pushNamed(context, AddMedicalStateScreen.routeName);
-          loadData();
-        },
-        child: Icon(
-          Icons.add,
-        ),
-      ),
+      floatingActionButton: me is StudentModel
+          ? FloatingActionButton(
+              onPressed: () async {
+                await CNav.pushNamed(context, AddMedicalStateScreen.routeName);
+                loadData();
+              },
+              child: Icon(
+                Icons.add,
+              ),
+            )
+          : null,
       body: Stack(
         children: [
           Container(
@@ -164,8 +168,10 @@ class _MedicalTrackingScreenState extends State<MedicalTrackingScreen> {
                                                   deleteMedicalState(e.id);
                                                 },
                                                 key: UniqueKey(),
-                                                direction:
-                                                    DismissDirection.endToStart,
+                                                direction: me is StudentModel
+                                                    ? DismissDirection
+                                                        .endToStart
+                                                    : DismissDirection.none,
                                                 background: Container(
                                                   alignment:
                                                       Alignment.centerRight,

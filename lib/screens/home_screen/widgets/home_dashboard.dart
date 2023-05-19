@@ -110,9 +110,12 @@ class HomeDashboard extends StatelessWidget {
                       title: 'Medical Tracking',
                       iconData: Icons.medication_liquid_outlined,
                       onTap: () {
+                        String myId = Providers.userPf(context).userModel!.uid;
+
                         CNav.pushNamed(
                           context,
                           MedicalTrackingScreen.routeName,
+                          arguments: myId,
                         );
                       },
                       color: colorTheme.kDangerColor,
