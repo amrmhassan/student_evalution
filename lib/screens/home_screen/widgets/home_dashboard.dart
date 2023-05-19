@@ -12,6 +12,7 @@ import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/init/runtime_variables.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/screens/all_students_screen/all_students_screen.dart';
 import 'package:student_evaluation/screens/attendance_screen/attendance_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
@@ -127,6 +128,51 @@ class HomeDashboard extends StatelessWidget {
                       },
                       color: colorTheme.kGreenColor,
                     ),
+                    // DashboardItem(
+                    //   title: 'Time Table',
+                    //   iconName: 'time_table',
+                    //   onTap: () {},
+                    // ),
+                    // DashboardItem(
+                    //   title: 'Messages',
+                    //   iconName: 'messages',
+                    //   onTap: () {
+                    //     CNav.pushReplacementNamed(
+                    //         context, MessagesScreen.routeName);
+                    //     Providers.appSPf(context).setActiveNavBar(1);
+                    //   },
+                    // ),
+                    // Opacity(
+                    //   opacity: 0,
+                    //   child: DashboardItem(
+                    //     title: 'Messages',
+                    //     iconName: 'messages',
+                    //     onTap: null,
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ],
+            )
+          else
+            Column(
+              children: [
+                VSpace(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DashboardItem(
+                      title: 'All Students',
+                      iconData: Icons.group,
+                      onTap: () {
+                        CNav.pushNamed(
+                          context,
+                          AllStudentsScreen.routeName,
+                        );
+                      },
+                      color: colorTheme.kBlueColor,
+                    ),
+
                     // DashboardItem(
                     //   title: 'Time Table',
                     //   iconName: 'time_table',

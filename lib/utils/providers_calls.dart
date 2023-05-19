@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_evaluation/providers/all_students_provider.dart';
 import 'package:student_evaluation/providers/app_state_provider.dart';
 import 'package:student_evaluation/providers/attendance_provider.dart';
 import 'package:student_evaluation/providers/event_provider.dart';
@@ -127,5 +128,13 @@ class Providers {
 
   static ThemeProvider themeP(BuildContext context) {
     return Provider.of<ThemeProvider>(context);
+  }
+
+  static AllStudentsProvider allStudentsPf(BuildContext context) {
+    return Provider.of<AllStudentsProvider>(context, listen: false);
+  }
+
+  static AllStudentsProvider allStudentsP(BuildContext context) {
+    return Provider.of<AllStudentsProvider>(context);
   }
 }
