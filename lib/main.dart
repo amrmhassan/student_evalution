@@ -18,7 +18,6 @@ import 'init/screens_init.dart';
 import 'init/theme_init.dart';
 import 'init/user_initiators.dart';
 import 'package:localization/localization.dart';
-
 // flutter packages pub run build_runner build --delete-conflicting-outputs
 
 void main() async {

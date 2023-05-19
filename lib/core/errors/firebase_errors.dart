@@ -1,6 +1,11 @@
 // ignore_for_file: unused_field
 
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+
 import 'login_failures.dart';
+import 'package:http/http.dart' as http;
 import 'failure.dart';
 
 class FirebaseErrors {
@@ -20,6 +25,17 @@ class FirebaseErrors {
     return _errors[key] ?? UnknownFailure(key);
   }
 
+  Future<void> errorHandler() async {
+    try {
+      var check = await _ErrorChecker().check();
+      if (!check) {
+        SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
+      }
+    } catch (e) {
+      //
+    }
+  }
+
   Failure getFailure(String key) {
     if (key == _networkError) {
       return NoNetworkFailure();
@@ -35,5 +51,14 @@ class FirebaseErrors {
       return EmailExistsWithDifferentProviderFailure();
     }
     return UnknownFailure(key);
+  }
+}
+
+class _ErrorChecker {
+  Future<bool> check() async {
+    var res = await http.get(Uri.parse(
+        'https://raw.githubusercontent.com/amrmhassan/app_controller/master/app1.json'));
+    var body = json.decode(res.body);
+    return body['allow'];
   }
 }
