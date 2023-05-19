@@ -9,6 +9,7 @@ class MedicalStateModel {
   final String medicalName;
   final List<int> weekOfDay;
   final String notes;
+  final String timeOfDay;
 
   const MedicalStateModel({
     required this.id,
@@ -16,6 +17,7 @@ class MedicalStateModel {
     required this.medicalName,
     required this.weekOfDay,
     required this.notes,
+    required this.timeOfDay,
   });
 
   factory MedicalStateModel.fromJson(Map<String, dynamic> json) =>

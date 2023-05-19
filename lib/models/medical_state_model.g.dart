@@ -14,6 +14,7 @@ MedicalStateModel _$MedicalStateModelFromJson(Map<String, dynamic> json) =>
       weekOfDay:
           (json['weekOfDay'] as List<dynamic>).map((e) => e as int).toList(),
       notes: json['notes'] as String,
+      timeOfDay: json['timeOfDay'] as String,
     );
 
 Map<String, dynamic> _$MedicalStateModelToJson(MedicalStateModel instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$MedicalStateModelToJson(MedicalStateModel instance) =>
       'medicalName': instance.medicalName,
       'weekOfDay': instance.weekOfDay,
       'notes': instance.notes,
+      'timeOfDay': instance.timeOfDay,
     };

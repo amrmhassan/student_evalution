@@ -30,11 +30,19 @@ class AddMedicalStateScreen extends StatefulWidget {
 }
 
 class _AddMedicalStateScreenState extends State<AddMedicalStateScreen> {
+  TimeOfDay timeOfDay = TimeOfDay.now();
   List<int> activeDays = [];
   void toggleNumber(int n) {
-    if (activeDays.contains(n)) return;
-    activeDays.add(n);
+    if (activeDays.contains(n)) {
+      activeDays.remove(n);
+    } else {
+      activeDays.add(n);
+    }
     setState(() {});
+  }
+
+  String timeOfDayConverter(TimeOfDay t) {
+    return '${timeOfDay.hourOfPeriod}:${timeOfDay.minute == 0 ? '00' : timeOfDay.minute} ${timeOfDay.period.name.toUpperCase()}';
   }
 
   TextEditingController medicineNameController = TextEditingController();
@@ -96,6 +104,7 @@ class _AddMedicalStateScreenState extends State<AddMedicalStateScreen> {
                             ),
                             VSpace(),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomTextField(
                                   controller: medicineNameController,
@@ -103,6 +112,11 @@ class _AddMedicalStateScreenState extends State<AddMedicalStateScreen> {
                                   padding: EdgeInsets.zero,
                                 ),
                                 VSpace(),
+                                Text(
+                                  'Choose medicine day',
+                                  style: h3TextStyle,
+                                ),
+                                VSpace(factor: .5),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -118,6 +132,30 @@ class _AddMedicalStateScreenState extends State<AddMedicalStateScreen> {
                                       ),
                                     ),
                                   ),
+                                ),
+                                VSpace(),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Choose time',
+                                      style: h3TextStyle,
+                                    ),
+                                    Spacer(),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        var res = await showTimePicker(
+                                            context: context,
+                                            initialTime: timeOfDay);
+                                        if (res == null) return;
+                                        setState(() {
+                                          timeOfDay = res;
+                                        });
+                                      },
+                                      child: Text(
+                                        timeOfDayConverter(timeOfDay),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 VSpace(),
                                 CustomTextField(
@@ -137,7 +175,9 @@ class _AddMedicalStateScreenState extends State<AddMedicalStateScreen> {
                                   onTap: () async {
                                     String name = medicineNameController.text;
                                     String notes = notesController.text;
-                                    if (name.isEmpty) return;
+                                    if (name.isEmpty || activeDays.isEmpty) {
+                                      return;
+                                    }
                                     String id = Uuid().v4();
                                     String userId = Providers.userPf(context)
                                         .userModel!
@@ -149,6 +189,7 @@ class _AddMedicalStateScreenState extends State<AddMedicalStateScreen> {
                                       medicalName: name,
                                       weekOfDay: activeDays,
                                       notes: notes,
+                                      timeOfDay: timeOfDayConverter(timeOfDay),
                                     );
                                     await FirebaseFirestore.instance
                                         .collection(DBCollections.medical)
