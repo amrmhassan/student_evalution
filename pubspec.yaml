@@ -67,6 +67,7 @@ dependencies:
   table_calendar: ^3.0.8
   localization: ^2.1.0
   json_annotation: ^4.8.1
+  video_player: ^2.6.1
 
 
 dev_dependencies:

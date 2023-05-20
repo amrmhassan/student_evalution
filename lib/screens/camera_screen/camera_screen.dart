@@ -8,10 +8,13 @@ import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/home_work_model.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../screens/home_screen/widgets/home_screen_appbar.dart';
 
@@ -24,6 +27,29 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    var userModel = Providers.userPf(context).userModel as StudentModel;
+
+    _controller = VideoPlayerController.network(
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      httpHeaders: {},
+    )..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+        _controller.play();
+      });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,10 +115,9 @@ class _CameraScreenState extends State<CameraScreen> {
                               children: [
                                 VSpace(factor: .3),
                                 //? here the home works
-                                Container(
-                                  width: double.infinity,
-                                  height: Responsive.getHeight(context) / 3,
-                                  color: Colors.black,
+                                AspectRatio(
+                                  aspectRatio: _controller.value.aspectRatio,
+                                  child: VideoPlayer(_controller),
                                 ),
 
                                 VSpace(),

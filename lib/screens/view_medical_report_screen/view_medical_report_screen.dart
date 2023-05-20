@@ -1,19 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
-import 'package:student_evaluation/fast_tools/widgets/double_modal_button.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/medical_report_model.dart';
-import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
-import 'package:student_evaluation/transformers/collections.dart';
-import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 

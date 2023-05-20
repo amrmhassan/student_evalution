@@ -2,26 +2,20 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
-import 'package:student_evaluation/fast_tools/widgets/double_modal_button.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
-import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/medical_report_model.dart';
-import 'package:student_evaluation/models/medical_state_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/view_medical_report_screen/view_medical_report_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
 import 'package:student_evaluation/transformers/collections.dart';
-import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../../core/navigation.dart';
-import '../add_medical_state_screen/add_medical_state_screen.dart';
 import '../home_screen/widgets/home_screen_appbar.dart';
 
 class MedicalReportsViewScreen extends StatefulWidget {
