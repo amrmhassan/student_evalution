@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/core/constants/global_constants.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
@@ -119,6 +120,13 @@ class _AllStudentsScreenState extends State<AllStudentsScreen> {
                                         color: colorTheme.inActiveText,
                                         borderRadius: 1000,
                                       ),
+                                      if (isDoctor) ...[
+                                        VSpace(factor: .3),
+                                        Text(
+                                          'You can add medical report to students by clicking the student and add the report',
+                                          style: h4TextStyleInactive,
+                                        )
+                                      ],
                                       VSpace(),
                                       VSpace(factor: .3),
                                       ...allStudentsProvider.gradeUsers

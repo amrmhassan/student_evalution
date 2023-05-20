@@ -31,6 +31,7 @@ class DBCollections {
 
   // medical
   static const String medical = 'medical';
+  static const String medicalReport = 'medicalReport';
   // absentRequest
   static const String absentRequest = 'absentRequest';
 

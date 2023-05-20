@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:student_evaluation/admin_app/screens/admin_groups_screen/admin_groups_screen.dart';
 import 'package:student_evaluation/admin_app/screens/signup_screen/signup_screen.dart';
 import 'package:student_evaluation/admin_app/screens/users_screen/users_screen.dart';
 import 'package:student_evaluation/core/navigation.dart';
@@ -197,8 +196,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                         VSpace(factor: .5),
                                         AdminUnitCard(
                                           onTap: () {
-                                            CNav.pushNamed(context,
-                                                AdminGroupsScreen.routeName);
+                                            CNav.pushNamed(
+                                                context,
+                                                AdminCreateGroupsScreen
+                                                    .routeName);
                                           },
                                           child: Row(
                                             children: [

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:student_evaluation/admin_app/screens/admin_home_screen/admin_home_screen.dart';
 import 'package:student_evaluation/admin_app/screens/users_screen/users_screen.dart';
 import 'package:student_evaluation/screens/add_event_screen/add_event_screen.dart';
+import 'package:student_evaluation/screens/add_medical_report_screen/add_medical_report_screen.dart';
 import 'package:student_evaluation/screens/add_medical_state_screen/add_medical_state_screen.dart';
 import 'package:student_evaluation/screens/all_students_screen/all_students_screen.dart';
 import 'package:student_evaluation/screens/behavior_screen/behavior_screen.dart';
@@ -69,6 +70,7 @@ class ScreensInit {
     AbsentRequestViewScreen.routeName: (context) => AbsentRequestViewScreen(),
     CameraScreen.routeName: (context) => CameraScreen(),
     AdminGroupsScreen.routeName: (context) => AdminGroupsScreen(),
+    AddMedicalReportScreen.routeName: (context) => AddMedicalReportScreen(),
   };
 
   static Widget? home = StreamBuilder(

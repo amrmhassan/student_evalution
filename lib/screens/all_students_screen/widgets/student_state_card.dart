@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:student_evaluation/core/constants/global_constants.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
@@ -8,6 +9,7 @@ import 'package:student_evaluation/models/absent_request_model.dart';
 import 'package:student_evaluation/models/medical_state_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/screens/absent_request_view_screen/absent_request_view_screen.dart';
+import 'package:student_evaluation/screens/add_medical_report_screen/add_medical_report_screen.dart';
 import 'package:student_evaluation/screens/medical_tracking_screen/medical_tracking_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
@@ -57,7 +59,13 @@ class _StudentStateCardState extends State<StudentStateCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ButtonWrapper(
+      onTap: isDoctor
+          ? () {
+              CNav.pushNamed(context, AddMedicalReportScreen.routeName,
+                  arguments: widget.userModel);
+            }
+          : null,
       margin: EdgeInsets.only(
         bottom: kVPad / 2,
       ),

@@ -1,40 +1,20 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:student_evaluation/core/types.dart';
-import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/models/material_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/bottom_line_time_line.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/time_line_title.dart';
-import 'package:student_evaluation/screens/home_screen/widgets/time_line_widget.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/top_line_time_line.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
-import 'package:student_evaluation/transformers/collections.dart';
-import 'package:student_evaluation/transformers/enums_transformers.dart';
-import 'package:student_evaluation/transformers/models_fields.dart';
-import 'package:student_evaluation/transformers/remote_storage.dart';
-import 'package:student_evaluation/utils/global_utils.dart';
 import 'package:student_evaluation/utils/providers_calls.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:uuid/uuid.dart';
 
-import '../../../models/group_data_model.dart';
 import '../../../screens/home_screen/widgets/home_screen_appbar.dart';
 
 class AdminGroupsScreen extends StatefulWidget {
-  static const String routeName = '/AdminStudentMaterialScreen';
+  static const String routeName = '/AdminGroupsScreen';
   const AdminGroupsScreen({super.key});
 
   @override
@@ -46,62 +26,61 @@ class _AdminGroupsScreenState extends State<AdminGroupsScreen> {
   StudentGrade studentGrade = StudentGrade.k1SectionA;
   TeacherClass teacherClass = TeacherClass.math;
 
-  void setStudentGrade(StudentGrade? grade) {
-    setState(() {
-      studentGrade = grade!;
-    });
-    loadData();
-  }
+  // void setStudentGrade(StudentGrade? grade) {
+  //   setState(() {
+  //     studentGrade = grade!;
+  //   });
+  //   loadData();
+  // }
 
-  void setTeacherClass(TeacherClass? teacherClass) {
-    setState(() {
-      this.teacherClass = teacherClass!;
-    });
-    loadData();
-  }
+  // void setTeacherClass(TeacherClass? teacherClass) {
+  //   setState(() {
+  //     this.teacherClass = teacherClass!;
+  //   });
+  //   loadData();
+  // }
 
-  void loadData() async {
-    setState(() {
-      loading = true;
-    });
-    try {
-      //!
-      var res = await FirebaseDatabase.instance
-          .ref(DBCollections.groupsMaps)
-          .child(DBCollections.studentsGroups)
-          .child(studentGrade.name)
-          .child(teacherClass.name)
-          .get();
-      var first = res.value;
+  // void loadData() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   try {
+  //     //!
+  //     var res = await FirebaseDatabase.instance
+  //         .ref(DBCollections.groupsMaps)
+  //         .child(DBCollections.studentsGroups)
+  //         .child(studentGrade.name)
+  //         .child(teacherClass.name)
+  //         .get();
+  //     var first = res.value;
 
-      var groups = res.children.map((e) {
-        var test = (e.value as Map<dynamic, dynamic>);
+  //     var groups = res.children.map((e) {
+  //       var test = (e.value as Map<dynamic, dynamic>);
 
-        Map<String, dynamic> data = {};
-        test.forEach((key, value) {
-          data[key.toString()] = value;
-        });
-        GroupDataModel model = GroupDataModel.fromJSON(data);
-        return model;
-      }).toList();
-      print(groups);
-    } catch (e) {
-      GlobalUtils.showSnackBar(
-        context: context,
-        message: e.toString(),
-        snackBarType: SnackBarType.error,
-      );
-    }
-    setState(() {
-      loading = false;
-    });
-  }
+  //       Map<String, dynamic> data = {};
+  //       test.forEach((key, value) {
+  //         data[key.toString()] = value;
+  //       });
+  //       GroupDataModel model = GroupDataModel.fromJSON(data);
+  //       return model;
+  //     }).toList();
+  //   } catch (e) {
+  //     GlobalUtils.showSnackBar(
+  //       context: context,
+  //       message: e.toString(),
+  //       snackBarType: SnackBarType.error,
+  //     );
+  //   }
+  //   setState(() {
+  //     loading = false;
+  //   });
+  // }
 
-  @override
-  void initState() {
-    loadData();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   loadData();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -187,63 +166,63 @@ class _AdminGroupsScreenState extends State<AdminGroupsScreen> {
                                             children: [
                                               VSpace(factor: 1.5),
                                               //?
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Student Sections',
-                                                    style: h3TextStyle,
-                                                  ),
-                                                  Spacer(),
-                                                  DropdownButton(
-                                                    value: studentGrade,
-                                                    items: StudentGrade.values
-                                                        .map(
-                                                          (e) =>
-                                                              DropdownMenuItem(
-                                                            key: Key(e.name),
-                                                            value: e,
-                                                            child: Text(
-                                                              gradeTransformer(
-                                                                  e),
-                                                              style:
-                                                                  h3InactiveTextStyle,
-                                                            ),
-                                                          ),
-                                                        )
-                                                        .toList(),
-                                                    onChanged: setStudentGrade,
-                                                  ),
-                                                ],
-                                              ),
-                                              VSpace(factor: .5),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Student Class',
-                                                    style: h3TextStyle,
-                                                  ),
-                                                  Spacer(),
-                                                  DropdownButton(
-                                                    value: teacherClass,
-                                                    items: TeacherClass.values
-                                                        .map(
-                                                          (e) =>
-                                                              DropdownMenuItem(
-                                                            key: Key(e.name),
-                                                            value: e,
-                                                            child: Text(
-                                                              classTransformer(
-                                                                  e),
-                                                              style:
-                                                                  h3InactiveTextStyle,
-                                                            ),
-                                                          ),
-                                                        )
-                                                        .toList(),
-                                                    onChanged: setTeacherClass,
-                                                  ),
-                                                ],
-                                              ),
+                                              // Row(
+                                              //   children: [
+                                              //     Text(
+                                              //       'Student Sections',
+                                              //       style: h3TextStyle,
+                                              //     ),
+                                              //     Spacer(),
+                                              //     DropdownButton(
+                                              //       value: studentGrade,
+                                              //       items: StudentGrade.values
+                                              //           .map(
+                                              //             (e) =>
+                                              //                 DropdownMenuItem(
+                                              //               key: Key(e.name),
+                                              //               value: e,
+                                              //               child: Text(
+                                              //                 gradeTransformer(
+                                              //                     e),
+                                              //                 style:
+                                              //                     h3InactiveTextStyle,
+                                              //               ),
+                                              //             ),
+                                              //           )
+                                              //           .toList(),
+                                              //       onChanged: setStudentGrade,
+                                              //     ),
+                                              //   ],
+                                              // ),
+                                              // VSpace(factor: .5),
+                                              // Row(
+                                              //   children: [
+                                              //     Text(
+                                              //       'Student Class',
+                                              //       style: h3TextStyle,
+                                              //     ),
+                                              //     Spacer(),
+                                              //     DropdownButton(
+                                              //       value: teacherClass,
+                                              //       items: TeacherClass.values
+                                              //           .map(
+                                              //             (e) =>
+                                              //                 DropdownMenuItem(
+                                              //               key: Key(e.name),
+                                              //               value: e,
+                                              //               child: Text(
+                                              //                 classTransformer(
+                                              //                     e),
+                                              //                 style:
+                                              //                     h3InactiveTextStyle,
+                                              //               ),
+                                              //             ),
+                                              //           )
+                                              //           .toList(),
+                                              //       onChanged: setTeacherClass,
+                                              //     ),
+                                              //   ],
+                                              // ),
 
                                               VSpace(),
 
