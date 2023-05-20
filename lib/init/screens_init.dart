@@ -16,6 +16,7 @@ import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dar
 import 'package:student_evaluation/screens/intro_screen/intro_screen.dart';
 import 'package:student_evaluation/screens/login_screen/login_screen.dart';
 import 'package:student_evaluation/screens/medical_tracking_screen/medical_tracking_screen.dart';
+import 'package:student_evaluation/screens/menu_screen/menu_screen.dart';
 import 'package:student_evaluation/screens/notifications_screen/notifications_screen.dart';
 import 'package:student_evaluation/screens/search_screen/search_screen.dart';
 import 'package:student_evaluation/screens/settings_screen/settings_screen.dart';
@@ -34,6 +35,8 @@ import '../admin_app/screens/admin_create_group_screen/admin_create_groups_scree
 import '../screens/home_screen/home_screen.dart';
 import '../screens/loading_screen.dart';
 import '../screens/messages_screen/messages_screen.dart';
+import '../screens/student_reports_screen/student_reports_screen.dart';
+import '../screens/view_medical_report_screen/view_medical_report_screen.dart';
 import '../student_app/screens/student_homework_screen/student_homework_screen.dart';
 import '../student_app/screens/students_attendance_screen/students_attendance_screen.dart';
 
@@ -71,6 +74,9 @@ class ScreensInit {
     CameraScreen.routeName: (context) => CameraScreen(),
     AdminGroupsScreen.routeName: (context) => AdminGroupsScreen(),
     AddMedicalReportScreen.routeName: (context) => AddMedicalReportScreen(),
+    MedicalReportsViewScreen.routeName: (context) => MedicalReportsViewScreen(),
+    ViewMedicalReportScreen.routeName: (context) => ViewMedicalReportScreen(),
+    ViewMenuScreen.routeName: (context) => ViewMenuScreen(),
   };
 
   static Widget? home = StreamBuilder(

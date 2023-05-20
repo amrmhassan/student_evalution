@@ -95,7 +95,7 @@ class _StudentStateCardState extends State<StudentStateCard> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       StudentStateButton(
-                        title: 'Medical',
+                        title: 'Medicines',
                         active: medicalState.isNotEmpty,
                         onTap: () {
                           CNav.pushNamed(
@@ -107,7 +107,7 @@ class _StudentStateCardState extends State<StudentStateCard> {
                       ),
                       HSpace(factor: .2),
                       StudentStateButton(
-                        title: 'Request',
+                        title: 'Requests',
                         active: absentState.isNotEmpty,
                         onTap: () {
                           CNav.pushNamed(

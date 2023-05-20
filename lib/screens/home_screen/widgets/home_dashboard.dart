@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:student_evaluation/core/navigation.dart';
 import 'package:student_evaluation/fast_tools/helpers/responsive.dart';
 import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
@@ -19,6 +20,7 @@ import 'package:student_evaluation/screens/camera_screen/camera_screen.dart';
 import 'package:student_evaluation/screens/home_screen/widgets/dash_board_item.dart';
 import 'package:student_evaluation/screens/home_work_screen/home_work_screen.dart';
 import 'package:student_evaluation/screens/medical_tracking_screen/medical_tracking_screen.dart';
+import 'package:student_evaluation/screens/menu_screen/menu_screen.dart';
 import 'package:student_evaluation/screens/messages_screen/messages_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_behaviour_screen/student_behaviour_screen.dart';
 import 'package:student_evaluation/student_app/screens/student_homework_screen/student_homework_screen.dart';
@@ -148,6 +150,23 @@ class HomeDashboard extends StatelessWidget {
                         );
                       },
                       color: Colors.cyan,
+                    ),
+                    DashboardItem(
+                      title: 'Menu',
+                      iconData: Icons.food_bank,
+                      onTap: () {
+                        CNav.pushNamed(context, ViewMenuScreen.routeName);
+                      },
+                      color: Colors.cyan,
+                    ),
+                    Opacity(
+                      opacity: 0,
+                      child: DashboardItem(
+                        title: 'Menu',
+                        iconData: Icons.menu,
+                        onTap: null,
+                        color: Colors.cyan,
+                      ),
                     ),
                   ],
                 ),

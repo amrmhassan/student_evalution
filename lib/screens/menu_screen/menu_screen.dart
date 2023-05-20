@@ -1,25 +1,38 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code, use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
+import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/models/absent_request_model.dart';
+import 'package:student_evaluation/models/medical_state_model.dart';
+import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/screens/student_reports_screen/student_reports_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/transformers/collections.dart';
+import 'package:student_evaluation/utils/global_utils.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
+import '../../core/navigation.dart';
+import '../add_medical_state_screen/add_medical_state_screen.dart';
 import '../home_screen/widgets/home_screen_appbar.dart';
 
-class AbsentRequestViewScreen extends StatelessWidget {
-  static const String routeName = '/AbsentRequestViewScreen';
-  const AbsentRequestViewScreen({super.key});
+class ViewMenuScreen extends StatefulWidget {
+  static const String routeName = '/ViewMenuScreen';
+  const ViewMenuScreen({super.key});
 
   @override
+  State<ViewMenuScreen> createState() => _ViewMenuScreenState();
+}
+
+class _ViewMenuScreenState extends State<ViewMenuScreen> {
+  @override
   Widget build(BuildContext context) {
-    List<AbsentRequestModel> absentData =
-        ModalRoute.of(context)!.settings.arguments as List<AbsentRequestModel>;
+    UserModel? me = Providers.userPf(context).userModel;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -43,6 +56,7 @@ class AbsentRequestViewScreen extends StatelessWidget {
                   children: [
                     VSpace(),
                     Container(
+                      constraints: BoxConstraints(minHeight: 200),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: colorTheme.backGround,
@@ -61,7 +75,7 @@ class AbsentRequestViewScreen extends StatelessWidget {
                           children: [
                             VSpace(),
                             Text(
-                              'Absent Requests',
+                              'Menu',
                               style: h1TextStyle.copyWith(
                                 color: colorTheme.kBlueColor,
                               ),
@@ -73,46 +87,8 @@ class AbsentRequestViewScreen extends StatelessWidget {
                               borderRadius: 1000,
                             ),
                             VSpace(),
-                            Column(
-                              children: [
-                                ...absentData.map((e) => Card(
-                                      surfaceTintColor: Colors.transparent,
-                                      color: Colors.white,
-                                      child: Container(
-                                          width: double.infinity,
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: kHPad,
-                                            vertical: kVPad / 2,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Absent Date: ${DateFormat('yyy-MM-dd').format(e.absentDate)}',
-                                                    style: h3TextStyle,
-                                                  ),
-                                                  VSpace(),
-                                                  Text(
-                                                    e.reason,
-                                                    style: h3LiteTextStyle,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )),
-                                    )),
-                                VSpace(),
-                                HLine(
-                                  thickness: .4,
-                                  color: colorTheme.inActiveText,
-                                  borderRadius: 1000,
-                                ),
-                                VSpace(),
-                              ],
-                            ),
+                            Image.network(
+                                'https://timessquaretx.com/wp-content/uploads/2023/02/Time-Square-Entertainment-067-533851-3852310-Main-Menu-2.2023-WEB_Page_2-scaled.jpg'),
                           ],
                         ),
                       ),

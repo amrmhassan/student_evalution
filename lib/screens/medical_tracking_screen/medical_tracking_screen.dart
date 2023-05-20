@@ -4,10 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:student_evaluation/core/types.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
+import 'package:student_evaluation/fast_tools/widgets/h_space.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
 import 'package:student_evaluation/models/medical_state_model.dart';
 import 'package:student_evaluation/models/user_model.dart';
+import 'package:student_evaluation/screens/student_reports_screen/student_reports_screen.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
@@ -85,6 +87,22 @@ class _MedicalTrackingScreenState extends State<MedicalTrackingScreen> {
         backgroundColor: colorTheme.kBlueColor.withOpacity(.5),
         flexibleSpace: HAppBarFlexibleArea(),
         foregroundColor: Colors.white,
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  CNav.pushNamed(context, MedicalReportsViewScreen.routeName);
+                },
+                icon: Text(
+                  'Reports',
+                  style: h2LightTextStyle,
+                ),
+              ),
+              HSpace(factor: .5),
+            ],
+          )
+        ],
       ),
       floatingActionButton: me is StudentModel
           ? FloatingActionButton(

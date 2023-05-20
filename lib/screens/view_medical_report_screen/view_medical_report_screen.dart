@@ -1,25 +1,30 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code, use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:student_evaluation/fast_tools/widgets/button_wrapper.dart';
+import 'package:student_evaluation/fast_tools/widgets/double_modal_button.dart';
 import 'package:student_evaluation/fast_tools/widgets/h_line.dart';
 import 'package:student_evaluation/fast_tools/widgets/padding_wrapper.dart';
 import 'package:student_evaluation/fast_tools/widgets/v_space.dart';
-import 'package:student_evaluation/models/absent_request_model.dart';
+import 'package:student_evaluation/models/medical_report_model.dart';
+import 'package:student_evaluation/models/user_model.dart';
 import 'package:student_evaluation/theming/constants/sizes.dart';
 import 'package:student_evaluation/theming/constants/styles.dart';
 import 'package:student_evaluation/theming/theme_calls.dart';
+import 'package:student_evaluation/transformers/collections.dart';
+import 'package:student_evaluation/utils/providers_calls.dart';
 
 import '../home_screen/widgets/home_screen_appbar.dart';
 
-class AbsentRequestViewScreen extends StatelessWidget {
-  static const String routeName = '/AbsentRequestViewScreen';
-  const AbsentRequestViewScreen({super.key});
+class ViewMedicalReportScreen extends StatelessWidget {
+  static const String routeName = '/ViewMedicalReportScreen';
+  const ViewMedicalReportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<AbsentRequestModel> absentData =
-        ModalRoute.of(context)!.settings.arguments as List<AbsentRequestModel>;
+    MedicalReportModel reportModel =
+        ModalRoute.of(context)!.settings.arguments as MedicalReportModel;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -61,7 +66,7 @@ class AbsentRequestViewScreen extends StatelessWidget {
                           children: [
                             VSpace(),
                             Text(
-                              'Absent Requests',
+                              reportModel.name,
                               style: h1TextStyle.copyWith(
                                 color: colorTheme.kBlueColor,
                               ),
@@ -74,42 +79,20 @@ class AbsentRequestViewScreen extends StatelessWidget {
                             ),
                             VSpace(),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ...absentData.map((e) => Card(
-                                      surfaceTintColor: Colors.transparent,
-                                      color: Colors.white,
-                                      child: Container(
-                                          width: double.infinity,
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: kHPad,
-                                            vertical: kVPad / 2,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Absent Date: ${DateFormat('yyy-MM-dd').format(e.absentDate)}',
-                                                    style: h3TextStyle,
-                                                  ),
-                                                  VSpace(),
-                                                  Text(
-                                                    e.reason,
-                                                    style: h3LiteTextStyle,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )),
-                                    )),
                                 VSpace(),
-                                HLine(
-                                  thickness: .4,
-                                  color: colorTheme.inActiveText,
-                                  borderRadius: 1000,
+                                Text(
+                                  reportModel.monthWeek,
+                                  style: h3TextStyle,
                                 ),
+                                VSpace(factor: .5),
+                                Text(
+                                  reportModel.notes,
+                                  style: h3LiteTextStyle,
+                                ),
+                                VSpace(),
+                                Image.network(reportModel.imageLink!),
                                 VSpace(),
                               ],
                             ),
